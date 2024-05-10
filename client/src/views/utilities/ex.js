@@ -12,23 +12,26 @@ import Button from '@mui/material/Button';
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
+import { useNavigate } from 'react-router';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import LDataPublic from './LblockAlldatapublic'; // Import the data from LDataPublic.js
 
-const FilterSearchblock = ({ block, department }) => {
+const FilterSearchblock = ({ block, department}) => {
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('Labs'); // Default to 'Labs'
+  const [selectedCategory, setSelectedCategory] = useState('ALL DATA');
   const [departmentData, setDepartmentData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [jsonData, setJsonData] = useState(null);
   const [excelGenerated, setExcelGenerated] = useState(false);
   const [pdfGenerated, setPdfGenerated] = useState(false);
+
+  const navigate= useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/block/categories/${block}/${department}`);
+        const response = await axios.get(`http://localhost:8010/api/block/categories/${block}/${department}`);
         setCategories(response.data);
       } catch (error) {
         console.error(`Error fetching categories for department ${department} in block ${block}:`, error);
@@ -38,45 +41,60 @@ const FilterSearchblock = ({ block, department }) => {
   }, [block, department]);
 
   useEffect(() => {
-    // When selectedCategory changes, automatically fetch data
-    if (selectedCategory !== 'All Data') {
-      fetchData();
+    handleCategorySelect(selectedCategory);
+  }, [selectedCategory]);
+  
+  const handlealldataselect=async(category)=>{
+    try{
+      navigate(`/${department}`);
     }
-  }, [selectedCategory, block, department]);
-
-  const handlealldataselect = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8010/api/block/allData/${block}/${department}`);
-      if (!response.data) {
-        console.error(`No data found for department ${department} in block ${block}`);
-        return;
-      }
-      setDepartmentData(response.data);
-    } catch (err) {
-      console.error(err);
+    catch(err){
+      console.log(err);
     }
-  };
+  }
 
   const handleCategorySelect = async (category) => {
     setSelectedCategory(category);
-    const url = category === 'All Data' ? 
+    const url = category === 'ALL DATA' ? 
       `http://localhost:8010/api/block/allData/${block}/${department}` :
       `http://localhost:8010/api/block/category/${block}/${department}/${category}`;
     try {
       const response = await axios.get(url);
-      if (!response.data) {
-        console.error(`No data found for category ${category} in department ${department} in block ${block}`);
-        return;
+      if(response.data==null){
+        response.data=`NO ${category} are there `
       }
       setDepartmentData(response.data);
+      fetchJsonData(url);
     } catch (error) {
-      console.error(`Error fetching data for category ${category} in department ${department} in block ${block}:`, error);
+      console.error(`Error fetching ${category} for department ${department} in block ${block}:`, error);
     }
   };
 
+  const fetchJsonData = (url) => {
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        return response.json();
+      })
+      .then(json => {
+        if (json && json.length > 0) {
+          setJsonData(json);
+        } else {
+          throw new Error('Empty JSON response');
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  };
+
   const convertJsonToExcel = () => {
-    const keys = Object.keys(departmentData[0]);
-    const data = departmentData.map(item => {
+    if (!jsonData) return;
+
+    const keys = Object.keys(jsonData[0]);
+    const data = jsonData.map(item => {
       const row = {};
       keys.forEach(key => {
         if (key !== '_id') {
@@ -97,8 +115,10 @@ const FilterSearchblock = ({ block, department }) => {
   };
 
   const convertJsonToPDF = () => {
-    const keys = Object.keys(departmentData[0]).filter(key => key !== '_id');
-    const data = departmentData.map(item =>
+    if (!jsonData) return;
+
+    const keys = Object.keys(jsonData[0]).filter(key => key !== '_id');
+    const data = jsonData.map(item =>
       keys.map(key => (typeof item[key] === 'boolean' ? (item[key] ? 'Yes' : 'No') : item[key]))
     );
 
@@ -118,32 +138,30 @@ const FilterSearchblock = ({ block, department }) => {
     setPage(0);
   };
 
-  const fetchData = async () => {
-    const url = `http://localhost:8000/api/block/category/${block}/${department}/${selectedCategory}`;
-    try {
-      const response = await axios.get(url);
-      setDepartmentData(response.data);
-    } catch (error) {
-      console.error(`Error fetching data for category ${selectedCategory} in department ${department} in block ${block}:`, error);
-    }
-  };
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{ marginBottom: '20px', width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         <Select
           value={selectedCategory}
-          onChange={(e) => handleCategorySelect(e.target.value)} // Modified here to directly call handleCategorySelect
-          style={{ width: '100%', marginBottom: '10px', borderRadius: '4px' }}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Select category' }}
+          onChange={(e) => handleCategorySelect(e.target.value)}
+          style={{ marginRight: '10px' }}
         >
-          <MenuItem value="Labs">Labs</MenuItem>
-          <MenuItem value="All Data">All Data</MenuItem>
           {categories.map((category) => (
             <MenuItem key={category} value={category}>{category}</MenuItem>
           ))}
         </Select>
+        <Button 
+          onClick={() => handlealldataselect('ALL DATA')}
+          style={{
+            width: '15%', 
+            marginBottom: '10px', 
+            backgroundColor: selectedCategory === 'ALL DATA' ? 'darkgreen' : '#EFA198',
+            color: 'white',
+          }}
+          variant="contained"
+        >
+          ALL DATA
+        </Button>
       </div>
       <Paper style={{ width: '100%', overflow: 'hidden', marginTop: '20px' }}>
         <TableContainer style={{ maxHeight: '440px', overflowY: 'auto' }}>
