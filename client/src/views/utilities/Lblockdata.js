@@ -1,12 +1,12 @@
 import { styled } from '@mui/material/styles';
-import { Card } from '@mui/material';
+import { Card, Button } from '@mui/material';
 import FilterSearch from 'menu-items/DataTable';
+import React, { useRef } from 'react';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import FilterSearchblock from './BlockData';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
-
 
 import LinkIcon from '@mui/icons-material/Link';
 
@@ -19,15 +19,63 @@ const IFrameWrapper = styled('iframe')(({ theme }) => ({
 
 // =============================|| TABLER ICONS ||============================= //
 
-const TablerIcons = () => (
-    <MainCard title="L Block Infrastructure" secondary={<SecondaryAction icon={<LinkIcon fontSize="small" />} link="https:filtermis.vercel.app/" />}>  
-      <MainCard title="IT Details" secondary={<SecondaryAction icon={<LinkIcon fontSize="small" />} link="/free/sampledata"  />}>
-         <FilterSearchblock block={'L'} department={'IT'} />
+const TablerIcons = () => {
+  const itRef = useRef(null);
+  const eeeRef = useRef(null);
+
+  const scrollToIT = () => {
+    itRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToEEE = () => {
+    eeeRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <MainCard title="L BLOCK INFRASTRUCTURE" sx={{ textTransform: 'uppercase' }}>
+      <div style={{ marginBottom: '10px' }}>
+      <Button
+          onClick={scrollToIT}
+          sx={{
+            textTransform: 'none',
+            marginRight: '2px',
+            width: '49%',
+            border: '1px solid #BA2C1B', // thin border with specified color
+            '&:hover': {
+              backgroundColor: '#BA2C1B', // darker green on hover
+              color: '#ffffff' // white text on hover
+            }
+          }}
+        >
+          INFORMATION TECHNOLOGY
+        </Button>
+        <Button
+          onClick={scrollToEEE}
+          sx={{
+            textTransform: 'none',
+            width: '49%',
+            marginLeft: '1px',
+            border: '1px solid #BA2C1B', // thin border with specified color
+            '&:hover': {
+              backgroundColor: '#BA2C1B', // darker green on hover
+              color: '#ffffff' // white text on hover
+            }
+          }}
+        >
+          ELECTRICAL & ELECTRONICS ENGINEERING
+        </Button>
+      </div>
+      <MainCard title="IT DETAILS" sx={{ textAlign: 'center', color: '#BA2C1B' }} ref={itRef}>
+        <FilterSearchblock block={'L'} department={'IT'} />
       </MainCard>
-      <MainCard title="EEE Details" secondary={<SecondaryAction icon={<LinkIcon fontSize="small" />} link="https:filtermis.vercel.app/" />}>
-         <FilterSearchblock block={'L'} department={'EEE'} />
+      <MainCard
+        title="EEE DETAILS"
+        ref={eeeRef}
+      >
+        <FilterSearchblock block={'L'} department={'EEE'} />
       </MainCard>
     </MainCard>
-);
+  );
+};
 
 export default TablerIcons;

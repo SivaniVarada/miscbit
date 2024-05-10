@@ -146,6 +146,10 @@ const FilterSearch = () => {
 
   return (
     <div>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
+        <button onClick={convertJsonToExcel} style={{ marginRight: '10px' }}>Generate Excel</button>
+        <button onClick={convertJsonToPDF}>Generate PDF</button>
+      </div>
       <Select
         value={selectedBlock}
         onChange={handleBlockSelect}
@@ -189,18 +193,18 @@ const FilterSearch = () => {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                {/* Your table header row will be replaced with your original logic */}
-                {/* For example, you can map through your data to generate table headers */}
                 {departmentData.length > 0 && typeof departmentData[0] === 'object' && (
                   Object.keys(departmentData[0]).map((key) => (
-                    key !== '_id' && <TableCell key={key}>{key}</TableCell>
+                    key !== '_id' && (
+                      <TableCell key={key}>
+                        <b>{key.toUpperCase()}</b>
+                      </TableCell>
+                    )
                   ))
                 )}
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* Your table body will be replaced with your original logic */}
-              {/* For example, you can map through your data to generate table rows */}
               {departmentData.map((item, index) => (
                 <TableRow key={index}>
                   {typeof item === 'object' && Object.keys(item).map((key) => (
@@ -225,10 +229,8 @@ const FilterSearch = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <button onClick={convertJsonToExcel}>Generate Excel</button>
-          <button onClick={convertJsonToPDF}>Generate PDF</button>
-          {excelGenerated && <p>Excel file generated successfully.</p>}
-          {pdfGenerated && <p>PDF file generated successfully.</p>}
+      {excelGenerated && <p>Excel file generated successfully.</p>}
+      {pdfGenerated && <p>PDF file generated successfully.</p>}
     </div>
   );
 };
