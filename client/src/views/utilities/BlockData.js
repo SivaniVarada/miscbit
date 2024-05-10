@@ -31,7 +31,7 @@ const FilterSearchblock = ({ block, department }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`http://localhost:8010/api/block/categories/${block}/${department}`);
+        const response = await axios.get(`http://localhost:8000/api/block/categories/${block}/${department}`);
         setCategories(response.data);
       } catch (error) {
         console.error(`Error fetching categories for department ${department} in block ${block}:`, error);
@@ -59,8 +59,8 @@ const FilterSearchblock = ({ block, department }) => {
 
   const fetchData = async () => {
     const url = selectedCategory === 'ALL DATA' ?
-      `http://localhost:8010/api/block/allData/${block}/${department}` :
-      `http://localhost:8010/api/block/category/${block}/${department}/${selectedCategory}`;
+      `http://localhost:8000/api/block/allData/${block}/${department}` :
+      `http://localhost:8000/api/block/category/${block}/${department}/${selectedCategory}`;
     try {
       const response = await axios.get(url);
       if (response.data == null) {
