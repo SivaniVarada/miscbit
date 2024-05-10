@@ -14,7 +14,7 @@ import html2pdf from 'html2pdf.js';
 import image1 from './images/Basketball.jpg';
 import image2 from './images/Cricket.jpg';
 import image3 from './images/Football.jpg';
-import image4 from './images/Football.jpg';
+import image4 from './images/Throwball.jpg';
 import image5 from './images/Volleyball.jpg';
 import { fontWeight } from '@mui/system';
 
@@ -177,7 +177,7 @@ const App = () => {
             ]
           },
           {
-            title: 'Football ',
+            title: 'Throwball ',
             imageUrl: image4,
             parameters: [
               { label: 'Capacity', value: '30' },
