@@ -148,55 +148,45 @@ const App = () => {
     {
       title: 'Basketball',
       imageUrl: image1,
-      parameters: [
-        { label: 'Capacity', value: '100' },
-        { label: 'Floor', value: '1' },
-        { label: 'Equipment Condition', value: 'Working' },
+      parameters: [   
+        { label: 'Ground Condition', value: 'Working' },
         { label: 'Available', value: 'Yes' },
       ]
     },
     {
-            title: 'Cricket',
-            imageUrl: image2,
-            parameters: [
-              { label: 'Capacity', value: '50' },
-              { label: 'Floor', value: 'Ground' },
-              { label: 'Equipment Condition', value: 'Working' },
-              { label: 'Available', value: 'Yes' },
-            ]
-          },
-          {
-            title: 'Football ',
-            imageUrl: image3,
-            parameters: [
-              { label: 'Capacity', value: '30' },
-              { label: 'Floor', value: '1' },
-              { label: 'Equipment Condition', value: 'Working' },
-              { label: 'Available', value: 'Yes' },
-              
-            ]
-          },
-          {
-            title: 'Throwball ',
-            imageUrl: image4,
-            parameters: [
-              { label: 'Capacity', value: '30' },
-              { label: 'Floor', value: '1' },
-              { label: 'Equipment Condition', value: 'Working' },
-              { label: 'Available', value: 'Yes' },
-            ]
-          },
-          {
-            title: 'Volleyball',
-            imageUrl: image5,
-            parameters: [
-              { label: 'Capacity', value: '50' },
-              { label: 'Floor', value: 'Ground' },
-              { label: 'Equipment Condition', value: 'Working' },
-              { label: 'Available', value: 'Yes' },
-              
-            ]
-          }
+    title: 'Cricket',
+    imageUrl: image2,
+    parameters: [
+      { label: 'Pitch Condition', value: 'Working' },
+      { label: 'Available', value: 'Yes' },
+    ]
+  },
+  {
+    title: 'Football ',
+    imageUrl: image3,
+    parameters: [
+      { label: 'Pitch Condition', value: 'Working' },
+      { label: 'Available', value: 'Yes' },
+      
+    ]
+  },
+  {
+    title: 'Throwball ',
+    imageUrl: image4,
+    parameters: [
+      { label: 'Ground Condition', value: 'Working' },
+      { label: 'Available', value: 'Yes' },
+    ]
+  },
+  {
+    title: 'Volleyball',
+    imageUrl: image5,
+    parameters: [
+      { label: 'Ground Condition', value: 'Working' },
+      { label: 'Available', value: 'Yes' },
+      
+    ]
+  }
 // Add data for other blocks as needed
 ];
 
