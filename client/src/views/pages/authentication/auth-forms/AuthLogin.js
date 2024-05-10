@@ -17,7 +17,7 @@ const FirebaseLogin = ({ ...others }) => {
   const handleLogin = async (values, actions) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8010/auth/login', values); // Update the endpoint
+      const response = await axios.post('http://localhost:8000/auth/login', values); // Update the endpoint
       const token = response.data.token;
       localStorage.setItem('token', token); // Store token in local storage
       setLoading(false);

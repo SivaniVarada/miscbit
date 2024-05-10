@@ -22,7 +22,7 @@ const FilterSearchblock = ({ block, department }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`http://localhost:8010/api/block/categories/L/IT`);
+        const response = await axios.get(`http://localhost:8000/api/block/categories/L/IT`);
         setCategories(response.data);
       } catch (error) {
         console.error(`Error fetching categories for department ${department} in block ${block}:`, error);
@@ -35,7 +35,7 @@ const FilterSearchblock = ({ block, department }) => {
     const fetchDataForCategories = async () => {
       categories.forEach(async (category) => {
         try {
-          const response = await axios.get(`http://localhost:8010/api/block/category/L/IT/${category}`);
+          const response = await axios.get(`http://localhost:8000/api/block/category/L/IT/${category}`);
           setCategoryData(prevData => ({
             ...prevData,
             [category]: response.data
@@ -66,9 +66,9 @@ const FilterSearchblock = ({ block, department }) => {
 
   const handleSubmitData = async (category, id) => {
     try {
-      await axios.put(`http://localhost:8010/api/block/category/L/IT/${category}/${id}`, modifiedData[id]);
+      await axios.put(`http://localhost:8000/api/block/category/L/IT/${category}/${id}`, modifiedData[id]);
       // Refresh data after modification
-      const response = await axios.get(`http://localhost:8010/api/block/category/L/IT/${category}`);
+      const response = await axios.get(`http://localhost:8000/api/block/category/L/IT/${category}`);
       setCategoryData(prevData => ({
         ...prevData,
         [category]: response.data
