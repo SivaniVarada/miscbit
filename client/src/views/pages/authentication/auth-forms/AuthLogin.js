@@ -2,10 +2,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
-import { Button, CircularProgress, FormControl, FormControlLabel, FormHelperText, Typography, Checkbox, Alert, InputLabel, OutlinedInput } from '@mui/material'; // Import components from Material-UI
+import { Button, CircularProgress, FormControl, FormHelperText, Typography, Checkbox, Alert, InputLabel, OutlinedInput } from '@mui/material';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
+import { FormControlLabel } from '@mui/material';
+
 
 const FirebaseLogin = ({ ...others }) => {
   const dispatch = useDispatch();
@@ -17,21 +19,16 @@ const FirebaseLogin = ({ ...others }) => {
   const handleLogin = async (values, actions) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8000/auth/login', values); // Update the endpoint
-      const token = response.data.token;
-      localStorage.setItem('token', token); // Store token in local storage
+      const response = await axios.post('http://localhost:8000/auth/login', values);
+      const { token } = response.data;
+      localStorage.setItem('token', token);
       setLoading(false);
-      setSuccessMessage('Login Successful!'); // Set success message
-      navigate("/sampledata");
-      // redirectTo('http://localhost:3000/free/sampledata'); 
+      setSuccessMessage('Login Successful!');
+      navigate("/");
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error.response.data.message);
       setLoading(false);
     }
-  };
-
-  const redirectTo = (path) => {
-    window.location.href = path;
   };
 
   return (
@@ -83,16 +80,16 @@ const FirebaseLogin = ({ ...others }) => {
           </FormControl>
 
           {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert> // Display error alert
+            <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>
           )}
 
           {successMessage && (
-            <Alert severity="success" sx={{ mb: 2 }}>{successMessage}</Alert> // Display success alert
+            <Alert severity="success" sx={{ mb: 2 }}>{successMessage}</Alert>
           )}
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
             <FormControlLabel
-              control={<Checkbox color="primary" />} // Using Checkbox component
+              control={<Checkbox color="primary" />}
               label="Remember me"
             />
             <Typography variant="subtitle1" color="secondary" style={{ textDecoration: 'none', cursor: 'pointer' }}>
@@ -118,3 +115,5 @@ const FirebaseLogin = ({ ...others }) => {
 };
 
 export default FirebaseLogin;
+
+
