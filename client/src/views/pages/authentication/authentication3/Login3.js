@@ -40,7 +40,7 @@ const Login = () => {
                             ADMINISTRATOR LOGIN
                           </Typography>
                           <Typography variant="caption" fontSize="16px" textAlign={matchDownSM ? 'center' : 'inherit'}>
-                            Enter your credentials to continue
+                            Enter your credentials
                           </Typography>
                         </Stack>
                       </Grid>
