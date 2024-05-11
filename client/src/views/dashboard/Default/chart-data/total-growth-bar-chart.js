@@ -41,7 +41,7 @@ const chartData = {
       position: 'bottom',
       offsetX: 20,
       labels: {
-        useSeriesColors: true
+        useSeriesColors: false
       },
       markers: {
         width: 16,
