@@ -36,6 +36,7 @@ const OutdoorSports = Loadable(lazy(() => import('views/outdoorsports')));
 const IndoorSports = Loadable(lazy(() => import('views/indoorsports')));
 
 //footer 
+const Footerpage = Loadable(lazy(()=>import('views/dashboard/Default/footer')))
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -202,7 +203,7 @@ const MainRoutes = {
       element: <Allfilter />
     },
     {
-      path: 'librarypage',
+      path: 'samplepage',
       element: <SamplePage />
     },
     {

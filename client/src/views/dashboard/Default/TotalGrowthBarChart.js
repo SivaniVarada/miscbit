@@ -31,11 +31,6 @@ const TotalGrowthBarChart = ({ isLoading }) => {
   const darkLight = theme.palette.dark.light;
   const grey200 = theme.palette.grey[200];
   const grey500 = theme.palette.grey[500];
-  
-  const clr1 = '#F01E2C';
-  const clr2 = '#8E0100';
-  const clr3 = '#044904';
-  const clr4 = '#728C69';
 
   const primary200 = '#000137';
   const primaryDark = theme.palette.primary.dark;
@@ -45,7 +40,7 @@ const TotalGrowthBarChart = ({ isLoading }) => {
   useEffect(() => {
     const newChartData = {
       ...chartData.options,
-      colors: [clr1,clr2,clr3,clr4],
+      colors: [primary200, primaryDark, secondaryMain, secondaryLight],
       xaxis: {
         labels: {
           style: {

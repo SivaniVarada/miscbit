@@ -19,7 +19,7 @@ const other = {
       id: 'library',
       title: 'Library',
       type: 'item',
-      url: '/librarypage',
+      url: '/samplepage',
       icon: icons.LibraryBooksIcon,
       breadcrumbs: false
     }
