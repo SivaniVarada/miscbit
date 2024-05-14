@@ -32,6 +32,7 @@ const FirebaseLogin = ({ ...others }) => {
       setLoading(false);
       setSuccessMessage('Login Successful!');
       navigate("/");
+      window.location.reload();
     } catch (error) {
       setError(error.response.data.message);
       setLoading(false);
