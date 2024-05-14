@@ -20,8 +20,15 @@ const FirebaseLogin = ({ ...others }) => {
     setLoading(true);
     try {
       const response = await axios.post('http://localhost:8000/auth/login', values);
-      const { token } = response.data;
+      const { token, usertype } = response.data;
+      console.log(token)
+      console.log(`ROLE${ usertype}`)
       localStorage.setItem('token', token);
+      if (usertype === 'admin') {
+        localStorage.setItem('role', 'admin');
+      } else {
+        localStorage.setItem('role', 'user');
+      }
       setLoading(false);
       setSuccessMessage('Login Successful!');
       navigate("/");

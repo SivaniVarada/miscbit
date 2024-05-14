@@ -440,6 +440,10 @@ const ProfileSection = () => {
       };
   
       await axios.post('http://localhost:8000/auth/logout', null, config);
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      localStorage.removeItem('usertype');
+      console.log(`user logged out${token}`)
       setUserProfile(null); // Clear user profile data upon logout
       setOpen(false); // Close the profile popper after logout
       navigate('/'); // Redirect to home page

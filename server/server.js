@@ -11,7 +11,7 @@ app.use(cors());
 
 // Connect to MongoDB
 mongoose.connect(
-  "mongodb+srv://akhilallepc:cbit-mis@cbit-mis.p43ma.mongodb.net/",
+  "mongodb+srv://root:root@it3fsd.6cqlrhg.mongodb.net/MIS?retryWrites=true&w=majority&appName=it3fsd",
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 const db = mongoose.connection;
