@@ -20,7 +20,7 @@ const IFrameWrapper = styled('iframe')(({ theme }) => ({
 // =============================|| TABLER ICONS ||============================= //
 
 const TablerIcons = () => (
-  <MainCard title=" A Block Details" secondary={<SecondaryAction icon={<LinkIcon fontSize="small" />} link="https://tablericons.com/" />}>
+  <MainCard title=" A Block Details">
    <FilterSearchblock block={'A'} department={'civil'} />
   </MainCard>
 );

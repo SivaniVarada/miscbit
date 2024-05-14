@@ -44,11 +44,13 @@ const Mytest = ({ isLoading }) => {
                         ...theme.typography.commonAvatar,
                         ...theme.typography.largeAvatar,
                         backgroundColor: theme.palette.primary[800],
-                        color: '#fff',
-                        mt: 1
+                        mt: 1,
+                        a:{
+                          color: '#ffffff',
+                        }
                       }}
                     >
-                      <EmojiEventsIcon fontSize="inherit" />
+                      <a href="/indoorsports"><EmojiEventsIcon fontSize="inherit" /></a>
                     </Avatar>
                   </Grid>
                   {/* Removed the second Avatar component */}
@@ -65,10 +67,12 @@ const Mytest = ({ isLoading }) => {
                         cursor: 'pointer',
                         ...theme.typography.smallAvatar,
                         backgroundColor: theme.palette.primary[200],
-                        color: theme.palette.primary.dark
+                        a:{
+                          color: theme.palette.primary.dark
+                        } 
                       }}
                     >
-                      <ArrowUpwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} />
+                      <a href="/indoorsports"><ArrowUpwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} /></a>
                     </Avatar>
                   </Grid>
                 </Grid>
