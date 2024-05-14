@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import { Avatar, Box, Grid, Typography } from '@mui/material';
 import blockbg from '../../../assets/images/blockbg.png';
+import CorporateFareIcon from '@mui/icons-material/CorporateFare';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import SkeletonEarningCard from 'ui-component/cards/Skeleton/EarningCard';
@@ -12,6 +13,8 @@ import SkeletonEarningCard from 'ui-component/cards/Skeleton/EarningCard';
 // assets
 import EarningIcon from 'assets/images/icons/earning.svg';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { color } from 'framer-motion';
+
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
   backgroundImage: `url(${blockbg})`,
@@ -38,11 +41,14 @@ const EarningCard = ({ isLoading }) => {
                   sx={{
                     ...theme.typography.commonAvatar,
                     ...theme.typography.largeAvatar,
-                    backgroundColor: theme.palette.secondary[800],
+                    backgroundColor: "#BA2C1B",
+                    a:{
+                      color:"white",
+                    },
                     mt: 1
                   }}
                 >
-                  <img src={EarningIcon} alt="Notification" />
+                  <a href="/blocks/Ablock"><CorporateFareIcon/></a>
                 </Avatar>
               </Grid>
               <Grid item>
@@ -56,10 +62,13 @@ const EarningCard = ({ isLoading }) => {
                         cursor: 'pointer',
                         ...theme.typography.smallAvatar,
                         backgroundColor: theme.palette.secondary[200],
-                        color: theme.palette.secondary.dark
+                        a:{
+                          color: theme.palette.secondary.dark,
+                        }
+                        
                       }}
                     >
-                      <ArrowUpwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} />
+                      <a href="/blocks/Ablock"><ArrowUpwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} /></a>
                     </Avatar>
                   </Grid>
                 </Grid>

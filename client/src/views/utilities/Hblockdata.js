@@ -20,7 +20,7 @@ const IFrameWrapper = styled('iframe')(({ theme }) => ({
 // =============================|| TABLER ICONS ||============================= //
 
 const TablerIcons = () => (
-  <MainCard title="H Block Details (No data available as of now)" secondary={<SecondaryAction icon={<LinkIcon fontSize="small" />} link="https:filtermis.vercel.app/" />}>
+  <MainCard title="H Block Details (No data available as of now)">
    <FilterSearchblock block={'H'} department={'chemlabs'} />
   </MainCard>
 );

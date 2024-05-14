@@ -11,11 +11,12 @@ const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')))
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
 const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
-const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
+
 
 //Blocks Data 
-const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
+const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/Ablockdata')));
 const CblockData = Loadable(lazy(() => import('views/utilities/Cblockdata')));
+const DblockData = Loadable(lazy(() => import('views/utilities/Dblockdata')));
 const NblockData = Loadable(lazy(() => import('views/utilities/Nblockdata')));
 const KblockData = Loadable(lazy(() => import('views/utilities/Kblockdata')));
 const LblockData = Loadable(lazy(() => import('views/utilities/Lblockdata')));
@@ -87,20 +88,11 @@ const MainRoutes = {
       ]
     },
     {
-      path: 'icons',
+      path: 'blocks',
       children: [
         {
-          path: 'tabler-icons',
+          path: 'Ablock',
           element: <UtilsTablerIcons />
-        }
-      ]
-    },
-    {
-      path: 'icons',
-      children: [
-        {
-          path: 'material-icons',
-          element: <UtilsMaterialIcons />
         }
       ]
     },
@@ -110,6 +102,15 @@ const MainRoutes = {
         {
           path: 'Cblock',
           element: <CblockData/>
+        }
+      ]
+    },
+    {
+      path: 'blocks',
+      children: [
+        {
+          path: 'Dblock',
+          element: <DblockData/>
         }
       ]
     },

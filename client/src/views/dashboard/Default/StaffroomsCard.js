@@ -9,7 +9,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import TotalIncomeCard from 'ui-component/cards/Skeleton/TotalIncomeCard';
 
 // assets
-import RecentActorsIcon from '@mui/icons-material/RecentActors';
+import RecentActorsIcon from '@mui/icons-material/Science';
 
 // styles
 const CardWrapper = styled(MainCard)(({ theme }) => ({
@@ -79,7 +79,7 @@ const TotalIncomeDarkCard = ({ isLoading }) => {
                   }
                   secondary={
                     <Typography variant="subtitle2" sx={{ color: 'primary.light', mt: 0.25 }}>
-                      Staffrooms
+                      Laboratories
                     </Typography>
                   }
                 />

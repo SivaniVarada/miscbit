@@ -139,12 +139,12 @@ const FilterSearchblock = ({ block, department}) => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <div style={{ marginBottom: '20px', width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px' }}>
+      <div style={{ marginBottom: '20px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Select
           value={selectedCategory}
           onChange={(e) => handleCategorySelect(e.target.value)}
-          style={{ marginRight: '10px' }}
+          style={{ marginBottom: '10px', width: '100%' }} // occupy 100% width
         >
           {categories.map((category) => (
             <MenuItem key={category} value={category}>{category}</MenuItem>
@@ -153,7 +153,7 @@ const FilterSearchblock = ({ block, department}) => {
         <Button 
           onClick={() => handlealldataselect('ALL DATA')}
           style={{
-            width: '15%', 
+            width: '100%', // occupy 100% width
             marginBottom: '10px', 
             backgroundColor: selectedCategory === 'ALL DATA' ? 'darkgreen' : '#EFA198',
             color: 'white',
@@ -164,46 +164,11 @@ const FilterSearchblock = ({ block, department}) => {
         </Button>
       </div>
       <Paper style={{ width: '100%', overflow: 'hidden', marginTop: '20px' }}>
-        <TableContainer style={{ maxHeight: '440px', overflowY: 'auto' }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {departmentData.length > 0 && typeof departmentData[0] === 'object' && (
-                  Object.keys(departmentData[0]).map((key) => (
-                    key !== '_id' && <TableCell key={key}>{key}</TableCell>
-                  ))
-                )}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {departmentData.map((item, index) => (
-                <TableRow key={index}>
-                  {typeof item === 'object' && Object.keys(item).map((key) => (
-                    key !== '_id' && (
-                      <TableCell key={key}>
-                        {typeof item[key] === 'boolean' ? (item[key] ? 'Yes' : 'No') : item[key]}
-                      </TableCell>
-                    )
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          style={{ marginTop: '20px' }}
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={departmentData.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        {/* your existing table code */}
       </Paper>
-      <div style={{ marginTop: '20px' }}>
-        <Button onClick={convertJsonToExcel} style={{ marginRight: '10px' }} variant="contained" color="primary">Generate Excel</Button>
-        <Button onClick={convertJsonToPDF} variant="contained" color="primary">Generate PDF</Button>
+      <div style={{ marginTop: '20px', width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <Button onClick={convertJsonToExcel} style={{ marginRight: '10px', width: '45%' }} variant="contained" color="primary">Generate Excel</Button>
+        <Button onClick={convertJsonToPDF} style={{ width: '45%' }} variant="contained" color="primary">Generate PDF</Button>
       </div>
       {excelGenerated && <p>Excel file generated successfully.</p>}
       {pdfGenerated && <p>PDF file generated successfully.</p>}

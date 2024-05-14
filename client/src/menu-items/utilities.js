@@ -3,6 +3,9 @@ import { IconTypography, IconPalette, IconShadow } from '@tabler/icons-react';
 import CorporateFareIcon from '@mui/icons-material/CorporateFare';
 import ScienceIcon from '@mui/icons-material/Science';
 import StorageIcon from '@mui/icons-material/Storage';
+import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
+import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 // constant
 const icons = {
   IconTypography,
@@ -19,13 +22,14 @@ const utilities = {
   id: 'utilities',
   type: 'group',
   title: 'Blocks',
+  
   children: [
     {
       id: 'Alldata',
       title: 'All Data',
       type: 'item',
       url: '/alldata',
-      icon: icons.StorageIcon,
+      icon: AlignHorizontalLeftIcon,
       breadcrumbs: false
     },
     {
@@ -33,7 +37,7 @@ const utilities = {
       title: 'Bulk Upload',
       type: 'item',
       url: '/bulkupload',
-      icon: icons.StorageIcon,
+      icon: DriveFolderUploadIcon,
       breadcrumbs: false
     },
     {
@@ -46,10 +50,8 @@ const utilities = {
           id: 'block-a',
           title: 'Block A',
           type: 'item',
-          url: '/icons/tabler-icons',
+          url: '/blocks/Ablock',
           breadcrumbs: false,
-          blockvalue:'A',
-          deptvalue:'civil'
         },
         {
           id: 'block-b',
@@ -65,6 +67,14 @@ const utilities = {
           title: 'Block C',
           type: 'item',
           url: '/blocks/Cblock',
+          breadcrumbs: false,
+          
+        },
+        {
+          id: 'block-d',
+          title: 'Block D',
+          type: 'item',
+          url: '/blocks/Dblock',
           breadcrumbs: false,
           
         },
@@ -85,6 +95,14 @@ const utilities = {
           url: '/blocks/Hblock',
           breadcrumbs: false,
           
+        },
+        {
+          id: 'block-k',
+          title: 'Block K',
+          type: 'item',
+          
+          url: '/blocks/Kblock',
+          breadcrumbs: false
         },
         {
           id: 'block-l',
@@ -111,14 +129,6 @@ const utilities = {
           breadcrumbs: false
         },
         {
-          id: 'block-k',
-          title: 'Block K',
-          type: 'item',
-          
-          url: '/blocks/Kblock',
-          breadcrumbs: false
-        },
-        {
           id: 'block-sms',
           title: 'SMS Block',
           type: 'item',
@@ -138,9 +148,9 @@ const utilities = {
     },
     {
       id: 'admin-blocks',
-      title: 'Blocks',
+      title: 'Admin Blocks',
       type: 'collapse',
-      icon: icons.CorporateFareIcon,
+      icon: AdminPanelSettingsIcon,
       children: [
         {
           id: 'admin-a',
