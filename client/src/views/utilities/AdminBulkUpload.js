@@ -1,9 +1,15 @@
-import React, { useRef } from 'react';
+import React, { useRef,useState ,useEffect } from 'react';
 import { Grid, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, MenuItem, Select } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 
 const SamplePage1 = () => {
   const contentRef = useRef(null);
+  //const [isAdmin, setIsAdmin] = useState(false);
+  // useEffect(() => {
+  //   // Check user's role when component mounts
+  //   const userRole = localStorage.getItem('token'); // Assuming role is stored in localStorage
+  //   setIsAdmin(userRole === 'admin');
+  // }, []);
 
   const handleBlockChange = (event) => {
     const block = event.target.value;

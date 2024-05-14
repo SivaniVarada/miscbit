@@ -8,12 +8,11 @@ const authenticate=require("./authenticate")
 // Register Route
 router.post('/register', async (req, res) => {
   try {
-    const { username, email, password,usertype } = req.body;
+    const { username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
       username,
       email,
-      usertype,
       password: hashedPassword
     });
     await user.save();
@@ -27,37 +26,24 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res, next) => {
   try {
     let temp;
-    const { email, password, usertype } = req.body;
-
-    if (usertype === 'user') {
-      temp = await User.findOne({ email: email });
-      if (!temp) {
-        console.log("User doesn't exist!!");
-      }
-    } else {
-      temp = await User.findOne({ email: email });
-      if (!temp) {
-        console.log("Admin doesn't exist!!!");
-      }
-    }
-
-    if (!temp || !(await bcrypt.compare(password, temp.password))) {
-      return res.status(401).json({ success: false, message: "Invalid email or password" });
-    }
-
-    let expiresIn = "1h"; // Default expiration for non-admin users
-    if (usertype === "admin") {
-      expiresIn = "30d"; // Set expiresIn to a value that indicates it never expires
-    }
-
-    // Generate a JWT token
-    const token = jwt.sign({ email, usertype }, "your-secret-key", { expiresIn });
-    temp.token = token;
-    await temp.save();
-
-    res.status(200).json({ usertype: usertype, token, success: true });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+    const { email, password } = req.body;
+      temp=await User.findOne({email:email})
+      if(!temp)
+        {
+          console.log('user doesnt exists!!')
+        }
+      if(!(await bcrypt.compare(password, temp.password)))
+        {
+          console.log('password doesnt matches')
+        }
+        let expiresIn = "3h"; 
+        const token = jwt.sign({ email }, "your-secret-key", { expiresIn });
+      temp.token = token;
+      await temp.save();
+      res.status(200).json({usertype:'admin', token, success: true });
+    } 
+   catch (err) {
+    console.log(err);
   }
 });
 router.post('/logout', authenticate, async (req, res, next) => {
