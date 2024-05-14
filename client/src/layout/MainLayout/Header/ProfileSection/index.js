@@ -447,6 +447,7 @@ const ProfileSection = () => {
       setUserProfile(null); // Clear user profile data upon logout
       setOpen(false); // Close the profile popper after logout
       navigate('/'); // Redirect to home page
+      window.location.reload();
     } catch (error) {
       console.error('Error logging out:', error);
     }
