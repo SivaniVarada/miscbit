@@ -8,7 +8,8 @@ import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import AuthWrapper1 from '../AuthWrapper1';
 import AuthCardWrapper from '../AuthCardWrapper';
 import AuthLogin from '../auth-forms/AuthLogin';
-import Logo from 'ui-component/Logo';
+import Logo from 'ui-component/Logo'; // Import the default logo
+import MobileLogo from 'ui-component/LoginMobileLogo'; // Import the mobile logo
 import AuthFooter from 'ui-component/cards/AuthFooter';
 
 // assets
@@ -18,6 +19,7 @@ import AuthFooter from 'ui-component/cards/AuthFooter';
 const Login = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobileView = useMediaQuery('(max-width: 600px)');
 
   return (
     <AuthWrapper1>
@@ -29,7 +31,7 @@ const Login = () => {
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                   <Grid item sx={{ mb: 3 }}>
                     <Link to="#">
-                      <Logo />
+                    {isMobileView ? <MobileLogo /> : <Logo />}
                     </Link>
                   </Grid>
                   <Grid item xs={12}>
