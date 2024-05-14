@@ -94,10 +94,10 @@ const SamplePage1 = () => {
                   <TableBody>
                     {/* Row 1 */}
                     <TableRow>
-                      <TableCell align="center"><Button variant="contained">Button</Button></TableCell>
-                      <TableCell align="center"><Button variant="contained">Button</Button></TableCell>
-                      <TableCell align="center"><Button variant="contained">Button</Button></TableCell>
-                      <TableCell align="center"><Button variant="contained">Button</Button></TableCell>
+                      <TableCell align="center"><Button variant="contained">Upload</Button></TableCell>
+                      <TableCell align="center"><Button variant="contained">Upload</Button></TableCell>
+                      <TableCell align="center"><Button variant="contained">Upload</Button></TableCell>
+                      <TableCell align="center"><Button variant="contained">Upload</Button></TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
