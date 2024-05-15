@@ -35,29 +35,68 @@ router.post('/register', async (req, res) => {
 });
 
 // Login Route
+// router.post('/login', async (req, res, next) => {
+//   try {
+//     let temp;
+//     const { email, password } = req.body;
+//       temp=await User.findOne({email:email})
+//       console.log(temp.password)
+//       if(!temp)
+//         {
+//           console.log('user doesnt exists!!')
+//         }
+//       if(!(await bcrypt.compare(password, temp.password)))
+//         {
+//           console.log('password doesnt matches')
+//         }
+//         let expiresIn = "3h"; 
+//         const token = jwt.sign({ email }, "your-secret-key", { expiresIn });
+//       temp.token = token;
+//       await temp.save();
+//       res.status(200).json({usertype:'admin', token, success: true });
+//     } 
+//    catch (err) {
+//     console.log(err);
+//   }
+// });
 router.post('/login', async (req, res, next) => {
   try {
     let temp;
     const { email, password } = req.body;
-      temp=await User.findOne({email:email})
-      if(!temp)
-        {
-          console.log('user doesnt exists!!')
-        }
-      if(!(await bcrypt.compare(password, temp.password)))
-        {
-          console.log('password doesnt matches')
-        }
-        let expiresIn = "3h"; 
-        const token = jwt.sign({ email }, "your-secret-key", { expiresIn });
-      temp.token = token;
-      await temp.save();
-      res.status(200).json({usertype:'admin', token, success: true });
-    } 
-   catch (err) {
-    console.log(err);
+
+    console.log('Received login request for email:', email);
+
+    temp = await User.findOne({ email: email });
+    if (!temp) {
+      console.log('User with email', email, 'does not exist');
+      return res.status(401).json({ success: false, message: 'Invalid email or password' });
+    }
+
+    console.log('User found in the database:', temp);
+
+    console.log('Comparing passwords...');
+    const passwordMatch = await bcrypt.compare(password, temp.password);
+    if (!passwordMatch) {
+      console.log('Password does not match');
+      return res.status(401).json({ success: false, message: 'Invalid email or password' });
+    }
+
+    console.log('Password matches');
+
+    let expiresIn = '3h'; 
+    const token = jwt.sign({ email }, 'your-secret-key', { expiresIn });
+    temp.token = token;
+    await temp.save();
+
+    console.log('Login successful. Sending token:', token);
+
+    res.status(200).json({ usertype: 'admin', token, success: true });
+  } catch (err) {
+    console.error('Error occurred during login:', err);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 });
+
 router.post('/logout', authenticate, async (req, res, next) => {
   try {
     const user = req.user;
