@@ -143,13 +143,13 @@ router.post("/forgot-password", async (req, res, next) => {
     const relink = `http://localhost:3000/pages/login/ForgotPassword?token=${token}`;
 
     // console.log(from.email)
-    var mailOptions = {
-      from: 'yvishnuvamsith@gmail.com',
+    const mailOptions = {
+      from: 'yvishnuvamsith',
       to: email,
-      subject: 'Forgot password reset',
-      // text: ${emailSettings.text}:https://sstaxmentors-9d8477a8b025.herokuapp.com/reset-password/${existingUser._id}/${token},
-      text: `click on the link to get started\n\nreset password link: ${relink}`
+      subject: 'Password Reset Request for CBIT Management Information System',
+      text: `Dear Administrator,\n\nYou have requested to reset your password for the CBIT Management Information System. Please click on the link below to reset your password.\n\nReset Password Link: ${relink}\n\nIf you did not request this change, please ignore this email. If you continue to receive such emails, please contact the system administrator.\n\nSincerely,\nCBIT Management Information System Team`
     };
+    
 
     transporterInstance.sendMail(mailOptions, function (error, info) {
       if (error) {
