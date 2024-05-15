@@ -12,6 +12,7 @@ import { gridSpacing } from 'store/constant';
 
 // assets
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
+import { NavLink } from 'react-router-dom';
 
 // ==============================|| DASHBOARD DEFAULT - POPULAR CARD ||============================== //
 
@@ -28,9 +29,7 @@ const LibraryCard = ({ isLoading }) => {
     setAnchorEl(null);
   };
 
-    const handleButtonClick = () => {
-      window.location.href = '/librarypage';
-    };
+    
 
   return (
     <>
@@ -54,7 +53,7 @@ const LibraryCard = ({ isLoading }) => {
                     <Grid container alignItems="center" justifyContent="space-between">
                       <Grid item>
                         <Typography variant="subtitle1" color="inherit">
-                          Number of Books
+                         Number of Books
                         </Typography>
                       </Grid>
                       <Grid item>
@@ -93,7 +92,7 @@ const LibraryCard = ({ isLoading }) => {
                           </Grid>
                           
                         </Grid>
-                      </Grid>
+                      </Grid> 
                     </Grid>
                   </Grid>
                   <Grid item>
@@ -244,8 +243,8 @@ const LibraryCard = ({ isLoading }) => {
             </Grid>
           </CardContent>
           <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
-            <Button onClick={handleButtonClick} size="small" disableElevation>
-              View All
+            <Button  size="small" disableElevation>
+            <NavLink to='/librarypage' style={{textDecoration: 'none',color: 'blue'}}>   View All  </NavLink>
               <ChevronRightOutlinedIcon />
             </Button>
           </CardActions>
