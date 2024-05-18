@@ -37,4 +37,15 @@
     margin-top: 10px;
     color: green;
   }
+  .sticky-table {
+    max-height: 440px;
+    overflow-y: auto;
+  }
+  
+  .sticky-table th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa; /* Adjust the background color as needed */
+    z-index: 100;
+  }
   

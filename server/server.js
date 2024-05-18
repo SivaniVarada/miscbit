@@ -8,10 +8,10 @@ const dataRouter = require("./apis/dataRouter");
 const app = express();
 app.use(express.json());
 app.use(cors());
-
+//mongodb+srv://root:root@it3fsd.6cqlrhg.mongodb.net/MIS?retryWrites=true&w=majority&appName=it3fsd
 // Connect to MongoDB
 mongoose.connect(
-  "mongodb+srv://root:root@it3fsd.6cqlrhg.mongodb.net/MIS?retryWrites=true&w=majority&appName=it3fsd",
+  "mongodb+srv://miniproject1729:miniproject1729@cluster0.ylskpxa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', { useNewUrlParser: true, useUnifiedTopology: true ",
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 const db = mongoose.connection;
