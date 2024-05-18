@@ -198,6 +198,8 @@ const FilterSearch = () => {
   const handleTableChange = (event) => {
     setSelectedTable(event.target.value);
   };
+  const convertJsonToExcel = () => {};
+  const convertJsonToPDF=()=>{};
   return (
     <div className="container">
       <Grid item xs={12}>
@@ -451,6 +453,12 @@ const FilterSearch = () => {
           <pre>{JSON.stringify(categoryData, null, 2)}</pre>
         </div>
       )}
+      <div className="button-container">
+        <button className="button" onClick={convertJsonToExcel}>Generate Excel</button>
+        <button className="button" onClick={convertJsonToPDF}>Generate PDF</button>
+        {/* {excelGenerated && <p className="message">Excel file generated successfully.</p>}
+        {pdfGenerated && <p className="message">PDF file generated successfully.</p>} */}
+      </div>
     </div>
   );
   };
