@@ -218,7 +218,7 @@ const FilterSearch = () => {
        <DropdownContainer style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
       <Dropdown variant="outlined" style={{ width: 'calc(33.33% - 8px)' }}>
         <InputLabel>BLOCK</InputLabel>
-        <Select value={selectedBlock} onChange={handleBlockChange} label="Select a block...">
+        <Select value={selectedBlock} onChange={handleBlockChange} label="BLOCK">
           <MenuItem value=""><em>None</em></MenuItem>
           {blocks.map((block, index) => (
             <MenuItem key={index} value={block}>{block}</MenuItem>
@@ -227,7 +227,7 @@ const FilterSearch = () => {
       </Dropdown>
       <Dropdown variant="outlined" style={{ width: 'calc(33.33% - 8px)' }}>
         <InputLabel>DEPARTMENT</InputLabel>
-        <Select value={selectedDepartment} onChange={handleDepartmentChange} label="Select a department...">
+        <Select value={selectedDepartment} onChange={handleDepartmentChange} label="DEPARTMENT">
           <MenuItem value=""><em>None</em></MenuItem>
           {departments.map((department, index) => (
             <MenuItem key={index} value={department}>{department}</MenuItem>
