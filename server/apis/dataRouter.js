@@ -16,6 +16,6 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 // Route to handle file upload for students data
-router.post('/import/:dataType', upload.single('file'), dataController.importData);
+router.post('/import/:dataType/:block', upload.single('file'), dataController.importData);
 
 module.exports = router;
