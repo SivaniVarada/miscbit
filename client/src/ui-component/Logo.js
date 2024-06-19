@@ -1,6 +1,6 @@
 import React from 'react';
-import pngLogo from '../assets/images/logo.png';
-import mobileLogo from '../assets/images/mobilelogo.png';
+import pngLogo from '../assets/images/logo.webp';
+import mobileLogo from '../assets/images/mobilelogo.webp';
 
 const Logo = ({ isMobile }) => {
   const logoSrc = isMobile ? mobileLogo : pngLogo;

@@ -4,7 +4,7 @@ import { useState } from 'react';
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import { Avatar, Box, Grid, Typography } from '@mui/material';
-import sportbg from '../../../assets/images/sportbg.png';
+import sportbg from '../../../assets/images/sportbg.webp';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import SkeletonEarningCard from 'ui-component/cards/Skeleton/EarningCard';

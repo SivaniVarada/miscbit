@@ -1,6 +1,6 @@
 
 import React from 'react';
-import mobileLogo from '../assets/images/mobilelogo.png';
+import mobileLogo from '../assets/images/mobilelogo.webp';
 
 const MobileLogo = () => {
   const width = 330;
