@@ -7,7 +7,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import FilterSearchblock from './BlockData';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 
-// assets
+
 import LinkIcon from '@mui/icons-material/Link';
 
 // styles
@@ -20,8 +20,9 @@ const IFrameWrapper = styled('iframe')(({ theme }) => ({
 // =============================|| TABLER ICONS ||============================= //
 
 const TablerIcons = () => (
-  <MainCard title=" A Block Details">
-    <FilterSearchblock block={'A'} department={'civil'} />
+  <MainCard title="SMS Block Details (No data available as of now)">
+   <FilterSearchblock block={'SMS'} department={'IT'} />
+   
   </MainCard>
 );
 

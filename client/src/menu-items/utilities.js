@@ -148,110 +148,15 @@ const utilities = {
         },
       ]
     },
-    // {
-    //   id: 'admin-blocks',
-    //   title: 'Admin Blocks',
-    //   type: 'collapse',
-    //   icon: AdminPanelSettingsIcon,
-    //   children: [
-    //     {
-    //       id: 'admin-a',
-    //       title: 'Block A',
-    //       type: 'item',
-    //       url: '/admin/Ablock',
-    //       breadcrumbs: false,
-    //       blockvalue:'A',
-    //       deptvalue:'civil'
-    //     },
-    //     {
-    //       id: 'block-b',
-    //       title: 'Block B',
-    //       type: 'item',
-          
-    //       url: '/blocks/Bblock',
-    //       breadcrumbs: false,
-          
-    //     },
-    //     {
-    //       id: 'block-c',
-    //       title: 'Block C',
-    //       type: 'item',
-    //       url: '/blocks/Cblock',
-    //       breadcrumbs: false,
-          
-    //     },
-    //     {
-    //       id: 'block-g',
-    //       title: 'Block G',
-    //       type: 'item',
-          
-    //       url: '/blocks/Gblock',
-    //       breadcrumbs: false,
-         
-    //     },
-    //     {
-    //       id: 'block-h',
-    //       title: 'Block H',
-    //       type: 'item',
-          
-    //       url: '/blocks/Hblock',
-    //       breadcrumbs: false,
-          
-    //     },
-    //     {
-    //       id: 'block-l',
-    //       title: 'Block L',
-    //       type: 'item',
-          
-    //       url: '/blocks/Lblock',
-    //       breadcrumbs: false
-    //     },
-    //     {
-    //       id: 'block-m',
-    //       title: 'Block M',
-    //       type: 'item',
-         
-    //       url: '/blocks/Mblock',
-    //       breadcrumbs: false
-    //     },
-    //     {
-    //       id: 'block-n',
-    //       title: 'Block N',
-    //       type: 'item',
-          
-    //       url: '/blocks/Nblock',
-    //       breadcrumbs: false
-    //     },
-    //     {
-    //       id: 'block-k',
-    //       title: 'Block K',
-    //       type: 'item',
-          
-    //       url: '/blocks/Kblock',
-    //       breadcrumbs: false
-    //     },
-    //     {
-    //       id: 'block-sms',
-    //       title: 'SMS Block',
-    //       type: 'item',
-          
-    //       url: '/blocks/SMSblock/',
-    //       breadcrumbs: false
-    //     },
-    //     {
-    //       id: 'block-rnd',
-    //       title: 'Research & Development Block',
-    //       type: 'item',
-         
-    //       url: '/blocks/R&Dblock',
-    //       breadcrumbs: false
-    //     },
-    //   ]
-    // }
+    
   ],
   breadcrumbs: 'false',
   
 };
+
+
+
+
 if (isAdmin()) {
   console.log('hi')
   utilities.children.push({
@@ -278,86 +183,94 @@ if (isAdmin()) {
         deptvalue:'civil'
       },
       {
-        id: 'block-b',
+        id: 'admin-b',
         title: 'Block B',
         type: 'item',
-        
-        url: '/blocks/Bblock',
+        url: '/admin/Bblock',
         breadcrumbs: false,
         
       },
       {
-        id: 'block-c',
+        id: 'admin-c',
         title: 'Block C',
         type: 'item',
-        url: '/blocks/Cblock',
+        url: '/admin/Cblock',
         breadcrumbs: false,
         
       },
       {
-        id: 'block-g',
+        id: 'admin-d',
+        title: 'Block D',
+        type: 'item',
+        
+        url: '/admin/Dblock',
+        breadcrumbs: false,
+       
+      },
+      {
+        id: 'admin-g',
         title: 'Block G',
         type: 'item',
         
-        url: '/blocks/Gblock',
+        url: '/admin/Gblock',
         breadcrumbs: false,
        
       },
       {
-        id: 'block-h',
+        id: 'admin-h',
         title: 'Block H',
         type: 'item',
         
-        url: '/blocks/Hblock',
+        url: '/admin/Hblock',
         breadcrumbs: false,
-        
-      },
-      {
-        id: 'block-l',
-        title: 'Block L',
-        type: 'item',
-        
-        url: '/blocks/Lblock',
-        breadcrumbs: false
-      },
-      {
-        id: 'block-m',
-        title: 'Block M',
-        type: 'item',
        
-        url: '/blocks/Mblock',
-        breadcrumbs: false
       },
       {
-        id: 'block-n',
-        title: 'Block N',
-        type: 'item',
-        
-        url: '/blocks/Nblock',
-        breadcrumbs: false
-      },
-      {
-        id: 'block-k',
+        id: 'admin-k',
         title: 'Block K',
         type: 'item',
         
-        url: '/blocks/Kblock',
+        url: '/admin/Kblock',
         breadcrumbs: false
       },
       {
-        id: 'block-sms',
+        id: 'admin-l',
+        title: 'Block L',
+        type: 'item',
+        
+        url: '/admin/Lblock',
+        breadcrumbs: false
+      },
+      {
+        id: 'admin-m',
+        title: 'Block M',
+        type: 'item',
+       
+        url: '/admin/Mblock',
+        breadcrumbs: false
+      },
+      {
+        id: 'admin-n',
+        title: 'Block N',
+        type: 'item',
+        
+        url: '/admin/Nblock',
+        breadcrumbs: false
+      },
+      {
+        id: 'admin-sms',
         title: 'SMS Block',
         type: 'item',
         
-        url: '/blocks/SMSblock/',
+        url: '/admin/SMSblock/',
         breadcrumbs: false
       },
       {
-        id: 'block-rnd',
+        id: 'admin-rnd',
         title: 'Research & Development Block',
         type: 'item',
        
-        url: '/blocks/R&Dblock',
+        url: '/admin/R&Dblock',
         breadcrumbs: false
       },
     ]
