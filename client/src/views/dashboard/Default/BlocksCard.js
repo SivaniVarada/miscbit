@@ -4,7 +4,7 @@ import { useState } from 'react';
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import { Avatar, Box, Grid, Typography } from '@mui/material';
-import blockbg from '../../../assets/images/blockbg.png';
+import blockbg from '../../../assets/images/blockbg.webp';
 import CorporateFareIcon from '@mui/icons-material/CorporateFare';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
