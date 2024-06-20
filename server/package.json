@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build":"echo \ "No build requi"
+    "build":"echo \ "No build requi"\ a"
   },
   "author": "",
   "license": "ISC",
