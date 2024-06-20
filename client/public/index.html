@@ -33,6 +33,49 @@
       property="twitter:description"
       content="Berry Dashboard is made for the faster web application development built using Material-UI, Reactjs, Redux & Hook API."
     />
+    <script>
+      document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+      });
+    </script>
+      <!-- <script>
+        function checkDevTools() {
+          const devTools = /./;
+          devTools.toString = () => {
+            console.log(
+              "%cWarning: Accessing developer tools is restricted!",
+              "color: red; font-size: 20px; font-weight: bold;"
+            );
+            console.log(
+              "%cIf you are not authorized to access developer tools, please close them immediately.",
+              "color: red; font-size: 16px;"
+            );
+            // Additional actions can be taken here if needed
+          };
+          console.log(devTools);
+        }
+        checkDevTools();
+      </script> -->
+      <!-- <script>
+        // Check for developer tools
+        function checkDevToolsOpen() {
+          setInterval(function() {
+            if (window.devToolsOpen === undefined) {
+              console.log(
+                "%cWarning: Accessing developer tools is restricted!",
+                "color: red; font-size: 20px; font-weight: bold;"
+              );
+              console.log(
+                "%cIf you are not authorized to access developer tools, please close them immediately.",
+                "color: red; font-size: 16px;"
+              );
+              // Additional actions can be taken here if needed
+            }
+            window.devToolsOpen = false;
+          }, 1000);
+        }
+        checkDevToolsOpen();
+      </script> -->
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
