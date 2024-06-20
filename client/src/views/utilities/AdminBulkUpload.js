@@ -6,6 +6,7 @@ import MainCard from 'ui-component/cards/MainCard';
 const SamplePage1 = () => {
   const contentRef = useRef(null);
   const [block, setBlock] = useState(''); 
+  const [uploadKey, setUploadKey] = useState(Date.now()); // Add a state for forcing re-render of file input
   //const [isAdmin, setIsAdmin] = useState(false);
   // useEffect(() => {
   //   // Check user's role when component mounts
@@ -49,6 +50,7 @@ const SamplePage1 = () => {
         alert('Error uploading file: ' + error.message);
       }
     }
+    setUploadKey(Date.now());
   };
   
 
@@ -135,6 +137,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey} // Force re-render by changing key
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -149,6 +152,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -163,6 +167,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -177,6 +182,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
@@ -239,6 +245,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -253,6 +260,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -267,6 +275,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -281,6 +290,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
@@ -343,6 +353,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -357,6 +368,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -371,6 +383,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -385,6 +398,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
@@ -447,6 +461,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -461,6 +476,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -475,6 +491,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -489,6 +506,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
@@ -551,6 +569,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -565,6 +584,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -579,6 +599,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -593,6 +614,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
@@ -655,6 +677,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -669,6 +692,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -683,6 +707,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -697,6 +722,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
@@ -761,6 +787,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -775,6 +802,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -789,6 +817,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -803,6 +832,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
@@ -848,6 +878,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -862,6 +893,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -876,6 +908,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -890,6 +923,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
@@ -952,6 +986,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -966,6 +1001,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -980,6 +1016,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -994,6 +1031,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
@@ -1056,6 +1094,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -1070,6 +1109,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -1084,6 +1124,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -1098,6 +1139,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
@@ -1161,6 +1203,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -1175,6 +1218,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -1189,6 +1233,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -1203,6 +1248,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
@@ -1265,6 +1311,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -1279,6 +1326,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -1293,6 +1341,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -1307,6 +1356,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
@@ -1369,6 +1419,7 @@ const SamplePage1 = () => {
                     <TableRow>
                     <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-classrooms"
@@ -1383,6 +1434,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-labs"
@@ -1397,6 +1449,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-seminar-halls"
@@ -1411,6 +1464,7 @@ const SamplePage1 = () => {
                       </TableCell>
                       <TableCell align="center">
                         <input
+                          key={uploadKey}
                           accept=".csv"
                           style={{ display: 'none' }}
                           id="upload-washrooms"
