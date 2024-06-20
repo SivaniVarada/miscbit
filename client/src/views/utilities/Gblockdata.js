@@ -20,7 +20,7 @@ const IFrameWrapper = styled('iframe')(({ theme }) => ({
 // =============================|| TABLER ICONS ||============================= //
 
 const TablerIcons = () => (
-  <MainCard title="G Block Details (No data available as of now)">
+  <MainCard title="G Block Details (CSC)">
    <FilterSearchblock block={'G'} department={'Computer Science Cybersecurity'} />
   </MainCard>
 );
