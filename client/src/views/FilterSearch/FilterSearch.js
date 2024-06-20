@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Grid,Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, MenuItem, Select, FormControl, InputLabel, Typography, Container, Box } from '@mui/material';
 import { styled } from '@mui/system';
 import './Filter.css';
+import * as XLSX from 'xlsx';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
 const Header = styled(Typography)({
   textAlign: 'center',
@@ -40,6 +43,8 @@ const FilterSearch = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categoryData, setCategoryData] = useState({});
   const [selectedTable, setSelectedTable] = useState('');
+  const [excelGenerated, setExcelGenerated] = useState(false);
+  const [pdfGenerated, setPdfGenerated] = useState(false);
 
   useEffect(() => {
     fetchBlocks();
@@ -198,8 +203,241 @@ const FilterSearch = () => {
   const handleTableChange = (event) => {
     setSelectedTable(event.target.value);
   };
-  const convertJsonToExcel = () => {};
-  const convertJsonToPDF=()=>{};
+  const convertJsonToExcel = () => {
+    console.log(blockData)
+    const createSheetData = (data, keys) => {
+      return data.map(item => {
+          const row = {};
+          keys.forEach(key => {
+              if (key !== '_id') {
+                  row[key] = item[key];
+              }
+          });
+          return row;
+      });
+  };
+
+  const workBook = XLSX.utils.book_new();
+
+  const categories = [
+      "Department",
+      "Labs",
+      "classrooms",
+      "SeminarHalls",
+      "Timetables",
+      "Student",
+      "Faculty",
+      "Research",
+      "Committe",
+      "Mentoring",
+      "EventsOrganized",
+      "EventsParticipated",
+      "Clubs"
+  ];
+
+  categories.forEach(category => {
+      const data = [];
+      blockData.forEach(block => {
+          if (block[category] && Array.isArray(block[category])) {
+              block[category].forEach(item => {
+                  const row = { Block: block.Block, ...item };
+                  data.push(row);
+              });
+          }
+      });
+      if (data.length > 0) {
+          const keys = Object.keys(data[0]);
+          const sheetData = createSheetData(data, keys);
+          const workSheet = XLSX.utils.json_to_sheet(sheetData);
+          XLSX.utils.book_append_sheet(workBook, workSheet, category);
+      }
+  });
+
+  XLSX.writeFile(workBook, 'blockData.xlsx');
+  setExcelGenerated(true);
+
+  };
+
+  const convertJsonToPDF = () => {
+    const doc = new jsPDF();
+  
+    blockData.forEach(block => {
+      doc.text(`Block: ${block.Block}`, 10, 10);
+      
+      // Handle Labs
+      if (block.Labs && block.Labs.length > 0) {
+        doc.addPage();
+        doc.text('Labs', 10, 10);
+        const labKeys = Object.keys(block.Labs[0]).filter(key => key !== '_id');
+        const labData = block.Labs.map(lab => labKeys.map(key => lab[key]));
+        doc.autoTable({
+          head: [labKeys],
+          body: labData,
+          startY: 20,
+        });
+      }
+  
+      // Handle Classrooms
+      if (block.classrooms && block.classrooms.length > 0) {
+        doc.addPage();
+        doc.text('Classrooms', 10, 10);
+        const classroomKeys = Object.keys(block.classrooms[0]).filter(key => key !== '_id');
+        const classroomData = block.classrooms.map(classroom => classroomKeys.map(key => classroom[key]));
+        doc.autoTable({
+          head: [classroomKeys],
+          body: classroomData,
+          startY: 20,
+        });
+      }
+  
+      // Handle Departments
+      if (block.Department && block.Department.length > 0) {
+        doc.addPage();
+        doc.text('Departments', 10, 10);
+        const departmentKeys = Object.keys(block.Department[0]).filter(key => key !== '_id');
+        const departmentData = block.Department.map(department => departmentKeys.map(key => department[key]));
+        doc.autoTable({
+          head: [departmentKeys],
+          body: departmentData,
+          startY: 20,
+        });
+      }
+  
+      // Handle Seminar Halls
+      if (block.SeminarHalls && block.SeminarHalls.length > 0) {
+        doc.addPage();
+        doc.text('Seminar Halls', 10, 10);
+        const seminarHallKeys = Object.keys(block.SeminarHalls[0]).filter(key => key !== '_id');
+        const seminarHallData = block.SeminarHalls.map(hall => seminarHallKeys.map(key => hall[key]));
+        doc.autoTable({
+          head: [seminarHallKeys],
+          body: seminarHallData,
+          startY: 20,
+        });
+      }
+  
+      // Handle Timetables
+      if (block.Timetables && block.Timetables.length > 0) {
+        doc.addPage();
+        doc.text('Timetables', 10, 10);
+        const timetableKeys = Object.keys(block.Timetables[0]).filter(key => key !== '_id');
+        const timetableData = block.Timetables.map(tt => timetableKeys.map(key => tt[key]));
+        doc.autoTable({
+          head: [timetableKeys],
+          body: timetableData,
+          startY: 20,
+        });
+      }
+  
+      // Handle Students
+      if (block.Student && block.Student.length > 0) {
+        doc.addPage();
+        doc.text('Students', 10, 10);
+        const studentKeys = Object.keys(block.Student[0]).filter(key => key !== '_id');
+        const studentData = block.Student.map(student => studentKeys.map(key => student[key]));
+        doc.autoTable({
+          head: [studentKeys],
+          body: studentData,
+          startY: 20,
+        });
+      }
+  
+      // Handle Faculty
+      if (block.Faculty && block.Faculty.length > 0) {
+        doc.addPage();
+        doc.text('Faculty', 10, 10);
+        const facultyKeys = Object.keys(block.Faculty[0]).filter(key => key !== '_id');
+        const facultyData = block.Faculty.map(faculty => facultyKeys.map(key => faculty[key]));
+        doc.autoTable({
+          head: [facultyKeys],
+          body: facultyData,
+          startY: 20,
+        });
+      }
+  
+      // Handle Research
+      if (block.Research && block.Research.length > 0) {
+        doc.addPage();
+        doc.text('Research', 10, 10);
+        const researchKeys = Object.keys(block.Research[0]).filter(key => key !== '_id');
+        const researchData = block.Research.map(research => researchKeys.map(key => research[key]));
+        doc.autoTable({
+          head: [researchKeys],
+          body: researchData,
+          startY: 20,
+        });
+      }
+  
+      // Handle Committees
+      if (block.Committe && block.Committe.length > 0) {
+        doc.addPage();
+        doc.text('Committees', 10, 10);
+        const committeeKeys = Object.keys(block.Committe[0]).filter(key => key !== '_id');
+        const committeeData = block.Committe.map(committee => committeeKeys.map(key => committee[key]));
+        doc.autoTable({
+          head: [committeeKeys],
+          body: committeeData,
+          startY: 20,
+        });
+      }
+  
+      // Handle Mentoring
+      if (block.Mentoring && block.Mentoring.length > 0) {
+        doc.addPage();
+        doc.text('Mentoring', 10, 10);
+        const mentoringKeys = Object.keys(block.Mentoring[0]).filter(key => key !== '_id');
+        const mentoringData = block.Mentoring.map(mentoring => mentoringKeys.map(key => mentoring[key]));
+        doc.autoTable({
+          head: [mentoringKeys],
+          body: mentoringData,
+          startY: 20,
+        });
+      }
+  
+      // Handle Events Organized
+      if (block.EventsOrganized && block.EventsOrganized.length > 0) {
+        doc.addPage();
+        doc.text('Events Organized', 10, 10);
+        const eventsOrganizedKeys = Object.keys(block.EventsOrganized[0]).filter(key => key !== '_id');
+        const eventsOrganizedData = block.EventsOrganized.map(event => eventsOrganizedKeys.map(key => event[key]));
+        doc.autoTable({
+          head: [eventsOrganizedKeys],
+          body: eventsOrganizedData,
+          startY: 20,
+        });
+      }
+  
+      // Handle Events Participated
+      if (block.EventsParticipated && block.EventsParticipated.length > 0) {
+        doc.addPage();
+        doc.text('Events Participated', 10, 10);
+        const eventsParticipatedKeys = Object.keys(block.EventsParticipated[0]).filter(key => key !== '_id');
+        const eventsParticipatedData = block.EventsParticipated.map(event => eventsParticipatedKeys.map(key => event[key]));
+        doc.autoTable({
+          head: [eventsParticipatedKeys],
+          body: eventsParticipatedData,
+          startY: 20,
+        });
+      }
+  
+      // Handle Clubs
+      if (block.Clubs && block.Clubs.length > 0) {
+        doc.addPage();
+        doc.text('Clubs', 10, 10);
+        const clubsKeys = Object.keys(block.Clubs[0]).filter(key => key !== '_id');
+        const clubsData = block.Clubs.map(club => clubsKeys.map(key => club[key]));
+        doc.autoTable({
+          head: [clubsKeys],
+          body: clubsData,
+          startY: 20,
+        });
+      }
+    });
+  
+    doc.save('jsonData.pdf');
+    setPdfGenerated(true);
+  };
+  
   return (
     <div className="container">
       <Grid item xs={12}>
