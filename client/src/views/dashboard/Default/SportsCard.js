@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
@@ -50,7 +51,7 @@ const Mytest = ({ isLoading }) => {
                         }
                       }}
                     >
-                      <a href="/indoorsports"><EmojiEventsIcon fontSize="inherit" /></a>
+                      <NavLink to='/indoorsports' ><EmojiEventsIcon fontSize="inherit" /></NavLink>
                     </Avatar>
                   </Grid>
                   {/* Removed the second Avatar component */}
@@ -72,7 +73,7 @@ const Mytest = ({ isLoading }) => {
                         } 
                       }}
                     >
-                      <a href="/indoorsports"><ArrowUpwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} /></a>
+                      <NavLink to='/indoorsports' ><ArrowUpwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} /></NavLink>
                     </Avatar>
                   </Grid>
                 </Grid>
