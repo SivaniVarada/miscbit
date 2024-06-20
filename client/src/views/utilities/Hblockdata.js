@@ -20,7 +20,7 @@ const IFrameWrapper = styled('iframe')(({ theme }) => ({
 // =============================|| TABLER ICONS ||============================= //
 
 const TablerIcons = () => (
-  <MainCard title="H Block Details (AI&DS">
+  <MainCard title="H Block Details (AI&DS)">
    <FilterSearchblock block={'H'} department={'Artificial Intelligence and Data Science'} />
   </MainCard>
 );
