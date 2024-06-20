@@ -97,116 +97,117 @@ const SamplePage1 = () => {
         </Select>
       </Grid>
 
-      {/* A Table section */}
-      <Grid id="a-block" item xs={12}>
-        <MainCard>
-          <Grid item xs={12}>
-            <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
-              <Grid container justifyContent="space-between" alignItems="center">
-                <Grid item>
-                  <Typography variant="h2" sx={{ textAlign: 'center', color: '#ba2c1b' }}>
-                  {`A BLOCK DATA`}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </MainCard>
+{/* A Block section */}
+<Grid id="a-block" item xs={12} style={{ display: block === 'A' ? 'block' : 'none' }}>
+  <MainCard>
+    <Grid item xs={12}>
+      <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
+        <Grid container justifyContent="space-between" alignItems="center">
+          <Grid item>
+            <Typography variant="h2" sx={{ textAlign: 'center', color: '#ba2c1b' }}>
+              {`A BLOCK DATA`}
+            </Typography>
           </Grid>
+        </Grid>
+      </MainCard>
+    </Grid>
 
-          {/* A BLOCK DATA */}
-         <Grid container direction="column" spacing={2}>
-            {/* Title */}
-            <Grid item>
-              <Typography variant="h3" sx={{ textAlign: 'center', color: '#ba2c1b', paddingTop: '2%', paddingBottom: '7%' }}>
-                CSE DETAILS
-              </Typography>
-            </Grid>
-            {/* Table */}
-            <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                    <TableCell align="center">
-                        <input
-                          key={uploadKey} // Force re-render by changing key
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Grid>
-         </Grid>
-        </MainCard>
+    {/* A BLOCK DATA */}
+    <Grid container direction="column" spacing={2}>
+      {/* Title */}
+      <Grid item>
+        <Typography variant="h3" sx={{ textAlign: 'center', color: '#ba2c1b', paddingTop: '2%', paddingBottom: '7%' }}>
+          CSE DETAILS
+        </Typography>
       </Grid>
-      {/* A BLOCK END */}
+      
+      {/* Table */}
+      <Grid item xs={12} style={{ overflowX: 'auto' }}>
+        <TableContainer style={{ minWidth: 800 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Classrooms</TableCell>
+                <TableCell align="center">Labs</TableCell>
+                <TableCell align="center">Seminar Halls</TableCell>
+                <TableCell align="center">Washrooms</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell align="center">
+                  <input
+                    key={uploadKey} // Force re-render by changing key
+                    accept=".csv"
+                    style={{ display: 'none' }}
+                    id="upload-classrooms"
+                    type="file"
+                    onChange={(event) => handleFileUpload(event, 'classrooms', block)}
+                  />
+                  <label htmlFor="upload-classrooms">
+                    <Button variant="contained" component="span">
+                      Upload
+                    </Button>
+                  </label>
+                </TableCell>
+                <TableCell align="center">
+                  <input
+                    key={uploadKey}
+                    accept=".csv"
+                    style={{ display: 'none' }}
+                    id="upload-labs"
+                    type="file"
+                    onChange={(event) => handleFileUpload(event, 'labs', block)}
+                  />
+                  <label htmlFor="upload-labs">
+                    <Button variant="contained" component="span">
+                      Upload
+                    </Button>
+                  </label>
+                </TableCell>
+                <TableCell align="center">
+                  <input
+                    key={uploadKey}
+                    accept=".csv"
+                    style={{ display: 'none' }}
+                    id="upload-seminar-halls"
+                    type="file"
+                    onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
+                  />
+                  <label htmlFor="upload-seminar-halls">
+                    <Button variant="contained" component="span">
+                      Upload
+                    </Button>
+                  </label>
+                </TableCell>
+                <TableCell align="center">
+                  <input
+                    key={uploadKey}
+                    accept=".csv"
+                    style={{ display: 'none' }}
+                    id="upload-washrooms"
+                    type="file"
+                    onChange={(event) => handleFileUpload(event, 'washrooms', block)}
+                  />
+                  <label htmlFor="upload-washrooms">
+                    <Button variant="contained" component="span">
+                      Upload
+                    </Button>
+                  </label>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+    </Grid>
+  </MainCard>
+</Grid>
+{/* A BLOCK END */}
+
 
       {/* B Table section */}
-      <Grid id="b-block" item xs={12}>
+      <Grid id="b-block" item xs={12} style={{ display: block === 'B' ? 'block' : 'none' }}>
         <MainCard >
           <Grid item xs={12}>
             <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
@@ -314,7 +315,7 @@ const SamplePage1 = () => {
       {/* B BLOCK END */}
 
       {/* C Table section */}
-      <Grid id="c-block" item xs={12}>
+      <Grid id="c-block" item xs={12} style={{ display: block === 'C' ? 'block' : 'none' }}>
         <MainCard >
           <Grid item xs={12}>
             <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
@@ -422,7 +423,7 @@ const SamplePage1 = () => {
       {/* C BLOCK END */}
 
       {/* D Table section */}
-      <Grid id="d-block" item xs={12}>
+      <Grid id="d-block" item xs={12} style={{ display: block === 'D' ? 'block' : 'none' }}>
         <MainCard >
           <Grid item xs={12}>
             <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
@@ -530,7 +531,7 @@ const SamplePage1 = () => {
       {/* D BLOCK END */}
 
       {/* G Table section */}
-      <Grid id="g-block" item xs={12}>
+      <Grid id="g-block" item xs={12} style={{ display: block === 'G' ? 'block' : 'none' }}>
         <MainCard >
           <Grid item xs={12}>
             <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
@@ -638,7 +639,7 @@ const SamplePage1 = () => {
       {/* G BLOCK END */}
 
       {/* H Table section */}
-      <Grid id="h-block" item xs={12}>
+      <Grid id="h-block" item xs={12} style={{ display: block === 'H' ? 'block' : 'none' }}>
         <MainCard >
           <Grid item xs={12}>
             <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
@@ -748,7 +749,7 @@ const SamplePage1 = () => {
 
 
       {/* L Table section */}
-      <Grid id="l-block" item xs={12}>
+      <Grid id="l-block" item xs={12} style={{ display: block === 'L' ? 'block' : 'none' }}>
         <MainCard>
           <Grid item xs={12}>
             <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
@@ -947,7 +948,7 @@ const SamplePage1 = () => {
 
 
       {/* M Table section */}
-      <Grid id="m-block" item xs={12}>
+      <Grid id="m-block" item xs={12} style={{ display: block === 'M' ? 'block' : 'none' }}>
         <MainCard >
           <Grid item xs={12}>
             <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
@@ -1055,7 +1056,7 @@ const SamplePage1 = () => {
       {/* M BLOCK END */}
 
       {/* N Table section */}
-      <Grid id="n-block" item xs={12}>
+      <Grid id="n-block" item xs={12} style={{ display: block === 'N' ? 'block' : 'none' }}>
         <MainCard >
           <Grid item xs={12}>
             <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
@@ -1164,7 +1165,7 @@ const SamplePage1 = () => {
 
 
       {/* K Table section */}
-      <Grid id="k-block" item xs={12}>
+      <Grid id="k-block" item xs={12} style={{ display: block === 'K' ? 'block' : 'none' }}>
         <MainCard >
           <Grid item xs={12}>
             <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
@@ -1272,7 +1273,7 @@ const SamplePage1 = () => {
       {/* K BLOCK END */}
 
       {/* SMS Table section */}
-      <Grid id="sms-block" item xs={12}>
+      <Grid id="sms-block" item xs={12} style={{ display: block === 'SMS' ? 'block' : 'none' }}>
         <MainCard >
           <Grid item xs={12}>
             <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
@@ -1380,7 +1381,7 @@ const SamplePage1 = () => {
       {/* SMS BLOCK END */}
 
       {/* R&D Table section */}
-      <Grid id="r&d-block" item xs={12}>
+      <Grid id="r&d-block" item xs={12} style={{ display: block === 'R&D' ? 'block' : 'none' }}>
         <MainCard >
           <Grid item xs={12}>
             <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>

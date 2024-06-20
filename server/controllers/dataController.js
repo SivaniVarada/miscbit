@@ -9,6 +9,7 @@ const importData = async (req, res) => {
         // Extract data based on the type of document being uploaded
         const dataType = req.params.dataType;
         const blockname=req.params.block;
+        console.log(dataType)
 
         let dataToInsert;
         switch (dataType) {
@@ -133,9 +134,58 @@ const importData = async (req, res) => {
                 throw new Error("Invalid data type");
         }
         console.log(dataToInsert)
+        const existingDocument = await Data.findOne({ Block: blockname });
 
-        await Data.insertMany(dataToInsert[0]);
-        res.status(200).send({ success: true, msg: `${dataType} data imported successfully` });
+        if (existingDocument) {
+            // Update existing document
+            switch (dataType) {
+                case 'classrooms':
+                    existingDocument.Classrooms.push(...dataToInsert[0].Classrooms);
+                    break;
+                case 'labs':
+                    existingDocument.Labs.push(...dataToInsert[0].Labs);
+                    break;
+                case 'seminarHalls':
+                    existingDocument.SeminarHalls.push(...dataToInsert[0].SeminarHalls);
+                    break;
+                case 'students':
+                    existingDocument.Student.push(...dataToInsert[0].Student);
+                    break;
+                case 'Faculty':
+                    existingDocument.Faculty.push(...dataToInsert[0].Faculty);
+                    break;
+                case 'Research':
+                    existingDocument.Research.push(...dataToInsert[0].Research);
+                    break;
+                case 'Committe':
+                    existingDocument.Committe.push(...dataToInsert[0].Committe);
+                    break;
+                case 'Mentoring':
+                    existingDocument.Mentoring.push(...dataToInsert[0].Mentoring);
+                    break;
+                case 'EventsOrganized':
+                    existingDocument.EventsOrganized.push(...dataToInsert[0].EventsOrganized);
+                    break;
+                case 'EventsParticipated':
+                    existingDocument.EventsParticipated.push(...dataToInsert[0].EventsParticipated);
+                    break;
+                case 'Clubs':
+                    existingDocument.Clubs.push(...dataToInsert[0].Clubs);
+                    break;
+                default:
+                    throw new Error("Invalid data type");
+            }
+
+            await existingDocument.save();
+            res.status(200).send({ success: true, msg: `${dataType} data updated successfully` });
+        } else {
+            // Insert new document
+            await Data.insertMany(dataToInsert[0]);
+            res.status(200).send({ success: true, msg: `${dataType} data imported successfully` });
+        }
+
+        // await Data.insertMany(dataToInsert[0]);
+        // res.status(200).send({ success: true, msg: `${dataType} data imported successfully` });
     } catch (error) {
         res.status(400).send({ success: false, msg: error.message });
     }
