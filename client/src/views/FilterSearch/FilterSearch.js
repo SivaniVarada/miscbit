@@ -441,60 +441,85 @@ const FilterSearch = () => {
   return (
     <div className="container">
       <Grid item xs={12}>
-         <Paper style={{ padding: '20px', background: '#fff' }}>
-           <Grid container justifyContent="space-between" alignItems="center">
-             <Grid item>
-               <Typography variant="h1" sx={{ color: '#ba2c1b' }}>
-                 ALL DATA FILTER
-               </Typography>
-             </Grid>
-           </Grid>
-         </Paper>
-       </Grid>
-       <br></br>
-       <div style={{ textAlign: 'center', marginTop: '20px' }}>
-      <Header variant="h3" style={{ marginBottom: '20px', color: '#333', fontWeight: 'bold' }}>Select a Block, Department and Category</Header>
-       </div>
-       <DropdownContainer style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-      <Dropdown variant="outlined" style={{ width: 'calc(33.33% - 8px)' }}>
-        <InputLabel>BLOCK</InputLabel>
-        <Select value={selectedBlock} onChange={handleBlockChange} label="BLOCK">
-          <MenuItem value=""><em>None</em></MenuItem>
-          {blocks.map((block, index) => (
-            <MenuItem key={index} value={block}>{block}</MenuItem>
-          ))}
-        </Select>
-      </Dropdown>
-      <Dropdown variant="outlined" style={{ width: 'calc(33.33% - 8px)' }}>
-        <InputLabel>DEPARTMENT</InputLabel>
-        <Select value={selectedDepartment} onChange={handleDepartmentChange} label="DEPARTMENT">
-          <MenuItem value=""><em>None</em></MenuItem>
-          {departments.map((department, index) => (
-            <MenuItem key={index} value={department}>{department}</MenuItem>
-          ))}
-        </Select>
-      </Dropdown>
-      <Dropdown variant="outlined" style={{ width: 'calc(33.33% - 8px)' }}>
-        <InputLabel id="table-select-label">Table</InputLabel>
-        <Select
-          labelId="table-select-label"
-          value={selectedTable}
-          onChange={handleTableChange}
-          label="Table"
-        >
-          <MenuItem value="">All Tables</MenuItem>
-          <MenuItem value="Classrooms">Classrooms</MenuItem>
-          <MenuItem value="Labs">Labs</MenuItem>
-          <MenuItem value="Faculty">Faculty</MenuItem>
-          {/* Add more menu items for other tables */}
-        </Select>
-      </Dropdown>
-    </DropdownContainer>
+        <Paper style={{ padding: '20px', background: '#fff' }}>
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item>
+              <Typography variant="h1" sx={{ color: '#ba2c1b' }}>
+                ALL DATA FILTER
+              </Typography>
+            </Grid>
+          </Grid>
+        </Paper>
+      </Grid>
+      <br />
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <Typography variant="h3" style={{ marginBottom: '20px', color: '#333', fontWeight: 'bold' }}>
+          Select a Block, Department and Category
+        </Typography>
+      </div>
+      <Grid container spacing={2} style={{ marginBottom: '20px' }}>
+        <Grid item xs={12} sm={4}>
+          <InputLabel>BLOCK</InputLabel>
+          <Select
+            variant="outlined"
+            fullWidth
+            value={selectedBlock}
+            onChange={handleBlockChange}
+            label="BLOCK"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {blocks.map((block, index) => (
+              <MenuItem key={index} value={block}>
+                {block}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <InputLabel>DEPARTMENT</InputLabel>
+          <Select
+            variant="outlined"
+            fullWidth
+            value={selectedDepartment}
+            onChange={handleDepartmentChange}
+            label="DEPARTMENT"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {departments.map((department, index) => (
+              <MenuItem key={index} value={department}>
+                {department}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <InputLabel id="table-select-label">Table</InputLabel>
+          <Select
+            labelId="table-select-label"
+            fullWidth
+            value={selectedTable}
+            onChange={handleTableChange}
+            label="Table"
+          >
+            <MenuItem value="">All Tables</MenuItem>
+            <MenuItem value="Classrooms">Classrooms</MenuItem>
+            <MenuItem value="Labs">Labs</MenuItem>
+            <MenuItem value="Faculty">Faculty</MenuItem>
+            {/* Add more menu items for other tables */}
+          </Select>
+        </Grid>
+      </Grid>
       {selectedBlock && Object.keys(blockData).length > 0 && !selectedDepartment && (
         <div>
           {(!selectedTable || selectedTable === 'Classrooms') && (
             <div>
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>CLASSROOMS</Typography>
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+                CLASSROOMS
+              </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
@@ -506,25 +531,28 @@ const FilterSearch = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {blockData.flatMap((block) => block.classrooms.map((classroom) => (
-                      <TableRow key={classroom._id}>
-                        <TableCell>{classroom.number}</TableCell>
-                        <TableCell>{classroom.capacity}</TableCell>
-                        <TableCell>{classroom.DepartmentId}</TableCell>
-                        <TableCell>{classroom.Floor}</TableCell>
-                      </TableRow>
-                    )))}
+                    {blockData.flatMap((block) =>
+                      block.classrooms.map((classroom) => (
+                        <TableRow key={classroom._id}>
+                          <TableCell>{classroom.number}</TableCell>
+                          <TableCell>{classroom.capacity}</TableCell>
+                          <TableCell>{classroom.DepartmentId}</TableCell>
+                          <TableCell>{classroom.Floor}</TableCell>
+                        </TableRow>
+                      ))
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>
-              
             </div>
           )}
-          
+
           {(!selectedTable || selectedTable === 'Labs') && (
             <div>
-              <br></br>
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }} >LABS</Typography>
+              <br />
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+                LABS
+              </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
@@ -534,28 +562,32 @@ const FilterSearch = () => {
                       <TableCell>Department</TableCell>
                       <TableCell>Equipment Status</TableCell>
                       <TableCell>Floor</TableCell>
-                      </TableRow>
+                    </TableRow>
                   </TableHead>
                   <TableBody>
-                    {blockData.flatMap((block) => block.Labs.map((lab) => (
-                      <TableRow key={lab._id}>
-                        <TableCell>{lab.Lab_num}</TableCell>
-                        <TableCell>{lab.name}</TableCell>
-                        <TableCell>{lab.Department}</TableCell>
-                        <TableCell>{lab.Equipment_status}</TableCell>
-                        <TableCell>{lab.Floor}</TableCell>
-                      </TableRow>
-                    )))}
+                    {blockData.flatMap((block) =>
+                      block.Labs.map((lab) => (
+                        <TableRow key={lab._id}>
+                          <TableCell>{lab.Lab_num}</TableCell>
+                          <TableCell>{lab.name}</TableCell>
+                          <TableCell>{lab.Department}</TableCell>
+                          <TableCell>{lab.Equipment_status}</TableCell>
+                          <TableCell>{lab.Floor}</TableCell>
+                        </TableRow>
+                      ))
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>
             </div>
           )}
-          
+
           {(!selectedTable || selectedTable === 'Faculty') && (
             <div>
-              <br></br>
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>FACULTY</Typography>
+              <br />
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+                FACULTY
+              </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
@@ -569,16 +601,18 @@ const FilterSearch = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {blockData.flatMap((block) => block.Faculty.map((faculty) => (
-                      <TableRow key={faculty._id}>
-                        <TableCell>{faculty.Facultyid}</TableCell>
-                        <TableCell>{faculty.name}</TableCell>
-                        <TableCell>{faculty.Designation}</TableCell>
-                        <TableCell>{faculty.DOJ}</TableCell>
-                        <TableCell>{faculty.Department}</TableCell>
-                        <TableCell>{faculty.Role}</TableCell>
-                      </TableRow>
-                    )))}
+                    {blockData.flatMap((block) =>
+                      block.Faculty.map((faculty) => (
+                        <TableRow key={faculty._id}>
+                          <TableCell>{faculty.Facultyid}</TableCell>
+                          <TableCell>{faculty.name}</TableCell>
+                          <TableCell>{faculty.Designation}</TableCell>
+                          <TableCell>{faculty.DOJ}</TableCell>
+                          <TableCell>{faculty.Department}</TableCell>
+                          <TableCell>{faculty.Role}</TableCell>
+                        </TableRow>
+                      ))
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -592,7 +626,9 @@ const FilterSearch = () => {
         <div>
           {(!selectedTable || selectedTable === 'Classrooms') && (
             <div>
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>CLASSROOMS</Typography>
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+                CLASSROOMS
+              </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
@@ -604,7 +640,7 @@ const FilterSearch = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {departmentData.classrooms.map(classroom => (
+                    {departmentData.classrooms.map((classroom) => (
                       <TableRow key={classroom._id}>
                         <TableCell>{classroom.number}</TableCell>
                         <TableCell>{classroom.capacity}</TableCell>
@@ -620,8 +656,10 @@ const FilterSearch = () => {
 
           {(!selectedTable || selectedTable === 'Labs') && (
             <div>
-              <br></br>
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>LABS</Typography>
+              <br />
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+                LABS
+              </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
@@ -634,7 +672,7 @@ const FilterSearch = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {departmentData.Labs.map(lab => (
+                    {departmentData.Labs.map((lab) => (
                       <TableRow key={lab._id}>
                         <TableCell>{lab.Lab_num}</TableCell>
                         <TableCell>{lab.name}</TableCell>
@@ -651,8 +689,10 @@ const FilterSearch = () => {
 
           {(!selectedTable || selectedTable === 'Faculty') && (
             <div>
-              <br></br>
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>FACULTY</Typography>
+              <br />
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+                FACULTY
+              </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
@@ -666,7 +706,7 @@ const FilterSearch = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {departmentData.Faculty.map(faculty => (
+                    {departmentData.Faculty.map((faculty) => (
                       <TableRow key={faculty.Facultyid}>
                         <TableCell>{faculty.Facultyid}</TableCell>
                         <TableCell>{faculty.name}</TableCell>
@@ -691,14 +731,20 @@ const FilterSearch = () => {
           <pre>{JSON.stringify(categoryData, null, 2)}</pre>
         </div>
       )}
-      <div className="button-container">
-        <button className="button" onClick={convertJsonToExcel}>Generate Excel</button>
-        <button className="button" onClick={convertJsonToPDF}>Generate PDF</button>
+      <div className="button-container" style={{ textAlign: 'center', marginTop: '20px' }}>
+        <button className="button" onClick={convertJsonToExcel}>
+          Generate Excel
+        </button>
+        <button className="button" onClick={convertJsonToPDF}>
+          Generate PDF
+        </button>
         {/* {excelGenerated && <p className="message">Excel file generated successfully.</p>}
         {pdfGenerated && <p className="message">PDF file generated successfully.</p>} */}
       </div>
     </div>
   );
-  };
+};
+
+  
 
 export default FilterSearch;
