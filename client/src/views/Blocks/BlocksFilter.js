@@ -32,7 +32,7 @@ const Dropdown = styled(FormControl)({
   },
 });
 
-const FilterSearch = () => {
+const BlockFilter = (block,department) => {
   const [blocks, setBlocks] = useState([]);
   const [selectedBlock, setSelectedBlock] = useState('');
   const [blockData, setBlockData] = useState({});
@@ -46,22 +46,22 @@ const FilterSearch = () => {
   const [excelGenerated, setExcelGenerated] = useState(false);
   const [pdfGenerated, setPdfGenerated] = useState(false);
 
-  useEffect(() => {
-    fetchBlocks();
-  }, []);
+  // useEffect(() => {
+  //   fetchBlocks();
+  // }, []);
 
-  const fetchBlocks = async () => {
-    try {
-      const response = await fetch('http://localhost:8000/api/block/blocks');
-      if (!response.ok) {
-        throw new Error('Failed to fetch blocks');
-      }
-      const data = await response.json();
-      setBlocks(data.map(block => block.Block));
-    } catch (error) {
-      console.error('Error fetching blocks:', error);
-    }
-  };
+  // const fetchBlocks = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:8000/api/block/blocks');
+  //     if (!response.ok) {
+  //       throw new Error('Failed to fetch blocks');
+  //     }
+  //     const data = await response.json();
+  //     setBlocks(data.map(block => block.Block));
+  //   } catch (error) {
+  //     console.error('Error fetching blocks:', error);
+  //   }
+  // };
 
   const fetchBlockData = async (blockName) => {
     try {
@@ -162,16 +162,16 @@ const FilterSearch = () => {
 
   useEffect(() => {
     if (selectedBlock) {
-      fetchDepartments(selectedBlock);
-      fetchBlockData(selectedBlock);
-      fetchCategories(selectedBlock, selectedDepartment);
+      fetchDepartments(block);
+      fetchBlockData(block);
+      fetchCategories(block, selectedDepartment);
     }
-  }, [selectedBlock]);
+  }, [block]);
 
   useEffect(() => {
     if (selectedDepartment) {
       fetchDepartmentData(selectedDepartment);
-      fetchCategories(selectedBlock, selectedDepartment);
+      fetchCategories(block, selectedDepartment);
     }
   }, [selectedDepartment]);
 
@@ -197,7 +197,7 @@ const FilterSearch = () => {
   const handleCategoryChange = (event) => {
     const categoryName = event.target.value;
     setSelectedCategory(categoryName);
-    fetchCategoryData(selectedBlock, selectedDepartment, categoryName);
+    fetchCategoryData(block, selectedDepartment, categoryName);
   };
 
   const handleTableChange = (event) => {
@@ -463,7 +463,7 @@ const FilterSearch = () => {
           <Select
             variant="outlined"
             fullWidth
-            value={selectedBlock}
+            value={block}
             onChange={handleBlockChange}
             label="BLOCK"
           >
@@ -656,7 +656,7 @@ const FilterSearch = () => {
         </div>
       )}
 
-      {selectedDepartment && Object.keys(departmentData).length > 0 && !selectedCategory && (
+      {/* {selectedDepartment && Object.keys(departmentData).length > 0 && !selectedCategory && (
         <div>
           {(!selectedTable || selectedTable === 'Classrooms') && (
             <div>
@@ -785,9 +785,9 @@ const FilterSearch = () => {
               </TableContainer>
             </div>
           )}
-          {/* Render other tables (Seminar Halls, Students, Research, etc.) similarly */}
+          
         </div>
-      )}
+      )} */}
 
       {selectedCategory && (
         <div>
@@ -811,4 +811,4 @@ const FilterSearch = () => {
 
   
 
-export default FilterSearch;
+export default BlockFilter;
