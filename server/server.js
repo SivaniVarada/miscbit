@@ -12,7 +12,7 @@ app.use(cors());
 //mongodb+srv://miniproject1729:miniproject1729@cluster0.ylskpxa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 // Connect to MongoDB
 mongoose.connect(
-  "mongodb+srv://miniproject1729:miniproject1729@cluster0.ylskpxa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', { useNewUrlParser: true, useUnifiedTopology: true ",
+  "mongodb+srv://root:root@it3fsd.6cqlrhg.mongodb.net/MIS?retryWrites=true&w=majority&appName=it3fsd",
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 const db = mongoose.connection;
