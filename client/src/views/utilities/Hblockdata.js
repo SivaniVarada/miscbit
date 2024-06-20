@@ -21,7 +21,7 @@ const IFrameWrapper = styled('iframe')(({ theme }) => ({
 
 const TablerIcons = () => (
   <MainCard title="H Block Details (No data available as of now)">
-   <FilterSearchblock block={'H'} department={'chemlabs'} />
+   <FilterSearchblock block={'H'} department={'Artificial Intelligence and Data Science'} />
   </MainCard>
 );
 
