@@ -1,5 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Grid,Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, MenuItem, Select, FormControl, InputLabel, Typography, Container, Box } from '@mui/material';
+import {
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  Typography,
+  Container,
+  Box
+} from '@mui/material';
 import { styled } from '@mui/system';
 import './Filter.css';
 import * as XLSX from 'xlsx';
@@ -8,31 +24,30 @@ import 'jspdf-autotable';
 
 const Header = styled(Typography)({
   textAlign: 'center',
-  color: 'black',
- 
+  color: 'black'
 });
 
 const DropdownContainer = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
   gap: '20px',
-  marginBottom: '20px',
+  marginBottom: '20px'
 });
 
 const Dropdown = styled(FormControl)({
   minWidth: 200,
   '& .MuiInputLabel-root': {
-    color: '#ba2c1b',
+    color: '#941b1c'
   },
   '& .MuiSelect-root': {
-    color: 'blue',
+    color: 'blue'
   },
   '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: '#ba2c1b',
-  },
+    borderColor: '#941b1c'
+  }
 });
 
-const BlockFilter = (block,department) => {
+const BlockFilter = (block, department) => {
   const [blocks, setBlocks] = useState([]);
   const [selectedBlock, setSelectedBlock] = useState('');
   const [blockData, setBlockData] = useState({});
@@ -103,7 +118,7 @@ const BlockFilter = (block,department) => {
       console.error('Error fetching departments:', error);
     }
   };
-  
+
   const fetchDepartmentData = async (departmentName) => {
     try {
       const response = await fetch(`http://localhost:8000/api/block/department/datas/${departmentName}`);
@@ -204,247 +219,246 @@ const BlockFilter = (block,department) => {
     setSelectedTable(event.target.value);
   };
   const convertJsonToExcel = () => {
-    console.log(blockData)
+    console.log(blockData);
     const createSheetData = (data, keys) => {
-      return data.map(item => {
-          const row = {};
-          keys.forEach(key => {
-              if (key !== '_id') {
-                  row[key] = item[key];
-              }
-          });
-          return row;
-      });
-  };
-
-  const workBook = XLSX.utils.book_new();
-
-  const categories = [
-      "Department",
-      "Labs",
-      "classrooms",
-      "SeminarHalls",
-      "Timetables",
-      "Student",
-      "Faculty",
-      "Research",
-      "Committe",
-      "Mentoring",
-      "EventsOrganized",
-      "EventsParticipated",
-      "Clubs"
-  ];
-
-  categories.forEach(category => {
-      const data = [];
-      blockData.forEach(block => {
-          if (block[category] && Array.isArray(block[category])) {
-              block[category].forEach(item => {
-                  const row = { Block: block.Block, ...item };
-                  data.push(row);
-              });
+      return data.map((item) => {
+        const row = {};
+        keys.forEach((key) => {
+          if (key !== '_id') {
+            row[key] = item[key];
           }
+        });
+        return row;
+      });
+    };
+
+    const workBook = XLSX.utils.book_new();
+
+    const categories = [
+      'Department',
+      'Labs',
+      'classrooms',
+      'SeminarHalls',
+      'Timetables',
+      'Student',
+      'Faculty',
+      'Research',
+      'Committe',
+      'Mentoring',
+      'EventsOrganized',
+      'EventsParticipated',
+      'Clubs'
+    ];
+
+    categories.forEach((category) => {
+      const data = [];
+      blockData.forEach((block) => {
+        if (block[category] && Array.isArray(block[category])) {
+          block[category].forEach((item) => {
+            const row = { Block: block.Block, ...item };
+            data.push(row);
+          });
+        }
       });
       if (data.length > 0) {
-          const keys = Object.keys(data[0]);
-          const sheetData = createSheetData(data, keys);
-          const workSheet = XLSX.utils.json_to_sheet(sheetData);
-          XLSX.utils.book_append_sheet(workBook, workSheet, category);
+        const keys = Object.keys(data[0]);
+        const sheetData = createSheetData(data, keys);
+        const workSheet = XLSX.utils.json_to_sheet(sheetData);
+        XLSX.utils.book_append_sheet(workBook, workSheet, category);
       }
-  });
+    });
 
-  XLSX.writeFile(workBook, 'blockData.xlsx');
-  setExcelGenerated(true);
-
+    XLSX.writeFile(workBook, 'blockData.xlsx');
+    setExcelGenerated(true);
   };
 
   const convertJsonToPDF = () => {
     const doc = new jsPDF();
-  
-    blockData.forEach(block => {
+
+    blockData.forEach((block) => {
       doc.text(`Block: ${block.Block}`, 10, 10);
-      
+
       // Handle Labs
       if (block.Labs && block.Labs.length > 0) {
         doc.addPage();
         doc.text('Labs', 10, 10);
-        const labKeys = Object.keys(block.Labs[0]).filter(key => key !== '_id');
-        const labData = block.Labs.map(lab => labKeys.map(key => lab[key]));
+        const labKeys = Object.keys(block.Labs[0]).filter((key) => key !== '_id');
+        const labData = block.Labs.map((lab) => labKeys.map((key) => lab[key]));
         doc.autoTable({
           head: [labKeys],
           body: labData,
-          startY: 20,
+          startY: 20
         });
       }
-  
+
       // Handle Classrooms
       if (block.classrooms && block.classrooms.length > 0) {
         doc.addPage();
         doc.text('Classrooms', 10, 10);
-        const classroomKeys = Object.keys(block.classrooms[0]).filter(key => key !== '_id');
-        const classroomData = block.classrooms.map(classroom => classroomKeys.map(key => classroom[key]));
+        const classroomKeys = Object.keys(block.classrooms[0]).filter((key) => key !== '_id');
+        const classroomData = block.classrooms.map((classroom) => classroomKeys.map((key) => classroom[key]));
         doc.autoTable({
           head: [classroomKeys],
           body: classroomData,
-          startY: 20,
+          startY: 20
         });
       }
-  
+
       // Handle Departments
       if (block.Department && block.Department.length > 0) {
         doc.addPage();
         doc.text('Departments', 10, 10);
-        const departmentKeys = Object.keys(block.Department[0]).filter(key => key !== '_id');
-        const departmentData = block.Department.map(department => departmentKeys.map(key => department[key]));
+        const departmentKeys = Object.keys(block.Department[0]).filter((key) => key !== '_id');
+        const departmentData = block.Department.map((department) => departmentKeys.map((key) => department[key]));
         doc.autoTable({
           head: [departmentKeys],
           body: departmentData,
-          startY: 20,
+          startY: 20
         });
       }
-  
+
       // Handle Seminar Halls
       if (block.SeminarHalls && block.SeminarHalls.length > 0) {
         doc.addPage();
         doc.text('Seminar Halls', 10, 10);
-        const seminarHallKeys = Object.keys(block.SeminarHalls[0]).filter(key => key !== '_id');
-        const seminarHallData = block.SeminarHalls.map(hall => seminarHallKeys.map(key => hall[key]));
+        const seminarHallKeys = Object.keys(block.SeminarHalls[0]).filter((key) => key !== '_id');
+        const seminarHallData = block.SeminarHalls.map((hall) => seminarHallKeys.map((key) => hall[key]));
         doc.autoTable({
           head: [seminarHallKeys],
           body: seminarHallData,
-          startY: 20,
+          startY: 20
         });
       }
-  
+
       // Handle Timetables
       if (block.Timetables && block.Timetables.length > 0) {
         doc.addPage();
         doc.text('Timetables', 10, 10);
-        const timetableKeys = Object.keys(block.Timetables[0]).filter(key => key !== '_id');
-        const timetableData = block.Timetables.map(tt => timetableKeys.map(key => tt[key]));
+        const timetableKeys = Object.keys(block.Timetables[0]).filter((key) => key !== '_id');
+        const timetableData = block.Timetables.map((tt) => timetableKeys.map((key) => tt[key]));
         doc.autoTable({
           head: [timetableKeys],
           body: timetableData,
-          startY: 20,
+          startY: 20
         });
       }
-  
+
       // Handle Students
       if (block.Student && block.Student.length > 0) {
         doc.addPage();
         doc.text('Students', 10, 10);
-        const studentKeys = Object.keys(block.Student[0]).filter(key => key !== '_id');
-        const studentData = block.Student.map(student => studentKeys.map(key => student[key]));
+        const studentKeys = Object.keys(block.Student[0]).filter((key) => key !== '_id');
+        const studentData = block.Student.map((student) => studentKeys.map((key) => student[key]));
         doc.autoTable({
           head: [studentKeys],
           body: studentData,
-          startY: 20,
+          startY: 20
         });
       }
-  
+
       // Handle Faculty
       if (block.Faculty && block.Faculty.length > 0) {
         doc.addPage();
         doc.text('Faculty', 10, 10);
-        const facultyKeys = Object.keys(block.Faculty[0]).filter(key => key !== '_id');
-        const facultyData = block.Faculty.map(faculty => facultyKeys.map(key => faculty[key]));
+        const facultyKeys = Object.keys(block.Faculty[0]).filter((key) => key !== '_id');
+        const facultyData = block.Faculty.map((faculty) => facultyKeys.map((key) => faculty[key]));
         doc.autoTable({
           head: [facultyKeys],
           body: facultyData,
-          startY: 20,
+          startY: 20
         });
       }
-  
+
       // Handle Research
       if (block.Research && block.Research.length > 0) {
         doc.addPage();
         doc.text('Research', 10, 10);
-        const researchKeys = Object.keys(block.Research[0]).filter(key => key !== '_id');
-        const researchData = block.Research.map(research => researchKeys.map(key => research[key]));
+        const researchKeys = Object.keys(block.Research[0]).filter((key) => key !== '_id');
+        const researchData = block.Research.map((research) => researchKeys.map((key) => research[key]));
         doc.autoTable({
           head: [researchKeys],
           body: researchData,
-          startY: 20,
+          startY: 20
         });
       }
-  
+
       // Handle Committees
       if (block.Committe && block.Committe.length > 0) {
         doc.addPage();
         doc.text('Committees', 10, 10);
-        const committeeKeys = Object.keys(block.Committe[0]).filter(key => key !== '_id');
-        const committeeData = block.Committe.map(committee => committeeKeys.map(key => committee[key]));
+        const committeeKeys = Object.keys(block.Committe[0]).filter((key) => key !== '_id');
+        const committeeData = block.Committe.map((committee) => committeeKeys.map((key) => committee[key]));
         doc.autoTable({
           head: [committeeKeys],
           body: committeeData,
-          startY: 20,
+          startY: 20
         });
       }
-  
+
       // Handle Mentoring
       if (block.Mentoring && block.Mentoring.length > 0) {
         doc.addPage();
         doc.text('Mentoring', 10, 10);
-        const mentoringKeys = Object.keys(block.Mentoring[0]).filter(key => key !== '_id');
-        const mentoringData = block.Mentoring.map(mentoring => mentoringKeys.map(key => mentoring[key]));
+        const mentoringKeys = Object.keys(block.Mentoring[0]).filter((key) => key !== '_id');
+        const mentoringData = block.Mentoring.map((mentoring) => mentoringKeys.map((key) => mentoring[key]));
         doc.autoTable({
           head: [mentoringKeys],
           body: mentoringData,
-          startY: 20,
+          startY: 20
         });
       }
-  
+
       // Handle Events Organized
       if (block.EventsOrganized && block.EventsOrganized.length > 0) {
         doc.addPage();
         doc.text('Events Organized', 10, 10);
-        const eventsOrganizedKeys = Object.keys(block.EventsOrganized[0]).filter(key => key !== '_id');
-        const eventsOrganizedData = block.EventsOrganized.map(event => eventsOrganizedKeys.map(key => event[key]));
+        const eventsOrganizedKeys = Object.keys(block.EventsOrganized[0]).filter((key) => key !== '_id');
+        const eventsOrganizedData = block.EventsOrganized.map((event) => eventsOrganizedKeys.map((key) => event[key]));
         doc.autoTable({
           head: [eventsOrganizedKeys],
           body: eventsOrganizedData,
-          startY: 20,
+          startY: 20
         });
       }
-  
+
       // Handle Events Participated
       if (block.EventsParticipated && block.EventsParticipated.length > 0) {
         doc.addPage();
         doc.text('Events Participated', 10, 10);
-        const eventsParticipatedKeys = Object.keys(block.EventsParticipated[0]).filter(key => key !== '_id');
-        const eventsParticipatedData = block.EventsParticipated.map(event => eventsParticipatedKeys.map(key => event[key]));
+        const eventsParticipatedKeys = Object.keys(block.EventsParticipated[0]).filter((key) => key !== '_id');
+        const eventsParticipatedData = block.EventsParticipated.map((event) => eventsParticipatedKeys.map((key) => event[key]));
         doc.autoTable({
           head: [eventsParticipatedKeys],
           body: eventsParticipatedData,
-          startY: 20,
+          startY: 20
         });
       }
-  
+
       // Handle Clubs
       if (block.Clubs && block.Clubs.length > 0) {
         doc.addPage();
         doc.text('Clubs', 10, 10);
-        const clubsKeys = Object.keys(block.Clubs[0]).filter(key => key !== '_id');
-        const clubsData = block.Clubs.map(club => clubsKeys.map(key => club[key]));
+        const clubsKeys = Object.keys(block.Clubs[0]).filter((key) => key !== '_id');
+        const clubsData = block.Clubs.map((club) => clubsKeys.map((key) => club[key]));
         doc.autoTable({
           head: [clubsKeys],
           body: clubsData,
-          startY: 20,
+          startY: 20
         });
       }
     });
-  
+
     doc.save('jsonData.pdf');
     setPdfGenerated(true);
   };
-  
+
   return (
     <div className="container">
       <Grid item xs={12}>
         <Paper style={{ padding: '20px', background: '#fff' }}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
-              <Typography variant="h1" sx={{ color: '#ba2c1b' }}>
+              <Typography variant="h1" sx={{ color: '#941b1c' }}>
                 ALL DATA FILTER
               </Typography>
             </Grid>
@@ -453,20 +467,14 @@ const BlockFilter = (block,department) => {
       </Grid>
       <br />
       <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        <Typography variant="h3" style={{ marginBottom: '30px', color: '#ba2c1b', fontWeight: 'bold' }}>
+        <Typography variant="h3" style={{ marginBottom: '30px', color: '#941b1c', fontWeight: 'bold' }}>
           SELECT A BLOCK DEPARTMENT & CATEGORY
         </Typography>
       </div>
       <Grid container spacing={2} style={{ marginBottom: '20px' }}>
         <Grid item xs={12} sm={4}>
           <InputLabel>BLOCK</InputLabel>
-          <Select
-            variant="outlined"
-            fullWidth
-            value={block}
-            onChange={handleBlockChange}
-            label="BLOCK"
-          >
+          <Select variant="outlined" fullWidth value={block} onChange={handleBlockChange} label="BLOCK">
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
@@ -479,13 +487,7 @@ const BlockFilter = (block,department) => {
         </Grid>
         <Grid item xs={12} sm={4}>
           <InputLabel>DEPARTMENT</InputLabel>
-          <Select
-            variant="outlined"
-            fullWidth
-            value={selectedDepartment}
-            onChange={handleDepartmentChange}
-            label="DEPARTMENT"
-          >
+          <Select variant="outlined" fullWidth value={selectedDepartment} onChange={handleDepartmentChange} label="DEPARTMENT">
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
@@ -498,13 +500,7 @@ const BlockFilter = (block,department) => {
         </Grid>
         <Grid item xs={12} sm={4}>
           <InputLabel id="table-select-label">Table</InputLabel>
-          <Select
-            labelId="table-select-label"
-            fullWidth
-            value={selectedTable}
-            onChange={handleTableChange}
-            label="Table"
-          >
+          <Select labelId="table-select-label" fullWidth value={selectedTable} onChange={handleTableChange} label="Table">
             <MenuItem value="">All Tables</MenuItem>
             <MenuItem value="Classrooms">Classrooms</MenuItem>
             <MenuItem value="Labs">Labs</MenuItem>
@@ -518,7 +514,7 @@ const BlockFilter = (block,department) => {
         <div>
           {(!selectedTable || selectedTable === 'Classrooms') && (
             <div>
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#941b1c', fontWeight: 'bold' }}>
                 CLASSROOMS
               </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
@@ -551,7 +547,7 @@ const BlockFilter = (block,department) => {
           {(!selectedTable || selectedTable === 'Labs') && (
             <div>
               <br />
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#941b1c', fontWeight: 'bold' }}>
                 LABS
               </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
@@ -586,7 +582,7 @@ const BlockFilter = (block,department) => {
           {(!selectedTable || selectedTable === 'Faculty') && (
             <div>
               <br />
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#941b1c', fontWeight: 'bold' }}>
                 FACULTY
               </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
@@ -620,9 +616,9 @@ const BlockFilter = (block,department) => {
             </div>
           )}
 
-{(!selectedTable || selectedTable === 'SeminarHalls') && (
+          {(!selectedTable || selectedTable === 'SeminarHalls') && (
             <div>
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#941b1c', fontWeight: 'bold' }}>
                 SeminarHalls
               </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
@@ -631,7 +627,7 @@ const BlockFilter = (block,department) => {
                     <TableRow>
                       <TableCell>Hall Number</TableCell>
                       <TableCell>Name</TableCell>
-                      
+
                       <TableCell>Capacity</TableCell>
                     </TableRow>
                   </TableHead>
@@ -642,8 +638,6 @@ const BlockFilter = (block,department) => {
                           <TableCell>{classroom.Hall_number}</TableCell>
                           <TableCell>{classroom.name}</TableCell>
                           <TableCell>{classroom.capacity}</TableCell>
-                          
-                          
                         </TableRow>
                       ))
                     )}
@@ -660,7 +654,7 @@ const BlockFilter = (block,department) => {
         <div>
           {(!selectedTable || selectedTable === 'Classrooms') && (
             <div>
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#941b1c', fontWeight: 'bold' }}>
                 CLASSROOMS
               </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
@@ -691,7 +685,7 @@ const BlockFilter = (block,department) => {
           {(!selectedTable || selectedTable === 'Labs') && (
             <div>
               <br />
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#941b1c', fontWeight: 'bold' }}>
                 LABS
               </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
@@ -724,7 +718,7 @@ const BlockFilter = (block,department) => {
           {(!selectedTable || selectedTable === 'Faculty') && (
             <div>
               <br />
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#941b1c', fontWeight: 'bold' }}>
                 FACULTY
               </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
@@ -758,7 +752,7 @@ const BlockFilter = (block,department) => {
            {(!selectedTable || selectedTable === 'SeminarHalls') && (
             <div>
               <br />
-              <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
+              <Typography variant="h3" style={{ marginBottom: '20px', color: '#941b1c', fontWeight: 'bold' }}>
                 SEMINAR HALLS
               </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
@@ -808,7 +802,5 @@ const BlockFilter = (block,department) => {
     </div>
   );
 };
-
-  
 
 export default BlockFilter;

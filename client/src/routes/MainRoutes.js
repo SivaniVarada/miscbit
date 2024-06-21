@@ -47,7 +47,7 @@ const AdminSMSBlock = Loadable(lazy(() => import('views/utilities/AdminSMSblock'
 const AdminBulkUpload = Loadable(lazy(() => import('views/utilities/AdminBulkUpload')));
 
 // sample page routing
-const SamplePage = Loadable(lazy(() => import('views/samplepage')));
+const SamplePage = Loadable(lazy(() => import('views/librarypage')));
 const FilterSearch = Loadable(lazy(() => import('../menu-items/DataTable')));
 const OutdoorSports = Loadable(lazy(() => import('views/outdoorsports')));
 const IndoorSports = Loadable(lazy(() => import('views/indoorsports')));
