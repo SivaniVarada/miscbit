@@ -16,11 +16,10 @@ import EarningIcon from 'assets/images/icons/earning.svg';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { color } from 'framer-motion';
 
-
 const CardWrapper = styled(MainCard)(({ theme }) => ({
   backgroundImage: `url(${blockbg})`,
   backgroundSize: 'cover',
-  backgroundPosition: 'center center',
+  backgroundPosition: 'center center'
 }));
 
 // ===========================|| DASHBOARD DEFAULT - EARNING CARD ||=========================== //
@@ -42,20 +41,22 @@ const EarningCard = ({ isLoading }) => {
                   sx={{
                     ...theme.typography.commonAvatar,
                     ...theme.typography.largeAvatar,
-                    backgroundColor: "#BA2C1B",
-                    a:{
-                      color:"white",
+                    backgroundColor: '#941b1c',
+                    a: {
+                      color: 'white'
                     },
                     mt: 1
                   }}
                 >
-                  <NavLink to='/alldata'><CorporateFareIcon sx={{color:'white'}}/></NavLink>
+                  <NavLink to="/alldata">
+                    <CorporateFareIcon sx={{ color: 'white' }} />
+                  </NavLink>
                 </Avatar>
               </Grid>
               <Grid item>
                 <Grid container alignItems="center">
                   <Grid item>
-                    <Typography sx={{color:'white',fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>13</Typography>
+                    <Typography sx={{ color: 'white', fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>13</Typography>
                   </Grid>
                   <Grid item>
                     <Avatar
@@ -63,13 +64,14 @@ const EarningCard = ({ isLoading }) => {
                         cursor: 'pointer',
                         ...theme.typography.smallAvatar,
                         backgroundColor: theme.palette.secondary[200],
-                        a:{
-                          color: theme.palette.secondary.dark,
+                        a: {
+                          color: theme.palette.secondary.dark
                         }
-                        
                       }}
                     >
-                      <NavLink to='/alldata' ><ArrowUpwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} /></NavLink>
+                      <NavLink to="/alldata">
+                        <ArrowUpwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} />
+                      </NavLink>
                     </Avatar>
                   </Grid>
                 </Grid>

@@ -34,15 +34,15 @@ const TablerIcons = () => {
   return (
     <MainCard title="L BLOCK INFRASTRUCTURE" sx={{ textTransform: 'uppercase' }}>
       <div style={{ marginBottom: '10px' }}>
-      <Button
+        <Button
           onClick={scrollToIT}
           sx={{
             textTransform: 'none',
             marginRight: '2px',
             width: '49%',
-            border: '1px solid #BA2C1B', // thin border with specified color
+            border: '1px solid #941b1c', // thin border with specified color
             '&:hover': {
-              backgroundColor: '#BA2C1B', // darker green on hover
+              backgroundColor: '#941b1c', // darker green on hover
               color: '#ffffff' // white text on hover
             }
           }}
@@ -55,9 +55,9 @@ const TablerIcons = () => {
             textTransform: 'none',
             width: '49%',
             marginLeft: '1px',
-            border: '1px solid #BA2C1B', // thin border with specified color
+            border: '1px solid #941b1c', // thin border with specified color
             '&:hover': {
-              backgroundColor: '#BA2C1B', // darker green on hover
+              backgroundColor: '#941b1c', // darker green on hover
               color: '#ffffff' // white text on hover
             }
           }}
@@ -65,13 +65,10 @@ const TablerIcons = () => {
           EEE
         </Button>
       </div>
-      <MainCard title="IT DETAILS" sx={{ textAlign: 'center', color: '#BA2C1B' }} ref={itRef}>
+      <MainCard title="IT DETAILS" sx={{ textAlign: 'center', color: '#941b1c' }} ref={itRef}>
         <FilterSearchblock block={'L'} department={'IT'} />
       </MainCard>
-      <MainCard
-        title="EEE DETAILS"
-        ref={eeeRef}
-      >
+      <MainCard title="EEE DETAILS" ref={eeeRef}>
         <FilterSearchblock block={'L'} department={'EEE'} />
       </MainCard>
     </MainCard>
