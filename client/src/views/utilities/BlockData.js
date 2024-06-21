@@ -28,7 +28,7 @@ const FilterSearchblock = ({ block, department }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`https://miscbit-1.onrender.com/api/block/categories/${block}/${department}`);
+        const response = await axios.get(`http://localhost:8000/api/block/categories/${block}/${department}`);
         setCategories(response.data);
       } catch (error) {
         console.error(`Error fetching categories for department ${department} in block ${block}:`, error);
@@ -119,7 +119,7 @@ const FilterSearchblock = ({ block, department }) => {
   };
 
   const fetchData = async () => {
-    const url = `https://miscbit-1.onrender.com/api/block/category/${block}/${department}/${selectedCategory}`;
+    const url = `http://localhost:8000/api/block/category/${block}/${department}/${selectedCategory}`;
     try {
       const response = await axios.get(url);
       setDepartmentData(response.data);
@@ -141,8 +141,9 @@ const FilterSearchblock = ({ block, department }) => {
           
          
           {categories.map((category) => (
+            category!=='Student' && category!=='Faculty' && category!=='Faculty' && category!=='Classrooms' && category!=='Research' && category!=='Timetables' && category!=='Committe' &&category!=='EventsOrganized' &&category!=='EventsParticipated' &&category!=='Clubs' && category!=='Mentoring' &&(
             <MenuItem key={category} value={category}>{category}</MenuItem>
-          ))}
+         ) ))}
         </Select>
       </div>
       <Paper style={{ width: '100%', overflow: 'hidden', marginTop: '20px' }}>

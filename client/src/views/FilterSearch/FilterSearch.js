@@ -52,7 +52,7 @@ const FilterSearch = () => {
 
   const fetchBlocks = async () => {
     try {
-      const response = await fetch('https://miscbit-1.onrender.com/api/block/blocks');
+      const response = await fetch('http://localhost:8000/api/block/blocks');
       if (!response.ok) {
         throw new Error('Failed to fetch blocks');
       }
@@ -65,7 +65,7 @@ const FilterSearch = () => {
 
   const fetchBlockData = async (blockName) => {
     try {
-      const response = await fetch(`https://miscbit-1.onrender.com/api/block/data/${blockName}`);
+      const response = await fetch(`http://localhost:8000/api/block/data/${blockName}`);
       if (!response.ok) {
         throw new Error('Failed to fetch block data');
       }
@@ -84,7 +84,7 @@ const FilterSearch = () => {
   const fetchDepartments = async (blockName) => {
     try {
       if (blockName) {
-        const response = await fetch(`https://miscbit-1.onrender.com/api/block/departments/${blockName}`);
+        const response = await fetch(`http://localhost:8000/api/block/departments/${blockName}`);
         if (!response.ok) {
           throw new Error('Failed to fetch departments');
         }
@@ -92,7 +92,7 @@ const FilterSearch = () => {
         setDepartments(data);
       } else {
         // Fetch departments without specifying a block
-        const response = await fetch(`https://miscbit-1.onrender.com/api/block/departments`);
+        const response = await fetch(`http://localhost:8000/api/block/departments`);
         if (!response.ok) {
           throw new Error('Failed to fetch departments');
         }
@@ -106,7 +106,7 @@ const FilterSearch = () => {
   
   const fetchDepartmentData = async (departmentName) => {
     try {
-      const response = await fetch(`https://miscbit-1.onrender.com/api/block/department/datas/${departmentName}`);
+      const response = await fetch(`http://localhost:8000/api/block/department/datas/${departmentName}`);
       if (!response.ok) {
         throw new Error('Failed to fetch department data');
       }
@@ -119,7 +119,7 @@ const FilterSearch = () => {
 
   const fetchCategoriesForBlock = async (blockName) => {
     try {
-      const response = await fetch(`https://miscbit-1.onrender.com/api/block/blocks/categories/${blockName}`);
+      const response = await fetch(`http://localhost:8000/api/block/blocks/categories/${blockName}`);
       if (!response.ok) {
         throw new Error('Failed to fetch categories for block');
       }
@@ -133,7 +133,7 @@ const FilterSearch = () => {
   const fetchCategories = async (blockName, departmentName) => {
     if (departmentName) {
       try {
-        const response = await fetch(`https://miscbit-1.onrender.com/api/block/fetchcategories/${blockName}/${departmentName}`);
+        const response = await fetch(`http://localhost:8000/api/block/fetchcategories/${blockName}/${departmentName}`);
         if (!response.ok) {
           throw new Error('Failed to fetch categories');
         }
@@ -149,7 +149,7 @@ const FilterSearch = () => {
 
   const fetchCategoryData = async (blockName, departmentName, categoryName) => {
     try {
-      const response = await fetch(`https://miscbit-1.onrender.com/api/block/category/data/${blockName}/${departmentName}/${categoryName}`);
+      const response = await fetch(`http://localhost:8000/api/block/category/data/${blockName}/${departmentName}/${categoryName}`);
       if (!response.ok) {
         throw new Error('Failed to fetch category data');
       }
@@ -204,6 +204,7 @@ const FilterSearch = () => {
     setSelectedTable(event.target.value);
   };
   const convertJsonToExcel = () => {
+    const timestamp = new Date().toISOString().replace(/:/g, '-');
     console.log(blockData)
     const createSheetData = (data, keys) => {
       return data.map(item => {
@@ -252,8 +253,9 @@ const FilterSearch = () => {
           XLSX.utils.book_append_sheet(workBook, workSheet, category);
       }
   });
+  
 
-  XLSX.writeFile(workBook, 'blockData.xlsx');
+  XLSX.writeFile(workBook, `${selectedBlock}-BlockData.xlsx`);
   setExcelGenerated(true);
 
   };
@@ -433,8 +435,8 @@ const FilterSearch = () => {
         });
       }
     });
-  
-    doc.save('jsonData.pdf');
+
+    doc.save(`${selectedBlock}-Blockdata`);
     setPdfGenerated(true);
   };
   
@@ -508,7 +510,7 @@ const FilterSearch = () => {
             <MenuItem value="">All Tables</MenuItem>
             <MenuItem value="Classrooms">Classrooms</MenuItem>
             <MenuItem value="Labs">Labs</MenuItem>
-            <MenuItem value="Faculty">Faculty</MenuItem>
+            <MenuItem value="Faculty">Washrooms</MenuItem>
             <MenuItem value="SeminarHalls">SeminarHalls</MenuItem>
             {/* Add more menu items for other tables */}
           </Select>
@@ -587,30 +589,28 @@ const FilterSearch = () => {
             <div>
               <br />
               <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
-                FACULTY
+                WASHROOMS
               </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Faculty ID</TableCell>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Designation</TableCell>
-                      <TableCell>Date of Joining</TableCell>
-                      <TableCell>Department</TableCell>
-                      <TableCell>Role</TableCell>
+                      <TableCell>S_NO</TableCell>
+                      <TableCell>TYPE</TableCell>
+                      <TableCell>GENDER</TableCell>
+                      <TableCell>FLOOR</TableCell>
+                      <TableCell>COUNT</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {blockData.flatMap((block) =>
-                      block.Faculty.map((faculty) => (
+                      block.Washrooms.map((faculty) => (
                         <TableRow key={faculty._id}>
-                          <TableCell>{faculty.Facultyid}</TableCell>
-                          <TableCell>{faculty.name}</TableCell>
-                          <TableCell>{faculty.Designation}</TableCell>
-                          <TableCell>{faculty.DOJ}</TableCell>
-                          <TableCell>{faculty.Department}</TableCell>
-                          <TableCell>{faculty.Role}</TableCell>
+                          <TableCell>{faculty.S_NO}</TableCell>
+                          <TableCell>{faculty.TYPE}</TableCell>
+                          <TableCell>{faculty.GENDER}</TableCell>
+                          <TableCell>{faculty.FLOOR}</TableCell>
+                          <TableCell>{faculty.COUNT}</TableCell>
                         </TableRow>
                       ))
                     )}
@@ -721,33 +721,31 @@ const FilterSearch = () => {
             </div>
           )}
 
-          {(!selectedTable || selectedTable === 'Faculty') && (
+          {(!selectedTable || selectedTable === 'Washrooms') && (
             <div>
               <br />
               <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
-                FACULTY
+                WASHROOMS
               </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Faculty ID</TableCell>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Designation</TableCell>
-                      <TableCell>Date of Joining</TableCell>
-                      <TableCell>Department</TableCell>
-                      <TableCell>Role</TableCell>
+                      <TableCell>S_NO</TableCell>
+                      <TableCell>TYPE</TableCell>
+                      <TableCell>GENDER</TableCell>
+                      <TableCell>FLOOR</TableCell>
+                      <TableCell>COUNT</TableCell>
+                      
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {departmentData.Faculty.map((faculty) => (
-                      <TableRow key={faculty.Facultyid}>
-                        <TableCell>{faculty.Facultyid}</TableCell>
-                        <TableCell>{faculty.name}</TableCell>
-                        <TableCell>{faculty.Designation}</TableCell>
-                        <TableCell>{faculty.DOJ}</TableCell>
-                        <TableCell>{faculty.Department}</TableCell>
-                        <TableCell>{faculty.Role}</TableCell>
+                    {departmentData.Washrooms.map((faculty) => (
+                      <TableRow key={faculty.S_NO}>
+                        <TableCell>{faculty.TYPE}</TableCell>
+                        <TableCell>{faculty.GENDER}</TableCell>
+                        <TableCell>{faculty.FLOOR}</TableCell>
+                        <TableCell>{faculty.COUNT}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

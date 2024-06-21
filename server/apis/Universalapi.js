@@ -16,7 +16,25 @@ router.post("/",async(req,res)=>{
      }
 })
 
+router.post('/addWashroom/:id', async (req, res) => {
+  try {
+      const washroomData = req.body;
+      const blockDataId = req.params.id;
 
+      const result = await BlockData.updateOne(
+          { _id: mongoose.Types.ObjectId(blockDataId) },
+          { $push: { Washrooms: { $each: washroomData } } }
+      );
+
+      if (result.modifiedCount === 0) {
+          return res.status(404).send({ message: 'Document not found' });
+      }
+
+      res.send({ message: 'Washrooms added successfully' });
+  } catch (error) {
+      res.status(500).send({ message: 'An error occurred', error });
+  }
+});
 
 router.get("/BlockData",async(req,res)=>{
     try{
