@@ -140,37 +140,37 @@ const importData = async (req, res) => {
             // Update existing document
             switch (dataType) {
                 case 'classrooms':
-                    existingDocument.Classrooms.push(...dataToInsert[0].Classrooms);
+                    existingDocument.Classrooms.push(...dataToInsert.Classrooms);
                     break;
                 case 'labs':
-                    existingDocument.Labs.push(...dataToInsert[0].Labs);
+                    existingDocument.Labs.push(...dataToInsert.Labs);
                     break;
                 case 'seminarHalls':
-                    existingDocument.SeminarHalls.push(...dataToInsert[0].SeminarHalls);
+                    existingDocument.SeminarHalls.push(...dataToInsert.SeminarHalls);
                     break;
                 case 'students':
-                    existingDocument.Student.push(...dataToInsert[0].Student);
+                    existingDocument.Student.push(...dataToInsert.Student);
                     break;
                 case 'Faculty':
-                    existingDocument.Faculty.push(...dataToInsert[0].Faculty);
+                    existingDocument.Faculty.push(...dataToInsert.Faculty);
                     break;
                 case 'Research':
-                    existingDocument.Research.push(...dataToInsert[0].Research);
+                    existingDocument.Research.push(...dataToInsert.Research);
                     break;
                 case 'Committe':
-                    existingDocument.Committe.push(...dataToInsert[0].Committe);
+                    existingDocument.Committe.push(...dataToInsert.Committe);
                     break;
                 case 'Mentoring':
-                    existingDocument.Mentoring.push(...dataToInsert[0].Mentoring);
+                    existingDocument.Mentoring.push(...dataToInsert.Mentoring);
                     break;
                 case 'EventsOrganized':
-                    existingDocument.EventsOrganized.push(...dataToInsert[0].EventsOrganized);
+                    existingDocument.EventsOrganized.push(...dataToInsert.EventsOrganized);
                     break;
                 case 'EventsParticipated':
-                    existingDocument.EventsParticipated.push(...dataToInsert[0].EventsParticipated);
+                    existingDocument.EventsParticipated.push(...dataToInsert.EventsParticipated);
                     break;
                 case 'Clubs':
-                    existingDocument.Clubs.push(...dataToInsert[0].Clubs);
+                    existingDocument.Clubs.push(...dataToInsert.Clubs);
                     break;
                 default:
                     throw new Error("Invalid data type");
@@ -180,7 +180,22 @@ const importData = async (req, res) => {
             res.status(200).send({ success: true, msg: `${dataType} data updated successfully` });
         } else {
             // Insert new document
-            await Data.insertMany(dataToInsert[0]);
+            const allData = {
+                Block: blockname,
+                Classrooms: [],
+                Labs: [],
+                SeminarHalls: []
+                // Add other arrays for different data types as needed
+            };
+
+            dataToInsert.forEach(entry => {
+                if (entry.Classrooms) allData.Classrooms.push(...entry.Classrooms);
+                if (entry.Labs) allData.Labs.push(...entry.Labs);
+                if (entry.SeminarHalls) allData.SeminarHalls.push(...entry.SeminarHalls);
+                // Add logic for other data types here
+            });
+
+            await Data.create(allData);
             res.status(200).send({ success: true, msg: `${dataType} data imported successfully` });
         }
 

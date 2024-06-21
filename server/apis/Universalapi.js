@@ -15,6 +15,20 @@ router.post("/",async(req,res)=>{
         res.status(500).json("Internal server error")
      }
 })
+router.delete('/blocks/deleteAll/:block', async (req, res) => {
+  const block = req.params.block;
+
+  try {
+    // Delete all documents in BlockData collection where Block matches the specified block
+    await BlockData.deleteMany({ Block: block });
+
+    res.status(200).json({ message: `All data in block ${block} deleted successfully.` });
+  } catch (error) {
+    console.error('Error deleting data:', error);
+    res.status(500).json({ error: 'Error deleting data.' });
+  }
+});
+
 
 
 
@@ -430,7 +444,7 @@ router.put('/labs/:id', async (req, res) => {
 
 
   // Delete data endpoint
-  router.delete('/api/block/category/L/IT/:category/:id', async (req, res) => {
+  router.delete('/category/data/:blockName/:departmentName/:categoryName/:id', async (req, res) => {
     const { category, id } = req.params;
     try {
       await Lab.findByIdAndDelete(id);
@@ -627,7 +641,96 @@ router.get('/fetchcategories/:blockName/:departmentName', (req, res) => {
   });
 });
 
+router.put('/category/data/:blockName/:departmentName/:categoryName/:id', async (req, res) => {
+  const { blockName, departmentName, categoryName, id } = req.params;
+  const updateData = req.body; // Assuming the updated data is sent in the request body
 
+  try {
+    // Find the relevant document to update
+    let blockData = await BlockData.findOne({ Block: blockName });
+
+    if (!blockData) {
+      return res.status(404).json({ error: 'Block not found' });
+    }
+    console.log(blockData)
+
+    // Depending on the category name, update the specific category data
+    switch (categoryName) {
+      case 'Labs':
+        // Find and update the lab data
+        blockData.Labs.forEach((lab) => {
+          if (lab._id.toString() === id) {
+            // Update the fields you want to modify
+            lab.field1 = updateData.field1;
+            lab.field2 = updateData.field2;
+            // Update more fields as needed
+          }
+        });
+        break;
+      case 'Classrooms':
+        // Find and update the classroom data
+        blockData.classrooms.forEach((classroom) => {
+          if (classroom._id.toString() === id) {
+            // Update the fields you want to modify
+            classroom.field1 = updateData.field1;
+            classroom.field2 = updateData.field2;
+            // Update more fields as needed
+          }
+        });
+        break;
+      // Add cases for other categories as needed
+      default:
+        return res.status(404).json({ error: 'Category not found' });
+    }
+
+    // Save the updated block data
+    await blockData.save();
+
+    // Return updated data or success message
+    res.json({ message: 'Data updated successfully' });
+  } catch (error) {
+    console.error('Error updating data:', error);
+    res.status(500).json({ error: 'Failed to update data' });
+  }
+});
+
+router.delete('/category/data/:blockName/:departmentName/:categoryName/:id', async (req, res) => {
+  const { blockName, departmentName, categoryName, id } = req.params;
+
+  try {
+    // Find the relevant document to delete from
+    let blockData = await BlockData.findOne({ Block: blockName });
+    console.log(blockData)
+
+    if (!blockData) {
+      return res.status(404).json({ error: 'Block not found' });
+    }
+
+    // Depending on the category name, delete the specific category data
+    switch (categoryName) {
+      case 'Labs':
+        // Find and remove the lab data
+        blockData.Labs = blockData.Labs.filter(lab => lab._id.toString() !== id);
+        break;
+      case 'Classrooms':
+        // Find and remove the classroom data
+        blockData.classrooms = blockData.classrooms.filter(classroom => classroom._id.toString() !== id);
+        break;
+      // Add cases for other categories as needed
+      default:
+        return res.status(404).json({ error: 'Category not found' });
+    }
+
+    // Save the updated block data after deletion
+    await blockData.save();
+
+    // Return success message
+    res.json({ message: 'Data deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting data:', error);
+    res.status(500).json({ error: 'Failed to delete data' });
+  }
+});
 
 
 

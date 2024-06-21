@@ -133,34 +133,6 @@ const FilterSearchblock = ({ block, department }) => {
                         )}
                       </TableCell>
                     ))}
-                    {/* <TableCell>
-                      {isModifying[dataItem._id] ? (
-                        <Button
-                          onClick={() => handleSubmitData(category, dataItem._id)}
-                          variant="contained"
-                          color="primary"
-                          style={{ marginRight: '10px' }}
-                        >
-                          Submit
-                        </Button>
-                      ) : (
-                        <Button
-                          onClick={() => handleModifyData(dataItem._id)}
-                          variant="contained"
-                          color="primary"
-                          style={{ marginRight: '10px' }}
-                        >
-                          Modify
-                        </Button>
-                      )}
-                      <Button
-                        onClick={() => handleDeleteData(category, dataItem._id)}
-                        variant="contained"
-                        color="secondary"
-                      >
-                        Delete
-                      </Button>
-                    </TableCell> */}
                   </TableRow>
                 ))}
               </TableBody>
@@ -184,3 +156,12 @@ const FilterSearchblock = ({ block, department }) => {
 };
 
 export default FilterSearchblock;
+
+
+
+
+
+
+
+
+
