@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
@@ -48,7 +49,7 @@ const EarningCard = ({ isLoading }) => {
                     mt: 1
                   }}
                 >
-                  <a href="/blocks/Ablock"><CorporateFareIcon/></a>
+                  <NavLink to='/alldata'><CorporateFareIcon sx={{color:'white'}}/></NavLink>
                 </Avatar>
               </Grid>
               <Grid item>
@@ -68,7 +69,7 @@ const EarningCard = ({ isLoading }) => {
                         
                       }}
                     >
-                      <a href="/blocks/Ablock"><ArrowUpwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} /></a>
+                      <NavLink to='/alldata' ><ArrowUpwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} /></NavLink>
                     </Avatar>
                   </Grid>
                 </Grid>

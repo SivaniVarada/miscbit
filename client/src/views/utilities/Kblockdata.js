@@ -1,67 +1,28 @@
-// import { styled } from '@mui/material/styles';
-// import { Card } from '@mui/material';
-// import FilterSearch from 'menu-items/DataTable';
+import { styled } from '@mui/material/styles';
+import { Card } from '@mui/material';
+import FilterSearch from 'menu-items/DataTable';
 
-// // project imports
-// import MainCard from 'ui-component/cards/MainCard';
-// import FilterSearchblock from './BlockData';
-// import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
-
-// // assets
-// import LinkIcon from '@mui/icons-material/Link';
-
-// // styles
-// const IFrameWrapper = styled('iframe')(({ theme }) => ({
-//   height: 'calc(100vh - 210px)',
-//   border: '1px solid',
-//   borderColor: theme.palette.primary.light
-// }));
-
-// // =============================|| TABLER ICONS ||============================= //
-
-// const TablerIcons = () => (
-//   <MainCard title="K Block Details">
-//    <FilterSearchblock block={'K'} department={'Chemical'} />
-//   </MainCard>
-// );
-
-// export default TablerIcons;
-import React, { useState } from 'react';
-import { Button, CircularProgress } from '@mui/material';
+// project imports
 import MainCard from 'ui-component/cards/MainCard';
 import FilterSearchblock from './BlockData';
-import axios from 'axios';
+import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 
-const KTablerIcons = () => {
-  const [loading, setLoading] = useState(false);
+// assets
+import LinkIcon from '@mui/icons-material/Link';
 
-  const handleDeleteAll = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.delete(`http://localhost:8000/api/block/blocks/deleteAll/K`);
-      console.log(response.data); // Log success message or handle as needed
-    } catch (error) {
-      console.error('Error deleting all data:', error);
-      // Handle error message or show notification
-    } finally {
-      setLoading(false);
-    }
-  };
+// styles
+const IFrameWrapper = styled('iframe')(({ theme }) => ({
+  height: 'calc(100vh - 210px)',
+  border: '1px solid',
+  borderColor: theme.palette.primary.light
+}));
 
-  return (
-    <MainCard title="K Block Details">
-      <Button
-        variant="contained"
-        color="error"
-        onClick={handleDeleteAll}
-        disabled={loading}
-        style={{ marginBottom: '10px' }}
-      >
-        {loading ? <CircularProgress size={24} /> : 'Delete All Data'}
-      </Button>
-      <FilterSearchblock block={'K'} department={'Chemical'} />
-    </MainCard>
-  );
-};
+// =============================|| TABLER ICONS ||============================= //
 
-export default KTablerIcons;
+const TablerIcons = () => (
+  <MainCard title="K Block Details (CHEMICAL)">
+   <FilterSearchblock block={'K'} department={'Chemical Engineering'} />
+  </MainCard>
+);
+
+export default TablerIcons;

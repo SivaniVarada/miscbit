@@ -20,8 +20,8 @@ const IFrameWrapper = styled('iframe')(({ theme }) => ({
 // =============================|| TABLER ICONS ||============================= //
 
 const TablerIcons = () => (
-  <MainCard title="Administrator Block Details (CIVIL)">
-   <FilterSearchblock block={'B'} department={'Civil Engineering'} />
+  <MainCard title="Administrator Block Details (No data available as of now)">
+   <FilterSearchblock block={'B'} department={'Admin'} />
   </MainCard>
 );
 

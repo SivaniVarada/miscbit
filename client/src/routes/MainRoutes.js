@@ -32,6 +32,18 @@ const Allfilter = Loadable(lazy(() => import('views/FilterSearch/FilterSearch'))
 
 //Admin Data 
 const AdminABlock = Loadable(lazy(() => import('views/utilities/AdminAblock')));
+const AdminBBlock = Loadable(lazy(() => import('views/utilities/AdminBblock')));
+const AdminCBlock = Loadable(lazy(() => import('views/utilities/AdminCblock')));
+const AdminDBlock = Loadable(lazy(() => import('views/utilities/AdminDblock')));
+const AdminNBlock = Loadable(lazy(() => import('views/utilities/AdminNblock')));
+const AdminKBlock = Loadable(lazy(() => import('views/utilities/AdminKblock')));
+const AdminMBlock = Loadable(lazy(() => import('views/utilities/AdminMblock')));
+const AdminLBlock = Loadable(lazy(() => import('views/utilities/AdminLblock')));
+const AdminGBlock = Loadable(lazy(() => import('views/utilities/AdminGblock')));
+const AdminHBlock = Loadable(lazy(() => import('views/utilities/AdminHblock')));
+const AdminRDBlock = Loadable(lazy(() => import('views/utilities/AdminR&Dblock')));
+const AdminSMSBlock = Loadable(lazy(() => import('views/utilities/AdminSMSblock')));
+
 const AdminBulkUpload = Loadable(lazy(() => import('views/utilities/AdminBulkUpload')));
 
 // sample page routing
@@ -212,90 +224,101 @@ const MainRoutes = {
       ]
     },
     {
-      path: 'blocks',
-      children: [
-        {
-          path: 'Nblock',
-          element: <NblockData/>
-        }
-      ]
-    },
-    {
-      path: 'blocks',
-      children: [
-        {
-          path: 'Kblock',
-          element: <KblockData/>
-        }
-      ]
-    },
-    {
-      path: 'blocks',
-      children: [
-        {
-          path: 'Mblock',
-          element: <MblockData/>
-        }
-      ]
-    },
-    {
-      path: 'blocks',
-      children: [
-       
-        {
-          path: 'Lblock',
-          element: <LblockData/>,
-          children:[
-            {
-              path: 'IT',
-              element: <AlldataLblock/>
-            },
-          ]
-        }
-      ]
-    },
-    {
-      path: 'blocks',
+      path: 'admin',
       children: [
         {
           path: 'Bblock',
-          element: <BblockData/>
+          element: <AdminBBlock/>
         }
       ]
     },
     {
-      path: 'blocks',
+      path: 'admin',
+      children: [
+        {
+          path: 'Cblock',
+          element: <AdminCBlock/>
+        }
+      ]
+    },
+    {
+      path: 'admin',
+      children: [
+        {
+          path: 'Dblock',
+          element: <AdminDBlock/>
+        }
+      ]
+    },
+    {
+      path: 'admin',
       children: [
         {
           path: 'Gblock',
-          element: <GblockData/>
+          element: <AdminGBlock/>
         }
       ]
     },
     {
-      path: 'blocks',
+      path: 'admin',
       children: [
         {
           path: 'Hblock',
-          element: <HblockData/>
+          element: <AdminHBlock/>
         }
       ]
     },
     {
-      path: 'blocks',
+      path: 'admin',
       children: [
         {
-          path: 'SMSblock',
-          element: <SMSblockData/>
+          path: 'Kblock',
+          element: <AdminKBlock/>
         }
       ]
     },
     {
-      path: 'blocks',
+      path: 'admin',
+      children: [
+        {
+          path: 'Mblock',
+          element: <AdminMBlock/>
+        }
+      ]
+    },
+    {
+      path: 'admin',
+      children: [
+        {
+          path: 'Nblock',
+          element: <AdminNBlock/>
+        }
+      ]
+    },
+    {
+      path: 'admin',
+      children: [
+        {
+          path: 'Lblock',
+          element: <AdminLBlock/>
+        }
+      ]
+    },
+    {
+      path: 'admin',
       children: [
         {
           path: 'R&Dblock',
-          element: <RDblockData/>
+          element: <AdminRDBlock/>
+        }
+      ]
+    },
+    {
+      path: 'admin',
+      children: [
+        {
+          path: 'SMSblock',
+          element: <AdminSMSBlock/>
         }
       ]
     },

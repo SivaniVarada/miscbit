@@ -19,7 +19,7 @@ const UniversalModel = new mongoose.Schema({
             Floor:Number
         }
     ],
-    Classrooms:[
+    classrooms:[
         {
             number:String,
             capacity:Number,
