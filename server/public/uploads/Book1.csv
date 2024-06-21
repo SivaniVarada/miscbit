@@ -1,4 +1,4 @@
-Lab_num,            name,Department,Equipment_status,Floor,Block
+Lab_num,name,Department,Equipment_status,Floor,Block
 1,abc,CSE,OK,1,A
 2,efg,IT,OK,3,A
 3,hij,ECE,OK,2,A

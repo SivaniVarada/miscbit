@@ -141,8 +141,9 @@ const FilterSearchblock = ({ block, department }) => {
           
          
           {categories.map((category) => (
+            category!=='Student' && category!=='Faculty' && category!=='Faculty' && category!=='Classrooms' && category!=='Research' && category!=='Timetables' && category!=='Committe' &&category!=='EventsOrganized' &&category!=='EventsParticipated' &&category!=='Clubs' && category!=='Mentoring' &&(
             <MenuItem key={category} value={category}>{category}</MenuItem>
-          ))}
+         ) ))}
         </Select>
       </div>
       <Paper style={{ width: '100%', overflow: 'hidden', marginTop: '20px' }}>
