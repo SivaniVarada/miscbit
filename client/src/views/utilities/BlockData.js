@@ -28,7 +28,7 @@ const FilterSearchblock = ({ block, department }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/block/categories/${block}/${department}`);
+        const response = await axios.get(`https://miscbit-8.onrender.com/api/block/categories/${block}/${department}`);
         setCategories(response.data);
       } catch (error) {
         console.error(`Error fetching categories for department ${department} in block ${block}:`, error);
@@ -119,7 +119,7 @@ const FilterSearchblock = ({ block, department }) => {
   };
 
   const fetchData = async () => {
-    const url = `http://localhost:8000/api/block/category/${block}/${department}/${selectedCategory}`;
+    const url = `https://miscbit-8.onrender.com/api/block/category/${block}/${department}/${selectedCategory}`;
     try {
       const response = await axios.get(url);
       setDepartmentData(response.data);
