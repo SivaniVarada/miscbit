@@ -89,9 +89,9 @@ const FilterSearchblock = ({ block, department }) => {
     const workSheet = XLSX.utils.json_to_sheet(data);
     const workBook = XLSX.utils.book_new();
 
-    XLSX.utils.book_append_sheet(workBook, workSheet, 'posts');
+    XLSX.utils.book_append_sheet(workBook, workSheet, `${selectedCategory}`);
 
-    XLSX.writeFile(workBook, 'postsData.xlsx');
+    XLSX.writeFile(workBook, `${block}Block-${selectedCategory}-Data.xlsx`);
 
     setExcelGenerated(true);
   };
@@ -104,7 +104,7 @@ const FilterSearchblock = ({ block, department }) => {
 
     const doc = new jsPDF();
     doc.autoTable({ head: [keys], body: data });
-    doc.save('jsonData.pdf');
+    doc.save(`${block}Block-${selectedCategory}-Data.pdf`);
 
     setPdfGenerated(true);
   };

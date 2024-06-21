@@ -225,15 +225,7 @@ const FilterSearch = () => {
       "Labs",
       "classrooms",
       "SeminarHalls",
-      "Timetables",
-      "Student",
-      "Faculty",
-      "Research",
-      "Committe",
-      "Mentoring",
-      "EventsOrganized",
-      "EventsParticipated",
-      "Clubs"
+      "Washrooms"
   ];
 
   categories.forEach(category => {
@@ -322,9 +314,9 @@ const FilterSearch = () => {
   
       if (block.Washrooms && block.Washrooms.length > 0) {
         doc.addPage();
-        doc.text('Clubs', 10, 10);
-        const clubsKeys = Object.keys(block.Clubs[0]).filter(key => key !== '_id');
-        const clubsData = block.Clubs.map(club => clubsKeys.map(key => club[key]));
+        doc.text('Washrooms', 10, 10);
+        const clubsKeys = Object.keys(block.Washrooms[0]).filter(key => key !== '_id');
+        const clubsData = block.Washrooms.map(club => clubsKeys.map(key => club[key]));
         doc.autoTable({
           head: [clubsKeys],
           body: clubsData,
