@@ -14,7 +14,7 @@ const UniversalModel = new mongoose.Schema({
         {
             Lab_num : String ,
             name:String,
-            Department:String,
+            Department: { type: String, required: true },
             Equipment_status:String,
             Floor:Number
         }
@@ -23,7 +23,7 @@ const UniversalModel = new mongoose.Schema({
         {
             number:String,
             capacity:Number,
-            DepartmentId:String,
+            Department: { type: String, required: true },
             Floor:Number,
             projector_status:String
         }
@@ -32,7 +32,8 @@ const UniversalModel = new mongoose.Schema({
         {
             Hall_number:Number,
             name :String,
-            capacity:Number
+            capacity:Number,
+            Department: { type: String, required: true },
         }
     ],
     Timetables:[

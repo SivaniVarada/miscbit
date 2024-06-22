@@ -3,4 +3,4 @@ Lab_num,            name,Department,Equipment_status,Floor,Block
 2,efg,IT,OK,3,A
 3,hij,ECE,OK,2,A
 4,klm,EEE,NO,2,A
-5,no[,MECH,NO,1,A
+5,no,MECH,NO,1,A

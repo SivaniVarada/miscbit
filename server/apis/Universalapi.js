@@ -304,17 +304,25 @@ router.get('/data/:blockName/:departmentName', async (req, res) => {
 
 router.get('/categories/:blockName/:departmentName', async (req, res) => {
     const { blockName, departmentName } = req.params;
+    console.log(blockName)
+    console.log(departmentName)
     try {
       const blockData = await BlockData.findOne({ 'Block': blockName });
       if (!blockData) {
         return res.status(404).json({ error: 'Block not found' });
       }
+      console.log(blockData)
       const department = blockData.Department.find(dep => dep.name === departmentName);
+      console.log(department)
       if (!department) {
-        return res.status(404).json({ error: 'Department not found' });
+        const categories = Object.keys(blockData.toObject()).filter(key => key !== 'Block' && key !== '_id' && key !== '__v');
+
+        res.json(categories);
       }
+      else{
       const categories = Object.keys(blockData.toObject()).filter(key => key !== 'Block' && key !== 'Department' && key !== '_id' && key !== '__v');
-      res.json(categories);
+      console.log(categories)
+      res.json(categories);}
     } catch (error) {
       console.error(`Error fetching categories for department ${departmentName} in block ${blockName}:`, error);
       res.status(500).json({ error: 'Internal server error' });
@@ -346,6 +354,8 @@ router.get('/categories/:blockName/:departmentName', async (req, res) => {
   
   router.get("/categories/:block/:department", async (req, res) => {
     const { block, department } = req.params;
+    console.log(block)
+    console.log(department)
     try {
       const blockData = await BlockData.findOne({ 'Block': block });
       if (!blockData) {
@@ -366,6 +376,9 @@ router.get('/categories/:blockName/:departmentName', async (req, res) => {
   // Fetch Category Data API
   router.get("/category/:block/:department/:category", async (req, res) => {
     const { block, department, category } = req.params;
+    console.log(block)
+    console.log(department)
+    console.log(category)
     try {
       const blockData = await BlockData.findOne({ 'Block': block });
       if (!blockData) {
@@ -477,6 +490,7 @@ router.get('/blocks', async (req, res) => {
 
 // Get categories by block name and department name
 router.get('/categories/:blockName/:departmentName', async (req, res) => {
+  console.log(`hii`)
   try {
     // Aggregation pipeline to match block and department names
     const categories = await BlockData.aggregate([
@@ -526,21 +540,158 @@ router.get('/categories/:blockName/:departmentName', async (req, res) => {
         }
       }
     ]);
+    console.log(categories)
 
     // Check if any categories found
     if (!categories || categories.length === 0) {
-      return res.status(404).json({ message: 'Department not found' });
+      // No matching documents, create a new one
+      const newDocument = {
+        Block: blockName,
+        Department: [
+          {
+            Id: '', // You might want to set a proper Id here
+            name: departmentName,
+            sections: 0
+          }
+        ],
+        Labs: [],
+        classrooms: [],
+        SeminarHalls: [],
+        Timetables: [],
+        Student: [],
+        Faculty: [],
+        Research: [],
+        Committe: [],
+        Mentoring: [],
+        EventsOrganized: [],
+        EventsParticipated: [],
+        Clubs: []
+      };
+
+      // Insert the new document into the database
+      const createdDoc = await BlockData.create(newDocument);
+
+      // Since a new document is created, project the categories similarly to the aggregation
+      const result = {
+        Labs: createdDoc.Labs,
+        classrooms: createdDoc.classrooms,
+        SeminarHalls: createdDoc.SeminarHalls,
+        Timetables: createdDoc.Timetables,
+        Student: createdDoc.Student,
+        Faculty: createdDoc.Faculty,
+        Research: createdDoc.Research,
+        Committe: createdDoc.Committe,
+        Mentoring: createdDoc.Mentoring,
+        EventsOrganized: createdDoc.EventsOrganized,
+        EventsParticipated: createdDoc.EventsParticipated,
+        Clubs: createdDoc.Clubs
+      };
+      console.log(result)
+
+      // Return the newly created document's categories
+      return res.json(result);
     }
 
-    // Extract the categories for the matching department
+    // Extract and respond with the categories for the matching department
     const result = categories[0].categories[0];
-
-    // Respond with the result
+    console.log(result)
     res.json(result);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+router.put('/update/:block/:department', async (req, res) => {
+  const { block, department } = req.params;
+  const { oldData, newData, selectedCategory } = req.body;
+
+  try {
+    // Ensure required data is provided
+    if (!oldData || !newData || !selectedCategory) {
+      return res.status(400).json({ error: 'Old data, new data, and selected category are required.' });
+    }
+
+    // Build the dynamic query to find the document
+    const query = {
+      Block: block,
+      [`${selectedCategory}._id`]: oldData._id,
+      [`${selectedCategory}.Department`]: oldData.Department
+    };
+
+    // Build the dynamic update operation
+    const updateFields = {};
+    for (const [key, value] of Object.entries(newData)) {
+      updateFields[`${selectedCategory}.$.${key}`] = value;
+    }
+
+    const update = { $set: updateFields };
+
+    // Perform the update operation
+    const result = await BlockData.findOneAndUpdate(query, update, { new: true });
+
+    if (!result) {
+      return res.status(404).json({ error: 'Document not found or no matching data found.' });
+    }
+
+    // Respond with the updated document
+    res.status(200).json({ message: 'Data updated successfully.', updatedDocument: result });
+  } catch (error) {
+    res.status(500).json({ error: `An error occurred while updating data: ${error.message}` });
+  }
+});
+
+// router.delete('/delete/:block/:department/:itemId', async (req, res) => {
+//   const { block, department, itemId } = req.params;
+//   console.log('Delete request received:', { block, department, itemId });
+
+//   try {
+//     const query = { Block: block };
+//     query[`${department}._id`] = itemId;
+//     console.log('Query:', query);
+
+//     const result = await BlockData.findOneAndUpdate(
+//       { Block: block },
+//       { $pull: { [department]: { _id: itemId } } },
+//       { new: true }
+//     );
+//     console.log('MongoDB result:', result);
+
+//     if (!result) {
+//       return res.status(404).json({ error: 'Document not found or no matching data found.' });
+//     }
+
+//     res.status(200).json({ message: 'Data deleted successfully.', updatedDocument: result });
+//   } catch (error) {
+//     console.error('Error during deletion:', error);
+//     res.status(500).json({ error: `An error occurred while deleting data: ${error.message}` });
+//   }
+// });
+
+router.delete('/delete/:block/:department/:itemId', async (req, res) => {
+  const { block, department, itemId } = req.params;
+
+  try {
+    // Delete the item from the Labs array
+    const result = await BlockData.findOneAndUpdate(
+      { Block: block },
+      { $pull: { Labs: { _id: itemId } } },
+      { new: true }
+    );
+
+    if (!result) {
+      return res.status(404).json({ error: 'Document not found or no matching data found.' });
+    }
+
+    // Respond with success message and updated document
+    res.status(200).json({ message: 'Data deleted successfully.', updatedDocument: result });
+  } catch (error) {
+    res.status(500).json({ error: `An error occurred while deleting data: ${error.message}` });
+  }
+});
+
+
+
+
+
 
 
 
@@ -734,29 +885,46 @@ router.delete('/category/data/:blockName/:departmentName/:categoryName/:id', asy
 
 
 
-router.get('/department/data/:departmentName', async (req, res) => {
-  const { departmentName } = req.params;
+router.get('/department/data/:block/:departmentName', async (req, res) => {
+  const { block,departmentName } = req.params;
+  console.log(block)
+  console.log(departmentName)
   try {
-      const blockData = await BlockData.find({
-          'Department.name': departmentName
+      const flockData = await BlockData.find({
+          'Block': block
       });
+      console.log(flockData)
 
-      if (!blockData || blockData.length === 0) {
-          return res.status(404).json({ error: 'Department not found' });
+      if (!flockData ) {
+          return res.status(404).json({ error: 'block not found' });
       }
+      // let blockData = null;
+      //   for (const block of flockData) {
+      //       // Ensure block.Department is an array and find the department within it
+      //       if (Array.isArray(block.Labs)) {
+      //           blockData = block.Labs.find(dep => dep.Department === departmentName);
+      //           if (blockData) break; // Stop searching if found
+      //       }
+      //   }
+      //   console.log(blockData)
+
+      //   if (!blockData) {
+      //       return res.status(404).json({ error: 'Department not found' });
+      //   }
 
       // Filter and structure the relevant data
       const departmentData = {
-          Department: blockData[0].Department.filter(dept => dept.name === departmentName),
-          Labs: blockData[0].Labs.filter(lab => lab.Department === departmentName),
-          Classrooms: blockData[0].classrooms.filter(classroom => {
-              return blockData[0].Department.some(dept => dept.name === departmentName && dept.Id === classroom.DepartmentId);
+          Department: flockData[0].Department.filter(dept => dept.name === departmentName),
+          Labs: flockData[0].Labs.filter(lab => lab.Department === departmentName),
+          Classrooms: flockData[0].classrooms.filter(classroom => {
+              return flockData[0].Department.some(dept => dept.name === departmentName && dept.Id === classroom.DepartmentId);
           }),
-          Faculty: blockData[0].Faculty.filter(faculty => faculty.Department === departmentName),
-          Students: blockData[0].Student.filter(student => student.Department === departmentName),
-          EventsOrganized: blockData[0].EventsOrganized.filter(event => event.Department === departmentName),
+          Faculty: flockData[0].Faculty.filter(faculty => faculty.Department === departmentName),
+          Students: flockData[0].Student.filter(student => student.Department === departmentName),
+          EventsOrganized: flockData[0].EventsOrganized.filter(event => event.Department === departmentName),
           // Add other relevant sections similarly...
       };
+      console.log(departmentData)
 
       res.json(departmentData);
   } catch (error) {
@@ -787,89 +955,135 @@ router.get('/department/datas/:departmentName', async (req, res) => {
 
 
 
-// Define the route to fetch category data
-router.get('/category/data/:blockName/:departmentName/:categoryName', async (req, res) => {
-  const { blockName, departmentName, categoryName } = req.params;
+// router.get('/category/data/:blockName/:departmentName/:category', async (req, res) => {
+//     const { blockName, departmentName, category } = req.params;
+
+//     try {
+//         // Fetch block data for the specified block name
+//         const flockData = await BlockData.find({ 'Block': blockName });
+
+//         if (!flockData || flockData.length === 0) {
+//             return res.status(404).json({ error: 'Block not found' });
+//         }
+
+//         // Create departmentData with all data filtered by department
+//         // const departmentData = {
+//         //     Department: flockData[0].Department.filter(dept => dept.name === departmentName),
+//         //     Labs: flockData[0].Labs.filter(lab => lab.Department === departmentName),
+//         //     Classrooms: flockData[0].Classrooms.filter(classroom => {
+//         //         return flockData[0].Department.some(dept => dept.name === departmentName && dept.Id === classroom.DepartmentId);
+//         //     }),
+//         //     Faculty: flockData[0].Faculty.filter(faculty => faculty.Department === departmentName),
+//         //     Students: flockData[0].Student.filter(student => student.Department === departmentName),
+//         //     EventsOrganized: flockData[0].EventsOrganized.filter(event => event.Department === departmentName),
+//         //     SeminarHalls: flockData[0].SeminarHalls.filter(hall => hall.Department === departmentName),
+//         //     // Add other relevant sections similarly...
+//         // };
+//         const departmentData = {
+//           Department: flockData[0].Department.filter(dept => dept.name === departmentName),
+//           Labs: flockData[0].Labs.filter(lab => lab.Department === departmentName),
+//           Classrooms: flockData[0].classrooms.filter(classroom => {
+//               return flockData[0].Department.some(dept => dept.name === departmentName && dept.Id === classroom.DepartmentId);
+//           }),
+//           Faculty: flockData[0].Faculty.filter(faculty => faculty.Department === departmentName),
+//           Students: flockData[0].Student.filter(student => student.Department === departmentName),
+//           EventsOrganized: flockData[0].EventsOrganized.filter(event => event.Department === departmentName),
+//           SeminarHalls: flockData[0].SeminarHalls.filter(hall => hall.Department === departmentName),
+//           // Add other relevant sections similarly...
+//       };
+
+//         // Filter departmentData based on the requested category
+//         let filteredData = {};
+//         switch (category) {
+//             case 'Labs':
+//                 filteredData = { Labs: departmentData.Labs };
+//                 break;
+//             case 'Classrooms':
+//                 filteredData = { Classrooms: departmentData.Classrooms };
+//                 break;
+//             case 'Faculty':
+//                 filteredData = { Faculty: departmentData.Faculty };
+//                 break;
+//             case 'Students':
+//                 filteredData = { Students: departmentData.Students };
+//                 break;
+//             case 'EventsOrganized':
+//                 filteredData = { EventsOrganized: departmentData.EventsOrganized };
+//                 break;
+//             // Add cases for other categories as needed
+//             default:
+//                 // If no category or invalid category, return all departmentData
+//                 filteredData = departmentData;
+//                 break;
+//         }
+
+//         res.json(filteredData);
+//     } catch (error) {
+//         console.error(`Error fetching department data:`, error);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// });
+
+router.get('/category/data/:blockName/:departmentName/:category', async (req, res) => {
+  const { blockName, departmentName, category } = req.params;
+
   try {
-    // Query the database to find all block data entries with the given block name
-    const blockDataEntries = await BlockData.find({ Block: blockName });
+      // Fetch block data for the specified block name
+      const block = await BlockData.findOne({ Block: blockName });
 
-    // Check if there are any block data entries with the given block name
-    if (!blockDataEntries || blockDataEntries.length === 0) {
-      return res.status(404).json({ error: 'Block not found' });
-    }
-
-    let department;
-    let found = false;
-
-    // Iterate through each block data entry to find the department
-    for (let i = 0; i < blockDataEntries.length; i++) {
-      const blockData = blockDataEntries[i];
-
-      // Check if the department exists in the current block data entry
-      department = blockData.Department.find(dep => dep.name === departmentName);
-      if (department) {
-        found = true;
-        break;
+      if (!block) {
+          return res.status(404).json({ error: 'Block not found' });
       }
-    }
 
-    // If department not found in any block data entry
-    if (!found) {
-      return res.status(404).json({ error: 'Department not found in any block entry' });
-    }
+      // Filter data based on departmentName
+      const departmentData = {
+          Department: block.Department.filter(dept => dept.name === departmentName),
+          Labs: block.Labs.filter(lab => lab.Department === departmentName),
+          classrooms: block.classrooms.filter(classroom => classroom.Department === departmentName),
+          Faculty: block.Faculty.filter(faculty => faculty.Department === departmentName),
+          Student: block.Student.filter(student => student.Department === departmentName),
+          EventsOrganized: block.EventsOrganized.filter(event => event.Department === departmentName),
+          SeminarHalls: block.SeminarHalls.filter(hall => hall.Department === departmentName),
+          // Add other relevant sections similarly...
+      };
 
-    // Filter the block data to include only the specified category
-    let categoryData;
-    switch (categoryName) {
-      case 'Labs':
-        categoryData = blockDataEntries.map(entry => entry.Labs);
-        break;
-      case 'Classrooms':
-        categoryData = blockDataEntries.map(entry => entry.classrooms);
-        break;
-      case 'SeminarHalls':
-        categoryData = blockDataEntries.map(entry => entry.SeminarHalls);
-        break;
-      case 'Timetables':
-        categoryData = blockDataEntries.map(entry => entry.Timetables);
-        break;
-      case 'Student':
-        categoryData = blockDataEntries.map(entry => entry.Student);
-        break;
-      case 'Faculty':
-        categoryData = blockDataEntries.map(entry => entry.Faculty);
-        break;
-      case 'Research':
-        categoryData = blockDataEntries.map(entry => entry.Research);
-        break;
-      case 'Committe':
-        categoryData = blockDataEntries.map(entry => entry.Committe);
-        break;
-      case 'Mentoring':
-        categoryData = blockDataEntries.map(entry => entry.Mentoring);
-        break;
-      case 'EventsOrganized':
-        categoryData = blockDataEntries.map(entry => entry.EventsOrganized);
-        break;
-      case 'EventsParticipated':
-        categoryData = blockDataEntries.map(entry => entry.EventsParticipated);
-        break;
-      case 'Clubs':
-        categoryData = blockDataEntries.map(entry => entry.Clubs);
-        break;
-      default:
-        categoryData = [];
-        
-    }
+      // Filter departmentData based on the requested category
+      let filteredData = {};
+      switch (category) {
+          case 'Labs':
+              filteredData = { Labs: departmentData.Labs };
+              break;
+          case 'Classrooms':
+              filteredData = { classrooms: departmentData.classrooms };
+              break;
+          case 'Faculty':
+              filteredData = { Faculty: departmentData.Faculty };
+              break;
+          case 'Student':
+              filteredData = { Student: departmentData.Student };
+              break;
+          case 'EventsOrganized':
+              filteredData = { EventsOrganized: departmentData.EventsOrganized };
+              break;
+          case 'SeminarHalls':
+              filteredData = { SeminarHalls: departmentData.SeminarHalls };
+              break;
+          // Add cases for other categories as needed
+          default:
+              // If no category or invalid category, return all departmentData
+              filteredData = departmentData;
+              break;
+      }
 
-    // Return the category data
-    res.json(categoryData);
+      res.json(filteredData);
   } catch (error) {
-    console.error('Error fetching category data:', error);
-    res.status(500).json({ error: 'Internal server error' });
+      console.error('Error fetching department data:', error);
+      res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
+
 
 router.get('/blocks/categories/:blockName', async (req, res) => {
   try {

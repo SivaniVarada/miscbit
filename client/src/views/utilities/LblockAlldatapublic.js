@@ -35,7 +35,7 @@ const FilterSearchblock = ({ block, department }) => {
     const fetchDataForCategories = async () => {
       categories.forEach(async (category) => {
         try {
-          const response = await axios.get(`http://localhost:8000/api/block/category/L/IT/${category}`);
+          const response = await axios.get(`http://localhost:8000/api/block/category/data/L/IT/${category}`);
           setCategoryData(prevData => ({
             ...prevData,
             [category]: response.data
