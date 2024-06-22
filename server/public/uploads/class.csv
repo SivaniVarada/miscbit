@@ -1,0 +1,4 @@
+number,capacity,Department,Floor,projector_status
+2,56,MECHANICAL,3,OK
+4,80,MECHANICAL,2,NO
+6,54,MECHANICAL,1,NO

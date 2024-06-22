@@ -2,5 +2,5 @@ Lab_num,name,Department,Equipment_status,Floor,Block
 1,abc,CSE,OK,1,A
 2,efg,IT,OK,3,A
 3,hij,ECE,OK,2,A
-4,klm,EEE,NO,2,A
-5,no[,MECH,NO,1,A
+4,klm,MECHANICAL,NO,2,A
+5,no[,MECHANICAL,NO,1,A
