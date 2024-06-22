@@ -26,7 +26,7 @@ const FirebaseLogin = ({ ...others }) => {
   const handleLogin = async (values, actions) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8000/auth/login', values);
+      const response = await axios.post('https://miscbit-8.onrender.com/auth/login', values);
       const { token, usertype } = response.data;
       localStorage.setItem('token', token);
       if (usertype === 'admin') {
@@ -52,7 +52,7 @@ const FirebaseLogin = ({ ...others }) => {
   const handleForgotPassword = async (email) => {
     setLoading(true);
     try {
-      await axios.post('http://localhost:8000/auth/forgot-password', { email });
+      await axios.post('https://miscbit-8.onrender.com/auth/forgot-password', { email });
       setSuccessMessage('An email with instructions for resetting your password has been sent.');
     } catch (error) {
       setError('Failed to initiate password reset. Please try again later.');

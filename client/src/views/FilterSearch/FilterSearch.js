@@ -204,6 +204,7 @@ const FilterSearch = () => {
     setSelectedTable(event.target.value);
   };
   const convertJsonToExcel = () => {
+    const timestamp = new Date().toISOString().replace(/:/g, '-');
     console.log(blockData)
     const createSheetData = (data, keys) => {
       return data.map(item => {
@@ -224,15 +225,7 @@ const FilterSearch = () => {
       "Labs",
       "classrooms",
       "SeminarHalls",
-      "Timetables",
-      "Student",
-      "Faculty",
-      "Research",
-      "Committe",
-      "Mentoring",
-      "EventsOrganized",
-      "EventsParticipated",
-      "Clubs"
+      "Washrooms"
   ];
 
   categories.forEach(category => {
@@ -252,8 +245,9 @@ const FilterSearch = () => {
           XLSX.utils.book_append_sheet(workBook, workSheet, category);
       }
   });
+  
 
-  XLSX.writeFile(workBook, 'blockData.xlsx');
+  XLSX.writeFile(workBook, `${selectedBlock}-BlockData.xlsx`);
   setExcelGenerated(true);
 
   };
@@ -316,116 +310,13 @@ const FilterSearch = () => {
         });
       }
   
-      // Handle Timetables
-      if (block.Timetables && block.Timetables.length > 0) {
-        doc.addPage();
-        doc.text('Timetables', 10, 10);
-        const timetableKeys = Object.keys(block.Timetables[0]).filter(key => key !== '_id');
-        const timetableData = block.Timetables.map(tt => timetableKeys.map(key => tt[key]));
-        doc.autoTable({
-          head: [timetableKeys],
-          body: timetableData,
-          startY: 20,
-        });
-      }
+      
   
-      // Handle Students
-      if (block.Student && block.Student.length > 0) {
+      if (block.Washrooms && block.Washrooms.length > 0) {
         doc.addPage();
-        doc.text('Students', 10, 10);
-        const studentKeys = Object.keys(block.Student[0]).filter(key => key !== '_id');
-        const studentData = block.Student.map(student => studentKeys.map(key => student[key]));
-        doc.autoTable({
-          head: [studentKeys],
-          body: studentData,
-          startY: 20,
-        });
-      }
-  
-      // Handle Faculty
-      if (block.Faculty && block.Faculty.length > 0) {
-        doc.addPage();
-        doc.text('Faculty', 10, 10);
-        const facultyKeys = Object.keys(block.Faculty[0]).filter(key => key !== '_id');
-        const facultyData = block.Faculty.map(faculty => facultyKeys.map(key => faculty[key]));
-        doc.autoTable({
-          head: [facultyKeys],
-          body: facultyData,
-          startY: 20,
-        });
-      }
-  
-      // Handle Research
-      if (block.Research && block.Research.length > 0) {
-        doc.addPage();
-        doc.text('Research', 10, 10);
-        const researchKeys = Object.keys(block.Research[0]).filter(key => key !== '_id');
-        const researchData = block.Research.map(research => researchKeys.map(key => research[key]));
-        doc.autoTable({
-          head: [researchKeys],
-          body: researchData,
-          startY: 20,
-        });
-      }
-  
-      // Handle Committees
-      if (block.Committe && block.Committe.length > 0) {
-        doc.addPage();
-        doc.text('Committees', 10, 10);
-        const committeeKeys = Object.keys(block.Committe[0]).filter(key => key !== '_id');
-        const committeeData = block.Committe.map(committee => committeeKeys.map(key => committee[key]));
-        doc.autoTable({
-          head: [committeeKeys],
-          body: committeeData,
-          startY: 20,
-        });
-      }
-  
-      // Handle Mentoring
-      if (block.Mentoring && block.Mentoring.length > 0) {
-        doc.addPage();
-        doc.text('Mentoring', 10, 10);
-        const mentoringKeys = Object.keys(block.Mentoring[0]).filter(key => key !== '_id');
-        const mentoringData = block.Mentoring.map(mentoring => mentoringKeys.map(key => mentoring[key]));
-        doc.autoTable({
-          head: [mentoringKeys],
-          body: mentoringData,
-          startY: 20,
-        });
-      }
-  
-      // Handle Events Organized
-      if (block.EventsOrganized && block.EventsOrganized.length > 0) {
-        doc.addPage();
-        doc.text('Events Organized', 10, 10);
-        const eventsOrganizedKeys = Object.keys(block.EventsOrganized[0]).filter(key => key !== '_id');
-        const eventsOrganizedData = block.EventsOrganized.map(event => eventsOrganizedKeys.map(key => event[key]));
-        doc.autoTable({
-          head: [eventsOrganizedKeys],
-          body: eventsOrganizedData,
-          startY: 20,
-        });
-      }
-  
-      // Handle Events Participated
-      if (block.EventsParticipated && block.EventsParticipated.length > 0) {
-        doc.addPage();
-        doc.text('Events Participated', 10, 10);
-        const eventsParticipatedKeys = Object.keys(block.EventsParticipated[0]).filter(key => key !== '_id');
-        const eventsParticipatedData = block.EventsParticipated.map(event => eventsParticipatedKeys.map(key => event[key]));
-        doc.autoTable({
-          head: [eventsParticipatedKeys],
-          body: eventsParticipatedData,
-          startY: 20,
-        });
-      }
-  
-      // Handle Clubs
-      if (block.Clubs && block.Clubs.length > 0) {
-        doc.addPage();
-        doc.text('Clubs', 10, 10);
-        const clubsKeys = Object.keys(block.Clubs[0]).filter(key => key !== '_id');
-        const clubsData = block.Clubs.map(club => clubsKeys.map(key => club[key]));
+        doc.text('Washrooms', 10, 10);
+        const clubsKeys = Object.keys(block.Washrooms[0]).filter(key => key !== '_id');
+        const clubsData = block.Washrooms.map(club => clubsKeys.map(key => club[key]));
         doc.autoTable({
           head: [clubsKeys],
           body: clubsData,
@@ -433,8 +324,8 @@ const FilterSearch = () => {
         });
       }
     });
-  
-    doc.save('jsonData.pdf');
+
+    doc.save(`${selectedBlock}-Blockdata`);
     setPdfGenerated(true);
   };
   
@@ -508,7 +399,7 @@ const FilterSearch = () => {
             <MenuItem value="">All Tables</MenuItem>
             <MenuItem value="Classrooms">Classrooms</MenuItem>
             <MenuItem value="Labs">Labs</MenuItem>
-            <MenuItem value="Faculty">Faculty</MenuItem>
+            <MenuItem value="Faculty">Washrooms</MenuItem>
             <MenuItem value="SeminarHalls">SeminarHalls</MenuItem>
             {/* Add more menu items for other tables */}
           </Select>
@@ -587,30 +478,28 @@ const FilterSearch = () => {
             <div>
               <br />
               <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
-                FACULTY
+                WASHROOMS
               </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Faculty ID</TableCell>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Designation</TableCell>
-                      <TableCell>Date of Joining</TableCell>
-                      <TableCell>Department</TableCell>
-                      <TableCell>Role</TableCell>
+                      <TableCell>S_NO</TableCell>
+                      <TableCell>TYPE</TableCell>
+                      <TableCell>GENDER</TableCell>
+                      <TableCell>FLOOR</TableCell>
+                      <TableCell>COUNT</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {blockData.flatMap((block) =>
-                      block.Faculty.map((faculty) => (
+                      block.Washrooms.map((faculty) => (
                         <TableRow key={faculty._id}>
-                          <TableCell>{faculty.Facultyid}</TableCell>
-                          <TableCell>{faculty.name}</TableCell>
-                          <TableCell>{faculty.Designation}</TableCell>
-                          <TableCell>{faculty.DOJ}</TableCell>
-                          <TableCell>{faculty.Department}</TableCell>
-                          <TableCell>{faculty.Role}</TableCell>
+                          <TableCell>{faculty.S_NO}</TableCell>
+                          <TableCell>{faculty.TYPE}</TableCell>
+                          <TableCell>{faculty.GENDER}</TableCell>
+                          <TableCell>{faculty.FLOOR}</TableCell>
+                          <TableCell>{faculty.COUNT}</TableCell>
                         </TableRow>
                       ))
                     )}
@@ -721,33 +610,31 @@ const FilterSearch = () => {
             </div>
           )}
 
-          {(!selectedTable || selectedTable === 'Faculty') && (
+          {(!selectedTable || selectedTable === 'Washrooms') && (
             <div>
               <br />
               <Typography variant="h3" style={{ marginBottom: '20px', color: '#ba2c1b', fontWeight: 'bold' }}>
-                FACULTY
+                WASHROOMS
               </Typography>
               <TableContainer component={Paper} style={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Faculty ID</TableCell>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Designation</TableCell>
-                      <TableCell>Date of Joining</TableCell>
-                      <TableCell>Department</TableCell>
-                      <TableCell>Role</TableCell>
+                      <TableCell>S_NO</TableCell>
+                      <TableCell>TYPE</TableCell>
+                      <TableCell>GENDER</TableCell>
+                      <TableCell>FLOOR</TableCell>
+                      <TableCell>COUNT</TableCell>
+                      
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {departmentData.Faculty.map((faculty) => (
-                      <TableRow key={faculty.Facultyid}>
-                        <TableCell>{faculty.Facultyid}</TableCell>
-                        <TableCell>{faculty.name}</TableCell>
-                        <TableCell>{faculty.Designation}</TableCell>
-                        <TableCell>{faculty.DOJ}</TableCell>
-                        <TableCell>{faculty.Department}</TableCell>
-                        <TableCell>{faculty.Role}</TableCell>
+                    {departmentData.Washrooms.map((faculty) => (
+                      <TableRow key={faculty.S_NO}>
+                        <TableCell>{faculty.TYPE}</TableCell>
+                        <TableCell>{faculty.GENDER}</TableCell>
+                        <TableCell>{faculty.FLOOR}</TableCell>
+                        <TableCell>{faculty.COUNT}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

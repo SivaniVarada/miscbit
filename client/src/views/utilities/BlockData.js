@@ -679,7 +679,7 @@ const FilterSearchblock = ({ block, department }) => {
     setPage(0);
   };
 
-  const convertJsonToExcel = () => {
+ const convertJsonToExcel = () => {
     const keys = Object.keys(departmentData[0]);
     const data = departmentData.map(item => {
       const row = {};
@@ -694,9 +694,11 @@ const FilterSearchblock = ({ block, department }) => {
     const workSheet = XLSX.utils.json_to_sheet(data);
     const workBook = XLSX.utils.book_new();
 
-    XLSX.utils.book_append_sheet(workBook, workSheet, 'Data');
+    XLSX.utils.book_append_sheet(workBook, workSheet, `${selectedCategory}`);
 
-    XLSX.writeFile(workBook, 'departmentData.xlsx');
+    XLSX.writeFile(workBook, `${block}Block-${selectedCategory}-Data.xlsx`);
+
+    setExcelGenerated(true);
   };
 
   const convertJsonToPDF = () => {
@@ -707,7 +709,18 @@ const FilterSearchblock = ({ block, department }) => {
 
     const doc = new jsPDF();
     doc.autoTable({ head: [keys], body: data });
-    doc.save('departmentData.pdf');
+    doc.save(`${block}Block-${selectedCategory}-Data.pdf`);
+
+    setPdfGenerated(true);
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
   };
 
   const fetchData = async () => {
@@ -740,8 +753,9 @@ const FilterSearchblock = ({ block, department }) => {
         >
           <MenuItem value="" disabled>Select a category</MenuItem>
           {categories.map((category) => (
+            category!=='Student' && category!=='Faculty' && category!=='Faculty' && category!=='Classrooms' && category!=='Research' && category!=='Timetables' && category!=='Committe' &&category!=='EventsOrganized' &&category!=='EventsParticipated' &&category!=='Clubs' && category!=='Mentoring' &&(
             <MenuItem key={category} value={category}>{category}</MenuItem>
-          ))}
+         ) ))}
         </Select>
       </div>
       <Paper style={{ width: '100%', overflow: 'hidden', marginTop: '20px' }}>

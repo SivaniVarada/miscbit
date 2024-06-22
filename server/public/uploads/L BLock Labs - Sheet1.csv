@@ -1,7 +1,6 @@
-Lab_num,name,Department,Equipment_status,Floor
-LAB 1,Embedded Systems & IOT Lab,MECHANICAL,Working,1
-LAB 2,Big Data Analytics Lab,CSC,Working,1
-LAB 3,Deep Learning Lab,IT,Working,1
-LAB 4,Basic Machine Learning Lab,IT,Working,1
-LAB 5,Full Stack Development Lab,MECHANICAL,Working,1
-LAB 6,Cloud Computing Lab,IT,Working,1
+S_NO,TYPE,GENDER,FLOOR,COUNT
+1,Faculty,Male,0,4
+2,Students,Female,1,4
+3,Faculty,Female,2,4
+4,Students,Male,2,4
+

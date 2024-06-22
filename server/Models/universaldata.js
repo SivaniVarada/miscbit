@@ -122,7 +122,14 @@ const UniversalModel = new mongoose.Schema({
             Role:String,
 
         }
-    ]
+    ],
+    Washrooms:[{
+        S_NO:String,
+        TYPE:String,
+        GENDER:String,
+        FLOOR:Number, //Date of start
+        COUNT:Number
+    }],
 
 })
 
