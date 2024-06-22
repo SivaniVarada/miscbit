@@ -1,10 +1,11 @@
+
 import { styled } from '@mui/material/styles';
 import { Card } from '@mui/material';
 import FilterSearch from 'menu-items/DataTable';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import FilterSearchblock from './BlockData';
+import FilterSearchblock from './blocks';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 
 

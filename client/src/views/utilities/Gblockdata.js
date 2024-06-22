@@ -4,7 +4,7 @@ import FilterSearch from 'menu-items/DataTable';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import FilterSearchblock from './BlockData';
+import FilterSearchblock from './blocks';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 
 
@@ -21,7 +21,7 @@ const IFrameWrapper = styled('iframe')(({ theme }) => ({
 
 const TablerIcons = () => (
   <MainCard title="G Block Details (CSC)">
-   <FilterSearchblock block={'G'} department={'Computer Science Cybersecurity'} />
+   <FilterSearchblock block={'G'} department={'ComputerScienceCybersecurity'} />
   </MainCard>
 );
 
