@@ -670,6 +670,7 @@ const FilterSearchblock = ({ block, department }) => {
     }
   };
 
+  // Only one definition of handleChangePage
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -697,8 +698,6 @@ const FilterSearchblock = ({ block, department }) => {
     XLSX.utils.book_append_sheet(workBook, workSheet, `${selectedCategory}`);
 
     XLSX.writeFile(workBook, `${block}Block-${selectedCategory}-Data.xlsx`);
-
-    setExcelGenerated(true);
   };
 
   const convertJsonToPDF = () => {
@@ -710,17 +709,6 @@ const FilterSearchblock = ({ block, department }) => {
     const doc = new jsPDF();
     doc.autoTable({ head: [keys], body: data });
     doc.save(`${block}Block-${selectedCategory}-Data.pdf`);
-
-    setPdfGenerated(true);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
   };
 
   const fetchData = async () => {
@@ -847,4 +835,5 @@ const FilterSearchblock = ({ block, department }) => {
 };
 
 export default FilterSearchblock;
+
 
