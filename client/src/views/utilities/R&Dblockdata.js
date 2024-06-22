@@ -30,7 +30,7 @@
 import React, { useState } from 'react';
 import { Button, CircularProgress } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
-import FilterSearchblock from './BlockData';
+import FilterSearchblock from './blocks';
 import axios from 'axios';
 
 const RnDTablerIcons = () => {
