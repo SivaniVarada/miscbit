@@ -16,35 +16,35 @@ const importData = async (req, res) => {
             case 'classrooms':
                 dataToInsert = jsonArray.map(item => ({
                     Block: blockname,
-                    classrooms: item.number ? [{ // Example condition to check if number exists
-                        number: item.number,
-                        capacity: item.capacity || '',
-                        Department: item.Department || '',
-                        Floor: item.Floor || '',
-                        projector_status: item.projector_status || ''
+                    Classrooms: item.NUMBER ? [{ // Example condition to check if number exists
+                        number: item.NUMBER,
+                        capacity: item.CAPACITY || '',
+                        Department: item.DEPARTMENT || '',
+                        Floor: item.FlOOR || '',
+                        projector_status: item.PROJECTOR_STATUS || ''
                     }] : []
                 }));
                 break;
             case 'labs':
                 dataToInsert = jsonArray.map(item => ({
                     Block: blockname,
-                    Labs: item.Lab_num ? [{
-                        Lab_num: item.Lab_num,
-                        name: item.name || '',
-                        Department: item.Department || '',
-                        Equipment_status: item.Equipment_status || '',
-                        Floor: item.Floor || ''
+                    Labs: item.LAB_NUMBER ? [{
+                        Lab_num: item.LAB_NUMBER,
+                        name: item.NAME || '',
+                        Department: item.DEPARTMENT || '',
+                        Equipment_status: item.EQUIPMENT_STATUS || '',
+                        Floor: item.FlOOR || ''
                     }] : []
                 }));
                 break;
             case 'seminarHalls':
                 dataToInsert = jsonArray.map(item => ({
                     Block: blockname,
-                    SeminarHalls: item.Hall_number ? [{
-                        Hall_number: item.Hall_number,
-                        name: item.name || '',
-                        capacity: item.capacity || '',
-                        Department: item.Department || ''
+                    SeminarHalls: item.HALL_NUMBER ? [{
+                        Hall_number: item.HALL_NUMBER,
+                        name: item.NAME || '',
+                        capacity: item.CAPACITY || '',
+                        Department: item.DEPARTMENT || ''
                     }] : []
                 }));
                 break;

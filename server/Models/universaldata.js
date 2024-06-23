@@ -6,120 +6,120 @@ const UniversalModel = new mongoose.Schema({
     },
     Department:[{
         
-        Id:String,
-        name:String,
-        sections:Number
+        ID:String,
+        NAME:String,
+        SECTIONS:Number
     }],
     Labs:[
         {
-            Lab_num : String ,
-            name:String,
-            Department: { type: String, required: true },
-            Equipment_status:String,
-            Floor:Number
+            LAB_NUMBER : String ,
+            NAME:String,
+            DEPARTMENT: { type: String, required: true },
+            EQUIPMENT_STATUS:String,
+            FlOOR:Number
         }
     ],
-    classrooms:[
+    Classrooms:[
         {
-            number:String,
-            capacity:Number,
-            Department: { type: String, required: true },
-            Floor:Number,
-            projector_status:String
+            NUMBER:String,
+            CAPACITY:Number,
+            DEPARTMENT: { type: String, required: true },
+            FLOOR:Number,
+            PROJECTOR_STATUS:String
         }
     ],
     SeminarHalls:[
         {
-            Hall_number:Number,
-            name :String,
-            capacity:Number,
-            Department: { type: String, required: true },
+            HALL_NUMBER:Number,
+            NAME :String,
+            CAPACITY:Number,
+            DEPARTMENT: { type: String, required: true },
         }
     ],
     Timetables:[
         {
-            course_id: String,
-            section:String,
-            FacultyId:String,
-            name:String,
-            Period:Number
+            COURSE_ID: String,
+            SECTION:String,
+            FACULTY_ID:String,
+            NAME:String,
+            PERIOD:Number
         }
     ],
     Student:[
         {
-            StudentId:Number,
-            Name:String,
-            Gender:String,
-            Program:String,
-            Department:String,
+            STUDENTID:Number,
+            NAME:String,
+            GENDER:String,
+            PROGRAM:String,
+            DEPARTMENT:String,
             
         }
     ],
     Faculty:[
         {
-            Facultyid :Number,
-            name :String ,
-            Designation:String,
+            FACULTYID :Number,
+            NAME :String ,
+            DESIGNATION:String,
             DOJ:String, //date of joining
-            Department:String,
-            committeId:Number,
-            Role:String
+            DEPARTMENT:String,
+            COMMITTEID:Number,
+            ROLE:String
         }
 
     ],
     Research :[{
-        Conference :String,
-        Journal:String,
-        Bookchapter:String,
-        Patent:String,
-        consultancy:String,
-        Project : String,
-        Facultyid:Number,
-        StudentId:Number
+        CONFERENCE :String,
+        JOURNAL:String,
+        BOOKCHAPTER:String,
+        PATENT:String,
+        CONSULTANCY:String,
+        PROJECT : String,
+        FACULTYID:Number,
+        STUDENTID:Number
        }
 
     ],
     Committe:[
         {
-            CommitteId : Number,
-            name :String,
-            FacultyId:Number,
-            Role:String,
+            COMMITTEID : Number,
+            NAME :String,
+            FACULTYID:Number,
+            ROLE:String,
 
         }
     ],
     Mentoring:[
         {
-            FacultyId:Number,
-            StudentId:Number,
+            FACULTYID:Number,
+            STUDENTID:Number,
 
         }
     ],
     EventsOrganized:[{
-        name:String,
-        Department:String,
-        FacultyId:String,
+        NAME:String,
+        DEPARTMENT:String,
+        FACULTYID:String,
         DOS:String , //Date of start
         DOE:String, //Date of End
-        Audience:String, //Student or faculty,
+        AUDIENCE:String, //Student or faculty,
         Venue:String
 
 
     }],
     EventsParticipated :[{
-        Type:String,
-        name:String,
-        FacultyId:Number,
-        MouDocument : String,
+        TYPE:String,
+        NAME:String,
+        FACULTYID:Number,
+        MOUDOCUMENT : String,
 
     }],
      
     Clubs :[
         {
-            name:String,
-            Coordinator:String,
-            StudentId:Number,
-            Role:String,
+            NAME:String,
+            COORDINATOR:String,
+            STUDENTID:Number,
+            ROLE:String,
 
         }
     ],
@@ -128,7 +128,8 @@ const UniversalModel = new mongoose.Schema({
         TYPE:String,
         GENDER:String,
         FLOOR:Number, //Date of start
-        COUNT:Number
+        COUNT:Number,
+        DEPARTMENT:String
     }],
 
 })

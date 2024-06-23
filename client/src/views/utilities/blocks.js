@@ -14,6 +14,7 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import LDataPublic from './LblockAlldatapublic'; // Import the data from LDataPublic.js
 
 const FilterSearchblock = ({ block, department }) => {
   const [categories, setCategories] = useState([]);
@@ -23,7 +24,6 @@ const FilterSearchblock = ({ block, department }) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [excelGenerated, setExcelGenerated] = useState(false);
   const [pdfGenerated, setPdfGenerated] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -44,48 +44,33 @@ const FilterSearchblock = ({ block, department }) => {
     }
   }, [selectedCategory, block, department]);
 
-  useEffect(() => {
-    if (!Array.isArray(departmentData)) {
-      setDepartmentData([]);
-    }
-  }, [departmentData]);
-
   const handlealldataselect = async () => {
-    setLoading(true);
     try {
       const response = await axios.get(`http://localhost:8000/api/block/allData/${block}/${department}`);
       if (!response.data) {
         console.error(`No data found for department ${department} in block ${block}`);
-        setDepartmentData([]);
-      } else {
-        setDepartmentData(response.data.Labs || []);
+        return;
       }
+      setDepartmentData(response.data);
     } catch (err) {
       console.error(err);
-      setDepartmentData([]);
-    } finally {
-      setLoading(false);
     }
   };
 
   const handleCategorySelect = async (category) => {
-    setLoading(true);
     setSelectedCategory(category);
-    const url = category === 'All Data' ?
-      `http://localhost:8000/api/block/department/data/${block}/${department}` :
-      `http://localhost:8000/api/block/category/data/${block}/${department}/${category}`;
+    const url = category === 'All Data' ? 
+      `http://localhost:8010/api/block/allData/${block}/${department}` :
+      `http://localhost:8010/api/block/category/${block}/${department}/${category}`;
     try {
       const response = await axios.get(url);
-      if (response.data && typeof response.data === 'object') {
-        setDepartmentData(response.data[category] || []);
-      } else {
-        setDepartmentData([]);
+      if (!response.data) {
+        console.error(`No data found for category ${category} in department ${department} in block ${block}`);
+        return;
       }
+      setDepartmentData(response.data);
     } catch (error) {
       console.error(`Error fetching data for category ${category} in department ${department} in block ${block}:`, error);
-      setDepartmentData([]);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -104,9 +89,9 @@ const FilterSearchblock = ({ block, department }) => {
     const workSheet = XLSX.utils.json_to_sheet(data);
     const workBook = XLSX.utils.book_new();
 
-    XLSX.utils.book_append_sheet(workBook, workSheet, 'posts');
+    XLSX.utils.book_append_sheet(workBook, workSheet, `${selectedCategory}`);
 
-    XLSX.writeFile(workBook, 'postsData.xlsx');
+    XLSX.writeFile(workBook, `${block}Block-${selectedCategory}-Data.xlsx`);
 
     setExcelGenerated(true);
   };
@@ -119,7 +104,7 @@ const FilterSearchblock = ({ block, department }) => {
 
     const doc = new jsPDF();
     doc.autoTable({ head: [keys], body: data });
-    doc.save('jsonData.pdf');
+    doc.save(`${block}Block-${selectedCategory}-Data.pdf`);
 
     setPdfGenerated(true);
   };
@@ -134,21 +119,12 @@ const FilterSearchblock = ({ block, department }) => {
   };
 
   const fetchData = async () => {
-    setLoading(true);
-    const url = `http://localhost:8000/api/block/category/data/${block}/${department}/${selectedCategory}`;
+    const url = `http://localhost:8000/api/block/category/${block}/${department}/${selectedCategory}`;
     try {
       const response = await axios.get(url);
-      console.log(response)
-      if (response.data && typeof response.data === 'object') {
-        setDepartmentData(response.data[selectedCategory] || []);
-      } else {
-        setDepartmentData([]);
-      }
+      setDepartmentData(response.data);
     } catch (error) {
       console.error(`Error fetching data for category ${selectedCategory} in department ${department} in block ${block}:`, error);
-      setDepartmentData([]);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -162,53 +138,43 @@ const FilterSearchblock = ({ block, department }) => {
           displayEmpty
           inputProps={{ 'aria-label': 'Select category' }}
         >
+          
+         
           {categories.map((category) => (
+            category!=='Student' && category!=='Faculty' && category!=='Department'   && category!=='Research' && category!=='Timetables' && category!=='Committe' &&category!=='EventsOrganized' &&category!=='EventsParticipated' &&category!=='Clubs' && category!=='Mentoring' &&(
             <MenuItem key={category} value={category}>{category}</MenuItem>
-          ))}
+         ) ))}
         </Select>
       </div>
       <Paper style={{ width: '100%', overflow: 'hidden', marginTop: '20px' }}>
         <TableContainer style={{ maxHeight: '440px', overflowY: 'auto' }}>
           <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {departmentData.length > 0 && typeof departmentData[0] === 'object' && (
-                  Object.keys(departmentData[0]).map((key) => (
+          <TableHead>
+  <TableRow>
+    {departmentData.length > 0 && typeof departmentData[0] === 'object' && (
+      Object.keys(departmentData[0]).map((key) => (
+        key !== '_id' && (
+          <TableCell key={key}>
+            <strong>{key.toUpperCase()}</strong>
+          </TableCell>
+        )
+      ))
+    )}
+  </TableRow>
+</TableHead>
+
+            <TableBody>
+              {departmentData.map((item, index) => (
+                <TableRow key={index}>
+                  {typeof item === 'object' && Object.keys(item).map((key) => (
                     key !== '_id' && (
                       <TableCell key={key}>
-                        <strong>{key.toUpperCase()}</strong>
+                        {typeof item[key] === 'boolean' ? (item[key] ? 'Yes' : 'No') : item[key]}
                       </TableCell>
                     )
-                  ))
-                )}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {loading ? (
-                <TableRow>
-                  <TableCell colSpan={Object.keys(departmentData[0] || {}).length || 1} style={{ textAlign: 'center' }}>
-                    Loading...
-                  </TableCell>
+                  ))}
                 </TableRow>
-              ) : departmentData.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={Object.keys(departmentData[0] || {}).length || 1} style={{ textAlign: 'center' }}>
-                    No data available
-                  </TableCell>
-                </TableRow>
-              ) : (
-                departmentData.map((item, index) => (
-                  <TableRow key={index}>
-                    {Object.keys(item).map((key) => (
-                      key !== '_id' && (
-                        <TableCell key={key}>
-                          {typeof item[key] === 'boolean' ? (item[key] ? 'Yes' : 'No') : item[key]}
-                        </TableCell>
-                      )
-                    ))}
-                  </TableRow>
-                ))
-              )}
+              ))}
             </TableBody>
           </Table>
         </TableContainer>

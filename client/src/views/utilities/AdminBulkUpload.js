@@ -65,20 +65,56 @@ const SamplePage1 = () => {
     setUploadKey(Date.now());
   };
 
+  const downloadFile = (fileName) => {
+    const link = document.createElement('a');
+    link.href = `client/src/views/utilities/Templatesbulkupload/${fileName}.xlsx`; // Adjust the path to your actual file location
+    link.download = `${fileName}.xlsx`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <Grid container spacing={3} ref={contentRef}>
       {/* Heading section */}
       <Grid item xs={12}>
-        <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item>
-              <Typography variant="h1" sx={{ textAlign: 'center', color: '#941b1c' }}>
-                BULK UPLOAD
-              </Typography>
-            </Grid>
+      <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
+        <Grid container justifyContent="space-between" alignItems="center">
+          <Grid item>
+            <Typography variant="h1" sx={{ textAlign: 'center', color: '#941b1c' }}>
+              BULK UPLOAD
+            </Typography>
           </Grid>
-        </MainCard>
-      </Grid>
+        </Grid>
+        <Grid container spacing={2} justifyContent="center" sx={{ marginTop: '20px' }}>
+          <Grid item xs={12}>
+            <Typography variant="h5" sx={{ textAlign: 'center', marginBottom: '20px' }}>
+              Templates for bulk uploading
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Button variant="contained" color="primary" onClick={() => downloadFile('LABS_TEMPLATE')}>
+              Labs
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button variant="contained" color="primary" onClick={() => downloadFile('CLASSROOMS_TEMPLATE')}>
+              Classrooms
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button variant="contained" color="primary" onClick={() => downloadFile('SEMINARHALLS_TEMPLATE')}>
+              Seminar Halls
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button variant="contained" color="primary" onClick={() => downloadFile('WASHROOMS_TEMPLATE')}>
+              Washrooms
+            </Button>
+          </Grid>
+        </Grid>
+      </MainCard>
+    </Grid>
 
       {/* Block Dropdown */}
       <Grid item xs={12}>

@@ -87,7 +87,7 @@ router.get('/labs', async (req, res) => {
 // Retrieve data for Classrooms
 router.get('/classrooms', async (req, res) => {
     try {
-        const classroomsData = await BlockData.find({}, 'classrooms');
+        const classroomsData = await BlockData.find({}, 'Classrooms');
         res.json(classroomsData);
     } catch (err) {
         console.error(err);
@@ -330,7 +330,7 @@ router.get('/categories/:blockName/:departmentName', async (req, res) => {
         return res.status(404).json({ error: 'Block not found' });
       }
       console.log(blockData)
-      const department = blockData.Department.find(dep => dep.name === departmentName);
+      const department = blockData.Department.find(dep => dep.NAME === departmentName);
       console.log(department)
       if (!department) {
         const categories = Object.keys(blockData.toObject()).filter(key => key !== 'Block' && key !== '_id' && key !== '__v');
@@ -355,7 +355,7 @@ router.get('/categories/:blockName/:departmentName', async (req, res) => {
       if (!blockData) {
         return res.status(404).json({ error: 'Block not found' });
       }
-      const department = blockData.Department.find(dep => dep.name === departmentName);
+      const department = blockData.Department.find(dep => dep.NAME === departmentName);
       if (!department) {
         return res.status(404).json({ error: 'Department not found' });
       }
@@ -379,7 +379,7 @@ router.get('/categories/:blockName/:departmentName', async (req, res) => {
       if (!blockData) {
         return res.status(404).json({ error: 'Block not found' });
       }
-      const departmentData = blockData.Department.find(dep => dep.name === department);
+      const departmentData = blockData.Department.find(dep => dep.NAME === department);
       if (!departmentData) {
         return res.status(404).json({ error: 'Department not found' });
       }
@@ -525,11 +525,11 @@ router.get('/categories/:blockName/:departmentName', async (req, res) => {
       // Group by Block and Department and push categories into an array
       {
         $group: {
-          _id: { Block: "$Block", Department: "$Department.name" },
+          _id: { Block: "$Block", Department: "$Department.NAME" },
           categories: {
             $push: {
               Labs: "$Labs",
-              classrooms: "$classrooms",
+              Classrooms: "$Classrooms",
               SeminarHalls: "$SeminarHalls",
               Timetables: "$Timetables",
               Student: "$Student",
@@ -573,7 +573,7 @@ router.get('/categories/:blockName/:departmentName', async (req, res) => {
           }
         ],
         Labs: [],
-        classrooms: [],
+        Classrooms: [],
         SeminarHalls: [],
         Timetables: [],
         Student: [],
@@ -592,7 +592,7 @@ router.get('/categories/:blockName/:departmentName', async (req, res) => {
       // Since a new document is created, project the categories similarly to the aggregation
       const result = {
         Labs: createdDoc.Labs,
-        classrooms: createdDoc.classrooms,
+        Classrooms: createdDoc.Classrooms,
         SeminarHalls: createdDoc.SeminarHalls,
         Timetables: createdDoc.Timetables,
         Student: createdDoc.Student,
@@ -759,7 +759,7 @@ router.get('/departments/:blockName', (req, res) => {
   BlockData.aggregate([
       { $match: { Block: blockName } },
       { $unwind: '$Department' },
-      { $group: { _id: null, departments: { $addToSet: '$Department.name' } } }
+      { $group: { _id: null, departments: { $addToSet: '$Department.NAME' } } }
   ]).then(result => {
       const departmentNames = result.length > 0 ? result[0].departments : [];
       res.json(departmentNames);
@@ -777,13 +777,13 @@ router.get('/fetchcategories/:blockName/:departmentName', (req, res) => {
   BlockData.aggregate([
       { $match: { 'Block': blockName } },
       { $unwind: '$Department' },
-      { $match: { 'Department.name': departmentName } },
+      { $match: { 'Department.NAME': departmentName } },
       {
           $project: {
               documentNames: {
                   $objectToArray: {
                       Labs: "$Labs",
-                      Classrooms: "$classrooms",
+                      Classrooms: "$Classrooms",
                       SeminarHalls: "$SeminarHalls",
                       Timetables: "$Timetables",
                       Student: "$Student",
@@ -838,7 +838,7 @@ router.put('/category/data/:blockName/:departmentName/:categoryName/:id', async 
         break;
       case 'Classrooms':
         // Find and update the classroom data
-        blockData.classrooms.forEach((classroom) => {
+        blockData.Classrooms.forEach((classroom) => {
           if (classroom._id.toString() === id) {
             // Update the fields you want to modify
             classroom.field1 = updateData.field1;
@@ -883,7 +883,7 @@ router.delete('/category/data/:blockName/:departmentName/:categoryName/:id', asy
         break;
       case 'Classrooms':
         // Find and remove the classroom data
-        blockData.classrooms = blockData.classrooms.filter(classroom => classroom._id.toString() !== id);
+        blockData.Classrooms = blockData.Classrooms.filter(classroom => classroom._id.toString() !== id);
         break;
       // Add cases for other categories as needed
       default:
@@ -932,14 +932,14 @@ router.get('/department/data/:block/:departmentName', async (req, res) => {
 
       // Filter and structure the relevant data
       const departmentData = {
-          Department: flockData[0].Department.filter(dept => dept.name === departmentName),
-          Labs: flockData[0].Labs.filter(lab => lab.Department === departmentName),
-          Classrooms: flockData[0].classrooms.filter(classroom => {
-              return flockData[0].Department.some(dept => dept.name === departmentName && dept.Id === classroom.DepartmentId);
+          Department: flockData[0].Department.filter(dept => dept.NAME === departmentName),
+          Labs: flockData[0].Labs.filter(lab => lab.DEPARTMENT === departmentName),
+          Classrooms: flockData[0].Classrooms.filter(classroom => {
+              return flockData[0].Department.some(dept => dept.NAME === departmentName && dept.Id === classroom.DepartmentId);
           }),
-          Faculty: flockData[0].Faculty.filter(faculty => faculty.Department === departmentName),
-          Students: flockData[0].Student.filter(student => student.Department === departmentName),
-          EventsOrganized: flockData[0].EventsOrganized.filter(event => event.Department === departmentName),
+          Faculty: flockData[0].Faculty.filter(faculty => faculty.DEPARTMENT === departmentName),
+          Students: flockData[0].Student.filter(student => student.DEPARTMENT === departmentName),
+          EventsOrganized: flockData[0].EventsOrganized.filter(event => event.DEPARTMENT === departmentName),
           // Add other relevant sections similarly...
       };
       console.log(departmentData)
@@ -956,7 +956,7 @@ router.get('/department/datas/:departmentName', async (req, res) => {
   const { departmentName } = req.params;
   try {
       const blockData = await BlockData.findOne({
-          'Department.name': departmentName
+          'Department.NAME': departmentName
       }).select('-Block');
 
       if (!blockData) {
@@ -1055,13 +1055,14 @@ router.get('/category/data/:blockName/:departmentName/:category', async (req, re
 
       // Filter data based on departmentName
       const departmentData = {
-          Department: block.Department.filter(dept => dept.name === departmentName),
-          Labs: block.Labs.filter(lab => lab.Department === departmentName),
-          classrooms: block.classrooms.filter(classroom => classroom.Department === departmentName),
-          Faculty: block.Faculty.filter(faculty => faculty.Department === departmentName),
-          Student: block.Student.filter(student => student.Department === departmentName),
-          EventsOrganized: block.EventsOrganized.filter(event => event.Department === departmentName),
-          SeminarHalls: block.SeminarHalls.filter(hall => hall.Department === departmentName),
+          Department: block.Department.filter(dept => dept.NAME === departmentName),
+          Labs: block.Labs.filter(lab => lab.DEPARTMENT === departmentName),
+          Classrooms: block.Classrooms.filter(classroom => classroom.DEPARTMENT === departmentName),
+          Faculty: block.Faculty.filter(faculty => faculty.DEPARTMENT === departmentName),
+          Student: block.Student.filter(student => student.DEPARTMENT === departmentName),
+          EventsOrganized: block.EventsOrganized.filter(event => event.DEPARTMENT === departmentName),
+          SeminarHalls: block.SeminarHalls.filter(hall => hall.DEPARTMENT === departmentName),
+          Washrooms:block.Washrooms.filter(wash=>wash.DEPARTMENT === departmentName)
           // Add other relevant sections similarly...
       };
 
@@ -1072,7 +1073,7 @@ router.get('/category/data/:blockName/:departmentName/:category', async (req, re
               filteredData = { Labs: departmentData.Labs };
               break;
           case 'Classrooms':
-              filteredData = { classrooms: departmentData.classrooms };
+              filteredData = { Classrooms: departmentData.Classrooms };
               break;
           case 'Faculty':
               filteredData = { Faculty: departmentData.Faculty };
@@ -1085,6 +1086,9 @@ router.get('/category/data/:blockName/:departmentName/:category', async (req, re
               break;
           case 'SeminarHalls':
               filteredData = { SeminarHalls: departmentData.SeminarHalls };
+              break;
+          case 'Washrooms':
+              filteredData = { Washrooms: departmentData.Washrooms };
               break;
           // Add cases for other categories as needed
           default:
@@ -1113,7 +1117,7 @@ router.get('/blocks/categories/:blockName', async (req, res) => {
       ...new Set(
         blockData.flatMap((data) => [
           ...data.Labs.map((lab) => 'Lab'),
-          ...data.classrooms.map((classroom) => 'Classroom'),
+          ...data.Classrooms.map((classroom) => 'Classroom'),
           
           // Add other category types as needed
         ])

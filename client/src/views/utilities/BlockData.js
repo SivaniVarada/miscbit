@@ -741,7 +741,7 @@ const FilterSearchblock = ({ block, department }) => {
         >
           <MenuItem value="" disabled>Select a category</MenuItem>
           {categories.map((category) => (
-            category!=='Student' && category!=='Faculty' && category!=='Faculty' && category!=='Classrooms' && category!=='Research' && category!=='Timetables' && category!=='Committe' &&category!=='EventsOrganized' &&category!=='EventsParticipated' &&category!=='Clubs' && category!=='Mentoring' &&(
+            category!=='Student' && category!=='Faculty' && category!=='Faculty'  && category!=='Research' && category!=='Timetables' && category!=='Committe' &&category!=='EventsOrganized' &&category!=='EventsParticipated' &&category!=='Clubs' && category!=='Mentoring' &&(
             <MenuItem key={category} value={category}>{category}</MenuItem>
          ) ))}
         </Select>
