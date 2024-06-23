@@ -52,7 +52,7 @@ const FilterSearch = () => {
 
   const fetchBlocks = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/block/blocks');
+      const response = await fetch('https://miscbit-10.onrender.com/api/block/blocks');
       if (!response.ok) {
         throw new Error('Failed to fetch blocks');
       }
@@ -65,7 +65,7 @@ const FilterSearch = () => {
 
   const fetchBlockData = async (blockName) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/block/data/${blockName}`);
+      const response = await fetch(`https://miscbit-10.onrender.com/api/block/data/${blockName}`);
       if (!response.ok) {
         throw new Error('Failed to fetch block data');
       }
@@ -84,7 +84,7 @@ const FilterSearch = () => {
   const fetchDepartments = async (blockName) => {
     try {
       if (blockName) {
-        const response = await fetch(`http://localhost:8000/api/block/departments/${blockName}`);
+        const response = await fetch(`https://miscbit-10.onrender.com/api/block/departments/${blockName}`);
         if (!response.ok) {
           throw new Error('Failed to fetch departments');
         }
@@ -92,7 +92,7 @@ const FilterSearch = () => {
         setDepartments(data);
       } else {
         // Fetch departments without specifying a block
-        const response = await fetch(`http://localhost:8000/api/block/departments`);
+        const response = await fetch(`https://miscbit-10.onrender.com/api/block/departments`);
         if (!response.ok) {
           throw new Error('Failed to fetch departments');
         }
@@ -106,7 +106,7 @@ const FilterSearch = () => {
   
   const fetchDepartmentData = async (departmentName) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/block/department/datas/${departmentName}`);
+      const response = await fetch(`https://miscbit-10.onrender.com/api/block/department/datas/${departmentName}`);
       if (!response.ok) {
         throw new Error('Failed to fetch department data');
       }
@@ -119,7 +119,7 @@ const FilterSearch = () => {
 
   const fetchCategoriesForBlock = async (blockName) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/block/blocks/categories/${blockName}`);
+      const response = await fetch(`https://miscbit-10.onrender.com/api/block/blocks/categories/${blockName}`);
       if (!response.ok) {
         throw new Error('Failed to fetch categories for block');
       }
@@ -133,7 +133,7 @@ const FilterSearch = () => {
   const fetchCategories = async (blockName, departmentName) => {
     if (departmentName) {
       try {
-        const response = await fetch(`http://localhost:8000/api/block/fetchcategories/${blockName}/${departmentName}`);
+        const response = await fetch(`https://miscbit-10.onrender.com/api/block/fetchcategories/${blockName}/${departmentName}`);
         if (!response.ok) {
           throw new Error('Failed to fetch categories');
         }
@@ -149,7 +149,7 @@ const FilterSearch = () => {
 
   const fetchCategoryData = async (blockName, departmentName, categoryName) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/block/category/data/${blockName}/${departmentName}/${categoryName}`);
+      const response = await fetch(`https://miscbit-10.onrender.com/api/block/category/data/${blockName}/${departmentName}/${categoryName}`);
       if (!response.ok) {
         throw new Error('Failed to fetch category data');
       }

@@ -28,7 +28,7 @@
 //   useEffect(() => {
 //     const fetchCategories = async () => {
 //       try {
-//         const response = await axios.get(`http://localhost:8000/api/block/categories/${block}/${department}`);
+//         const response = await axios.get(`https://miscbit-10.onrender.com/api/block/categories/${block}/${department}`);
 //         setCategories(response.data);
 //       } catch (error) {
 //         console.error(`Error fetching categories for department ${department} in block ${block}:`, error);
@@ -53,7 +53,7 @@
 //   const handlealldataselect = async () => {
 //     setLoading(true);
 //     try {
-//       const response = await axios.get(`http://localhost:8000/api/block/allData/${block}/${department}`);
+//       const response = await axios.get(`https://miscbit-10.onrender.com/api/block/allData/${block}/${department}`);
 //       if (!response.data) {
 //         console.error(`No data found for department ${department} in block ${block}`);
 //         setDepartmentData([]);
@@ -72,8 +72,8 @@
 //     setLoading(true);
 //     setSelectedCategory(category);
 //     const url = category === 'All Data' ?
-//       `http://localhost:8000/api/block/department/data/${block}/${department}` :
-//       `http://localhost:8000/api/block/category/data/${block}/${department}/${category}`;
+//       `https://miscbit-10.onrender.com/api/block/department/data/${block}/${department}` :
+//       `https://miscbit-10.onrender.com/api/block/category/data/${block}/${department}/${category}`;
 //     try {
 //       const response = await axios.get(url);
 //       if (response.data && typeof response.data === 'object') {
@@ -135,7 +135,7 @@
 
 //   const fetchData = async () => {
 //     setLoading(true);
-//     const url = `http://localhost:8000/api/block/category/data/${block}/${department}/${selectedCategory}`;
+//     const url = `https://miscbit-10.onrender.com/api/block/category/data/${block}/${department}/${selectedCategory}`;
 //     try {
 //       const response = await axios.get(url);
 //       console.log(response)
@@ -280,7 +280,7 @@
 //   useEffect(() => {
 //     const fetchCategories = async () => {
 //       try {
-//         const response = await axios.get(`http://localhost:8000/api/block/categories/${block}/${department}`);
+//         const response = await axios.get(`https://miscbit-10.onrender.com/api/block/categories/${block}/${department}`);
 //         setCategories(response.data);
 //       } catch (error) {
 //         console.error(`Error fetching categories for department ${department} in block ${block}:`, error);
@@ -305,8 +305,8 @@
 //     setLoading(true);
 //     setSelectedCategory(category);
 //     const url = category === 'All Data'
-//       ? `http://localhost:8000/api/block/department/data/${block}/${department}`
-//       : `http://localhost:8000/api/block/category/data/${block}/${department}/${category}`;
+//       ? `https://miscbit-10.onrender.com/api/block/department/data/${block}/${department}`
+//       : `https://miscbit-10.onrender.com/api/block/category/data/${block}/${department}/${category}`;
 //     try {
 //       const response = await axios.get(url);
 //       if (response.data && typeof response.data === 'object') {
@@ -351,7 +351,7 @@
 //       selectedCategory: selectedCategory // Send the selected category
 //     };
 //     try {
-//       await axios.put(`http://localhost:8000/api/block/update/${block}/${department}`, payload);
+//       await axios.put(`https://miscbit-10.onrender.com/api/block/update/${block}/${department}`, payload);
 //       console.log('Data submitted successfully');
 //     } catch (error) {
 //       console.error('Error submitting data:', error);
@@ -402,7 +402,7 @@
 
 //   const fetchData = async () => {
 //     setLoading(true);
-//     const url = `http://localhost:8000/api/block/category/data/${block}/${department}/${selectedCategory}`;
+//     const url = `https://miscbit-10.onrender.com/api/block/category/data/${block}/${department}/${selectedCategory}`;
 //     try {
 //       const response = await axios.get(url);
 //       if (response.data && typeof response.data === 'object') {
@@ -568,7 +568,7 @@ const FilterSearchblock = ({ block, department }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/block/categories/${block}/${department}`);
+        const response = await axios.get(`https://miscbit-10.onrender.com/api/block/categories/${block}/${department}`);
         setCategories(response.data);
       } catch (error) {
         console.error(`Error fetching categories for department ${department} in block ${block}:`, error);
@@ -593,8 +593,8 @@ const FilterSearchblock = ({ block, department }) => {
     setLoading(true);
     setSelectedCategory(category);
     const url = category === 'All Data'
-      ? `http://localhost:8000/api/block/department/data/${block}/${department}`
-      : `http://localhost:8000/api/block/category/data/${block}/${department}/${category}`;
+      ? `https://miscbit-10.onrender.com/api/block/department/data/${block}/${department}`
+      : `https://miscbit-10.onrender.com/api/block/category/data/${block}/${department}/${category}`;
     try {
       const response = await axios.get(url);
       if (response.data && typeof response.data === 'object') {
@@ -620,7 +620,7 @@ const FilterSearchblock = ({ block, department }) => {
   const handleDeleteClick = async (id) => {
     try {
       // Send a DELETE request to the server with the specific ID
-      const response = await axios.delete(`http://localhost:8000/api/block/delete/${block}/${department}/${id}`);
+      const response = await axios.delete(`https://miscbit-10.onrender.com/api/block/delete/${block}/${department}/${id}`);
       
       // Check if deletion was successful
       if (response.status === 200) {
@@ -660,7 +660,7 @@ const FilterSearchblock = ({ block, department }) => {
   
     try {
       console.log('Submitting changes...');
-      await axios.put(`http://localhost:8000/api/block/update/${block}/${department}`, payload);
+      await axios.put(`https://miscbit-10.onrender.com/api/block/update/${block}/${department}`, payload);
       console.log('Updated department data:', departmentData);
       console.log('Data submitted successfully');
       setIsModified(false);
@@ -713,7 +713,7 @@ const FilterSearchblock = ({ block, department }) => {
 
   const fetchData = async () => {
     setLoading(true);
-    const url = `http://localhost:8000/api/block/category/data/${block}/${department}/${selectedCategory}`;
+    const url = `https://miscbit-10.onrender.com/api/block/category/data/${block}/${department}/${selectedCategory}`;
     try {
       const response = await axios.get(url);
       if (response.data && typeof response.data === 'object') {

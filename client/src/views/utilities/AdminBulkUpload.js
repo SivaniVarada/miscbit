@@ -42,7 +42,7 @@ const SamplePage1 = () => {
     formData.append('file', file);
 
     try {
-      const response = await axios.post(`http://localhost:8000/data/import/${dataType}/${block}`, formData, {
+      const response = await axios.post(`https://miscbit-10.onrender.com/data/import/${dataType}/${block}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
