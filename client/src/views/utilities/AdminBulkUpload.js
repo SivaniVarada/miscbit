@@ -1,5 +1,9 @@
 import axios from 'axios';
 import React, { useRef, useState, useEffect } from 'react';
+import PinIcon from '@mui/icons-material/Link';
+import Tooltip from '@mui/material/Tooltip';
+import { Link } from 'react-router-dom';
+
 import {
   Grid,
   Typography,
@@ -78,43 +82,26 @@ const SamplePage1 = () => {
     <Grid container spacing={3} ref={contentRef}>
       {/* Heading section */}
       <Grid item xs={12}>
-      <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
-        <Grid container justifyContent="space-between" alignItems="center">
-          <Grid item>
-            <Typography variant="h1" sx={{ textAlign: 'center', color: '#941b1c' }}>
-              BULK UPLOAD
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} justifyContent="center" sx={{ marginTop: '20px' }}>
-          <Grid item xs={12}>
-            <Typography variant="h5" sx={{ textAlign: 'center', marginBottom: '20px' }}>
-              Templates for bulk uploading
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" color="primary" onClick={() => downloadFile('LABS_TEMPLATE')}>
-              Labs
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" color="primary" onClick={() => downloadFile('CLASSROOMS_TEMPLATE')}>
-              Classrooms
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" color="primary" onClick={() => downloadFile('SEMINARHALLS_TEMPLATE')}>
-              Seminar Halls
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" color="primary" onClick={() => downloadFile('WASHROOMS_TEMPLATE')}>
-              Washrooms
-            </Button>
-          </Grid>
-        </Grid>
-      </MainCard>
+  <MainCard sx={{ paddingTop: { xs: '20px', sm: '0px' } }}>
+    <Grid container justifyContent="space-between" alignItems="center">
+      <Grid item>
+        <Typography variant="h1" sx={{ textAlign: 'center', color: '#941b1c' }}>
+          BULK UPLOAD
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Tooltip title="Bulk Upload Templates">
+          <div style={{ paddingRight: '10px' }}>
+          <Link to="https://drive.google.com/drive/folders/1VmQN68ulegklC8rTP3l7N7CbxTqB4mgr?usp=sharing" target='_blank'>
+            <PinIcon /> {/* This is the Material-UI Pin icon */}
+          </Link> {/* This is the Material-UI Pin icon */}
+          </div>
+        </Tooltip>
+      </Grid>
     </Grid>
+  </MainCard>
+</Grid>
+
 
       {/* Block Dropdown */}
       <Grid item xs={12}>
@@ -166,78 +153,39 @@ const SamplePage1 = () => {
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
               <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
-                <Table stickyHeader style={{ maxWidth: 300 }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey} // Force re-render by changing key
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -245,6 +193,8 @@ const SamplePage1 = () => {
           </Grid>
         </MainCard>
       </Grid>
+
+
 
       {/* B Table section */}
       <Grid id="b-block" item xs={12} style={{ display: block === 'B' ? 'block' : 'none' }}>
@@ -269,82 +219,43 @@ const SamplePage1 = () => {
                 DEPARTMENT TITLE DETAILS
               </Typography>
             </Grid>
+
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
+              <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -352,7 +263,7 @@ const SamplePage1 = () => {
           </Grid>
         </MainCard>
       </Grid>
-      {/* B BLOCK END */}
+
 
       {/* C Table section */}
       <Grid id="c-block" item xs={12} style={{ display: block === 'C' ? 'block' : 'none' }}>
@@ -377,82 +288,43 @@ const SamplePage1 = () => {
                 DEPARTMENT TITLE DETAILS
               </Typography>
             </Grid>
+
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
+              <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -460,7 +332,8 @@ const SamplePage1 = () => {
           </Grid>
         </MainCard>
       </Grid>
-      {/* C BLOCK END */}
+
+
 
       {/* D Table section */}
       <Grid id="d-block" item xs={12} style={{ display: block === 'D' ? 'block' : 'none' }}>
@@ -485,82 +358,43 @@ const SamplePage1 = () => {
                 DEPARTMENT TITLE DETAILS
               </Typography>
             </Grid>
+
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
+              <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -568,7 +402,8 @@ const SamplePage1 = () => {
           </Grid>
         </MainCard>
       </Grid>
-      {/* D BLOCK END */}
+
+
 
       {/* G Table section */}
       <Grid id="g-block" item xs={12} style={{ display: block === 'G' ? 'block' : 'none' }}>
@@ -593,82 +428,43 @@ const SamplePage1 = () => {
                 DEPARTMENT TITLE DETAILS
               </Typography>
             </Grid>
+
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
+              <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -676,7 +472,7 @@ const SamplePage1 = () => {
           </Grid>
         </MainCard>
       </Grid>
-      {/* G BLOCK END */}
+
 
       {/* H Table section */}
       <Grid id="h-block" item xs={12} style={{ display: block === 'H' ? 'block' : 'none' }}>
@@ -701,82 +497,43 @@ const SamplePage1 = () => {
                 DEPARTMENT TITLE DETAILS
               </Typography>
             </Grid>
+
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
+              <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -785,6 +542,9 @@ const SamplePage1 = () => {
         </MainCard>
       </Grid>
       {/* H BLOCK END */}
+
+
+
 
       {/* L Table section */}
       <Grid id="l-block" item xs={12} style={{ display: block === 'L' ? 'block' : 'none' }}>
@@ -809,82 +569,43 @@ const SamplePage1 = () => {
                 IT DETAILS
               </Typography>
             </Grid>
+
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
+              <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -895,86 +616,47 @@ const SamplePage1 = () => {
           <Grid container direction="column" spacing={2}>
             {/* Title */}
             <Grid item>
-              <Typography variant="h3" sx={{ textAlign: 'center', color: '#941b1c', paddingTop: '2%', paddingBottom: '7%' }}>
+              <Typography variant="h3" sx={{ textAlign: 'center', color: '#941b1c', paddingTop: '2%', paddingBottom: '4%' }}>
                 EEE DETAILS
               </Typography>
             </Grid>
+
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
+              <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms-eee', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs-eee', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls-eee', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms-eee', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -982,6 +664,8 @@ const SamplePage1 = () => {
           </Grid>
         </MainCard>
       </Grid>
+      {/* L BLOCK END */}
+
 
       {/* M Table section */}
       <Grid id="m-block" item xs={12} style={{ display: block === 'M' ? 'block' : 'none' }}>
@@ -1006,82 +690,43 @@ const SamplePage1 = () => {
                 DEPARTMENT TITLE DETAILS
               </Typography>
             </Grid>
+
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
+              <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms-m', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs-m', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls-m', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms-m', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -1090,6 +735,9 @@ const SamplePage1 = () => {
         </MainCard>
       </Grid>
       {/* M BLOCK END */}
+
+
+
 
       {/* N Table section */}
       <Grid id="n-block" item xs={12} style={{ display: block === 'N' ? 'block' : 'none' }}>
@@ -1114,82 +762,43 @@ const SamplePage1 = () => {
                 DEPARTMENT TITLE DETAILS
               </Typography>
             </Grid>
+
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
+              <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms-n', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs-n', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls-n', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms-n', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -1198,6 +807,7 @@ const SamplePage1 = () => {
         </MainCard>
       </Grid>
       {/* N BLOCK END */}
+
 
       {/* K Table section */}
       <Grid id="k-block" item xs={12} style={{ display: block === 'K' ? 'block' : 'none' }}>
@@ -1224,80 +834,40 @@ const SamplePage1 = () => {
             </Grid>
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
+              <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms-k', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs-k', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls-k', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms-k', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -1306,6 +876,7 @@ const SamplePage1 = () => {
         </MainCard>
       </Grid>
       {/* K BLOCK END */}
+
 
       {/* SMS Table section */}
       <Grid id="sms-block" item xs={12} style={{ display: block === 'SMS' ? 'block' : 'none' }}>
@@ -1332,80 +903,40 @@ const SamplePage1 = () => {
             </Grid>
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
+              <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms-sms', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs-sms', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls-sms', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms-sms', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -1414,6 +945,7 @@ const SamplePage1 = () => {
         </MainCard>
       </Grid>
       {/* SMS BLOCK END */}
+
 
       {/* R&D Table section */}
       <Grid id="r&d-block" item xs={12} style={{ display: block === 'R&D' ? 'block' : 'none' }}>
@@ -1440,80 +972,40 @@ const SamplePage1 = () => {
             </Grid>
             {/* Table */}
             <Grid item xs={12} style={{ overflowX: 'auto' }}>
-              <TableContainer style={{ minWidth: 800 }}>
-                <Table>
+              <TableContainer style={{ minWidth: 300, overflowX: 'auto' }}>
+                <Table stickyHeader style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="center">Classrooms</TableCell>
-                      <TableCell align="center">Labs</TableCell>
-                      <TableCell align="center">Seminar Halls</TableCell>
-                      <TableCell align="center">Washrooms</TableCell>
+                      <TableCell align="center">Resource Type</TableCell>
+                      <TableCell align="center">Action</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* Row 1 */}
-                    <TableRow>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-classrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'classrooms', block)}
-                        />
-                        <label htmlFor="upload-classrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-labs"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'labs', block)}
-                        />
-                        <label htmlFor="upload-labs">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-seminar-halls"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'seminarHalls', block)}
-                        />
-                        <label htmlFor="upload-seminar-halls">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                      <TableCell align="center">
-                        <input
-                          key={uploadKey}
-                          accept=".csv"
-                          style={{ display: 'none' }}
-                          id="upload-washrooms"
-                          type="file"
-                          onChange={(event) => handleFileUpload(event, 'washrooms', block)}
-                        />
-                        <label htmlFor="upload-washrooms">
-                          <Button variant="contained" component="span">
-                            Upload
-                          </Button>
-                        </label>
-                      </TableCell>
-                    </TableRow>
+                    {[
+                      { label: 'Classrooms', id: 'upload-classrooms-rnd', type: 'classrooms' },
+                      { label: 'Labs', id: 'upload-labs-rnd', type: 'labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls-rnd', type: 'seminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms-rnd', type: 'washrooms' },
+                    ].map(({ label, id, type }) => (
+                      <TableRow key={id}>
+                        <TableCell align="center">{label}</TableCell>
+                        <TableCell align="center">
+                          <input
+                            key={uploadKey} // Force re-render by changing key
+                            accept=".csv"
+                            style={{ display: 'none' }}
+                            id={id}
+                            type="file"
+                            onChange={(event) => handleFileUpload(event, type, block)}
+                          />
+                          <label htmlFor={id}>
+                            <Button variant="contained" component="span">
+                              Upload
+                            </Button>
+                          </label>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -1522,6 +1014,7 @@ const SamplePage1 = () => {
         </MainCard>
       </Grid>
       {/* R&D BLOCK END */}
+
     </Grid>
   );
 };

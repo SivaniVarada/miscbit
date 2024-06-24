@@ -140,7 +140,7 @@ router.post("/forgot-password", async (req, res, next) => {
     //   title: "Reset Password",
     // });
     // const relink=`http://localhost:3000/auth/reset-password?token=${token}`
-    const relink = `http://localhost:3000/pages/login/ForgotPassword?token=${token}`;
+    const relink = `http://localhost:3002/pages/login/ForgotPassword?token=${token}`;
 
     // console.log(from.email)
     const mailOptions = {

@@ -3,8 +3,8 @@ import React from 'react';
 import mobileLogo from '../assets/images/mobilelogo.webp';
 
 const MobileLogo = () => {
-  const width = 330;
-  const height = 95;
+  const width = 270;
+  const height = 80;
 
   return (
     <img src={mobileLogo} alt="Mobile Logo" width={width} height={height}/>
