@@ -40,7 +40,10 @@ const SamplePage1 = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} sx={{ textAlign: { xs: 'center', sm: 'right' } }}>
-              <Button variant="contained" onClick={downloadPdf}>
+              <Button variant="contained" onClick={downloadPdf}
+              sx={{ 
+                mt: { xs: '15px', sm: '0px' }
+              }}>
                 Download PDF
               </Button>
             </Grid>

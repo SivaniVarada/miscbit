@@ -114,7 +114,10 @@ const OutdoorSports = ({ blocksData }) => {
               </Typography>
             </Grid>
             <Grid item>
-              <Button variant="contained" onClick={downloadPdf}>
+              <Button variant="contained" onClick={downloadPdf}
+              sx={{ 
+                mt: { xs: '15px', sm: '0px' }
+              }}>
                 Download PDF
               </Button>
             </Grid>

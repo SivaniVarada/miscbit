@@ -793,8 +793,8 @@ const FilterSearchblock = ({ block, department }) => {
                         <Button onClick={handleSaveClick} variant="contained" color="secondary">Save</Button>
                       ) : (
                         <>
-                          <Button onClick={() => handleEditClick(item._id)} variant="contained" color="primary" style={{ marginRight: '10px' }}>Modify</Button>
-                          <Button onClick={() => handleDeleteClick(item._id)} variant="contained" color="error">Delete</Button>
+                          <Button onClick={() => handleEditClick(item._id)} variant="contained" color="primary" style={{ marginRight: '10px', marginTop:'7px' }}>Modify</Button>
+                          <Button onClick={() => handleDeleteClick(item._id)} variant="contained" color="error" style={{ marginRight: '10px', marginTop:'7px' }}>Delete</Button>
                         </>
                       )}
                     </TableCell>
@@ -815,16 +815,17 @@ const FilterSearchblock = ({ block, department }) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <div style={{ marginTop: '20px' }}>
-        <Button onClick={convertJsonToExcel} style={{ marginRight: '10px' }} variant="contained" color="primary">Generate Excel</Button>
-        <Button onClick={convertJsonToPDF} variant="contained" color="primary">Generate PDF</Button>
+      <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }} className="button-container">
+        <Button onClick={convertJsonToExcel} style={{ marginRight: '10px', marginBottom: '10px' }} variant="contained" color="primary">Generate Excel</Button>
+        <Button onClick={convertJsonToPDF} style={{ marginBottom: '10px' }} variant="contained" color="primary">Generate PDF</Button>
       </div>
+
       {isModified && (
         <Button
           variant="contained"
           color="primary"
           onClick={handleSubmit}
-          style={{ position: 'fixed', bottom: '20px', right: '20px' }}
+          style={{ position: 'fixed', bottom: '20px', right: '25px' }}
         >
           Submit
         </Button>
