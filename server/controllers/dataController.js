@@ -10,41 +10,42 @@ const importData = async (req, res) => {
         const dataType = req.params.dataType;
         const blockname = req.params.block;
         console.log(dataType);
+        console.log(blockname)
 
         let dataToInsert;
         switch (dataType) {
-            case 'classrooms':
+            case 'Classrooms':
                 dataToInsert = jsonArray.map(item => ({
                     Block: blockname,
                     Classrooms: item.NUMBER ? [{ // Example condition to check if number exists
-                        number: item.NUMBER,
-                        capacity: item.CAPACITY || '',
-                        Department: item.DEPARTMENT || '',
-                        Floor: item.FlOOR || '',
-                        projector_status: item.PROJECTOR_STATUS || ''
+                        NUMBER: item.NUMBER,
+                        CAPACITY: item.CAPACITY || '',
+                        DEPARTMENT: item.DEPARTMENT || '',
+                        FLOOR: item.FLOOR || '',
+                        PROJECTOR_STATUS: item.PROJECTOR_STATUS || ''
                     }] : []
                 }));
                 break;
-            case 'labs':
+            case 'Labs':
                 dataToInsert = jsonArray.map(item => ({
                     Block: blockname,
                     Labs: item.LAB_NUMBER ? [{
-                        Lab_num: item.LAB_NUMBER,
-                        name: item.NAME || '',
-                        Department: item.DEPARTMENT || '',
-                        Equipment_status: item.EQUIPMENT_STATUS || '',
-                        Floor: item.FlOOR || ''
+                        LAB_NUMBER: item.LAB_NUMBER,
+                        NAME: item.NAME || '',
+                        DEPARTMENT: item.DEPARTMENT || '',
+                        EQUIPMENT_STATUS: item.EQUIPMENT_STATUS || '',
+                        FLOOR: item.FlOOR || ''
                     }] : []
                 }));
                 break;
-            case 'seminarHalls':
+            case 'SeminarHalls':
                 dataToInsert = jsonArray.map(item => ({
                     Block: blockname,
                     SeminarHalls: item.HALL_NUMBER ? [{
-                        Hall_number: item.HALL_NUMBER,
-                        name: item.NAME || '',
-                        capacity: item.CAPACITY || '',
-                        Department: item.DEPARTMENT || ''
+                        HALL_NUMBER: item.HALL_NUMBER,
+                        NAME: item.NAME || '',
+                        CAPACITY: item.CAPACITY || '',
+                        DEPARTMENT: item.DEPARTMENT || ''
                     }] : []
                 }));
                 break;
@@ -121,6 +122,18 @@ const importData = async (req, res) => {
                     Role: item.Role || ''
                 }));
                 break;
+            case 'Washrooms':
+                dataToInsert = jsonArray.map(item => ({
+                    
+                    S_NO: item.S_NO || '',
+                    TYPE: item.TYPE || '',
+                    GENDER: item.GENDER || '',
+                    FLOOR: item.FLOOR || '',
+                    COUNT: item.COUNT || '',
+                    DEPARTMENT: item.DEPARTMENT || '',
+                    }));
+                break;
+
             default:
                 throw new Error("Invalid data type");
         }
@@ -131,13 +144,13 @@ const importData = async (req, res) => {
         if (existingDocument) {
             // Update existing document
             switch (dataType) {
-                case 'classrooms':
-                    existingDocument.classrooms.push(...dataToInsert.map(entry => entry.classrooms).flat());
+                case 'Classrooms':
+                    existingDocument.Classrooms.push(...dataToInsert.map(entry => entry.Classrooms).flat());
                     break;
-                case 'labs':
+                case 'Labs':
                     existingDocument.Labs.push(...dataToInsert.map(entry => entry.Labs).flat());
                     break;
-                case 'seminarHalls':
+                case 'SeminarHalls':
                     existingDocument.SeminarHalls.push(...dataToInsert.map(entry => entry.SeminarHalls).flat());
                     break;
                 case 'students':
@@ -163,6 +176,9 @@ const importData = async (req, res) => {
                     break;
                 case 'clubs':
                     existingDocument.Clubs.push(...dataToInsert);
+                    break;
+                case 'Washrooms':
+                    existingDocument.Washrooms.push(...dataToInsert.map(entry => entry.Washrooms).flat());
                     break;
                 default:
                     throw new Error("Invalid data type");
