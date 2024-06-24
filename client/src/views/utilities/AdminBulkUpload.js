@@ -234,9 +234,9 @@ const SamplePage1 = () => {
                   <TableBody>
                     {[
                       { label: 'Classrooms', id: 'upload-classrooms', type: 'Classrooms' },
-                      { label: 'Labs', id: 'upload-labs', type: 'labs' },
-                      { label: 'Seminar Halls', id: 'upload-seminar-halls', type: 'seminarHalls' },
-                      { label: 'Washrooms', id: 'upload-washrooms', type: 'washrooms' },
+                      { label: 'Labs', id: 'upload-labs', type: 'Labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls', type: 'SeminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms', type: 'Washrooms' },
                     ].map(({ label, id, type }) => (
                       <TableRow key={id}>
                         <TableCell align="center">{label}</TableCell>
@@ -373,9 +373,9 @@ const SamplePage1 = () => {
                   <TableBody>
                     {[
                       { label: 'Classrooms', id: 'upload-classrooms', type: 'classrooms' },
-                      { label: 'Labs', id: 'upload-labs', type: 'labs' },
-                      { label: 'Seminar Halls', id: 'upload-seminar-halls', type: 'seminarHalls' },
-                      { label: 'Washrooms', id: 'upload-washrooms', type: 'washrooms' },
+                      { label: 'Labs', id: 'upload-labs', type: 'Labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls', type: 'SeminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms', type: 'Washrooms' },
                     ].map(({ label, id, type }) => (
                       <TableRow key={id}>
                         <TableCell align="center">{label}</TableCell>
@@ -776,10 +776,10 @@ const SamplePage1 = () => {
                   </TableHead>
                   <TableBody>
                     {[
-                      { label: 'Classrooms', id: 'upload-classrooms-n', type: 'classrooms' },
+                      { label: 'Classrooms', id: 'upload-classrooms-n', type: 'Classrooms' },
                       { label: 'Labs', id: 'upload-labs-n', type: 'Labs' },
-                      { label: 'Seminar Halls', id: 'upload-seminar-halls-n', type: 'seminarHalls' },
-                      { label: 'Washrooms', id: 'upload-washrooms-n', type: 'washrooms' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls-n', type: 'SeminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms-n', type: 'Washrooms' },
                     ].map(({ label, id, type }) => (
                       <TableRow key={id}>
                         <TableCell align="center">{label}</TableCell>
@@ -845,10 +845,10 @@ const SamplePage1 = () => {
                   </TableHead>
                   <TableBody>
                     {[
-                      { label: 'Classrooms', id: 'upload-classrooms-k', type: 'classrooms' },
-                      { label: 'Labs', id: 'upload-labs-k', type: 'labs' },
-                      { label: 'Seminar Halls', id: 'upload-seminar-halls-k', type: 'seminarHalls' },
-                      { label: 'Washrooms', id: 'upload-washrooms-k', type: 'washrooms' },
+                      { label: 'Classrooms', id: 'upload-classrooms-k', type: 'Classrooms' },
+                      { label: 'Labs', id: 'upload-labs-k', type: 'Labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls-k', type: 'SeminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms-k', type: 'Washrooms' },
                     ].map(({ label, id, type }) => (
                       <TableRow key={id}>
                         <TableCell align="center">{label}</TableCell>
@@ -914,10 +914,10 @@ const SamplePage1 = () => {
                   </TableHead>
                   <TableBody>
                     {[
-                      { label: 'Classrooms', id: 'upload-classrooms-sms', type: 'classrooms' },
-                      { label: 'Labs', id: 'upload-labs-sms', type: 'labs' },
-                      { label: 'Seminar Halls', id: 'upload-seminar-halls-sms', type: 'seminarHalls' },
-                      { label: 'Washrooms', id: 'upload-washrooms-sms', type: 'washrooms' },
+                      { label: 'Classrooms', id: 'upload-classrooms-sms', type: 'Classrooms' },
+                      { label: 'Labs', id: 'upload-labs-sms', type: 'Labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls-sms', type: 'SeminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms-sms', type: 'Washrooms' },
                     ].map(({ label, id, type }) => (
                       <TableRow key={id}>
                         <TableCell align="center">{label}</TableCell>
@@ -983,10 +983,10 @@ const SamplePage1 = () => {
                   </TableHead>
                   <TableBody>
                     {[
-                      { label: 'Classrooms', id: 'upload-classrooms-rnd', type: 'classrooms' },
-                      { label: 'Labs', id: 'upload-labs-rnd', type: 'labs' },
-                      { label: 'Seminar Halls', id: 'upload-seminar-halls-rnd', type: 'seminarHalls' },
-                      { label: 'Washrooms', id: 'upload-washrooms-rnd', type: 'washrooms' },
+                      { label: 'Classrooms', id: 'upload-classrooms-rnd', type: 'Classrooms' },
+                      { label: 'Labs', id: 'upload-labs-rnd', type: 'Labs' },
+                      { label: 'Seminar Halls', id: 'upload-seminar-halls-rnd', type: 'SeminarHalls' },
+                      { label: 'Washrooms', id: 'upload-washrooms-rnd', type: 'Washrooms' },
                     ].map(({ label, id, type }) => (
                       <TableRow key={id}>
                         <TableCell align="center">{label}</TableCell>

@@ -427,6 +427,7 @@ const FilterSearch = () => {
                       <TableCell>CAPACITY</TableCell>
                       <TableCell>DEPARTMENT</TableCell>
                       <TableCell>FLOOR</TableCell>
+                      <TableCell>PROJECTOR_STATUS</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -437,6 +438,7 @@ const FilterSearch = () => {
                           <TableCell>{classroom.CAPACITY}</TableCell>
                           <TableCell>{classroom.DEPARTMENT}</TableCell>
                           <TableCell>{classroom.FLOOR}</TableCell>
+                          <TableCell>{classroom.PROJECTOR_STATUS}</TableCell>
                         </TableRow>
                       ))
                     )}
@@ -635,6 +637,7 @@ const FilterSearch = () => {
                   <TableBody>
                     {departmentData.Washrooms.map((faculty) => (
                       <TableRow key={faculty.S_NO}>
+                        <TableCell>{faculty.S_NO}</TableCell>
                         <TableCell>{faculty.TYPE}</TableCell>
                         <TableCell>{faculty.GENDER}</TableCell>
                         <TableCell>{faculty.FLOOR}</TableCell>

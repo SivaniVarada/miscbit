@@ -205,7 +205,7 @@ const importData = async (req, res) => {
             };
 
             dataToInsert.forEach(entry => {
-                if (entry.classrooms) allData.classrooms.push(...entry.classrooms);
+                if (entry.Classrooms) allData.Classrooms.push(...entry.Classrooms);
                 if (entry.Labs) allData.Labs.push(...entry.Labs);
                 if (entry.SeminarHalls) allData.SeminarHalls.push(...entry.SeminarHalls);
                 // Add logic for other data types here
