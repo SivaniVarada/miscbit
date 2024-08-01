@@ -12,8 +12,6 @@
   <a href="https://mulberry-calendula-c8e.notion.site/CBIT-MANAGEMENT-INFORMATION-SYSTEM-MIS-f8d9c3e23c014882b3934c377745f79b">Documentation</a> 
 </p>
 
-![screenshot](https://mulberry-calendula-c8e.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fb55c9d73-fc76-4d0b-aebd-ed5083c0a74e%2F8341fbc2-567a-4de0-923e-759c4c1c0324%2Fnotion_cards.png?table=block&id=f8d9c3e2-3c01-4882-b393-4c377745f79b&spaceId=b55c9d73-fc76-4d0b-aebd-ed5083c0a74e&width=2000&userId=&cache=v2)
-
 ## PROJECT DESCRIPTION
 
 The CBIT Management Information System is a dynamic, responsive platform designed to provide a comprehensive overview of a college's infrastructural assets. It allows management to access and analyze data across various categories, including classrooms, laboratories, seminar halls, and washrooms, with options to download reports as Excel or PDF files. Administrators benefit from features like secure login, bulk data upload via Excel templates, and easy data management. Additionally, it offers detailed views of library and sports facilities, enhancing resource transparency and management efficiency.
