@@ -1,0 +1,7 @@
+{
+    "name": "cbit-mis",
+    "integrations": {
+      "capacitor": {}
+    },
+    "type": "react"
+  }
