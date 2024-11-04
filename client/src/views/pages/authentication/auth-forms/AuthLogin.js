@@ -40,7 +40,8 @@ const FirebaseLogin = ({ ...others }) => {
   const handleLogin = async (values, actions) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8000/auth/login', values);
+      //added deplyed link for login backend
+      const response = await axios.post('https://miscbit-10.onrender.com/auth/login', values);
       const { token, usertype } = response.data;
       localStorage.setItem('token', token);
       if (usertype === 'admin') {

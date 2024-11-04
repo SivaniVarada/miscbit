@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "/",
   "dependencies": {
+    "@capacitor/android": "6.1.2",
+    "@capacitor/core": "^6.1.2",
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
@@ -66,6 +68,7 @@
     "@babel/core": "^7.23.9",
     "@babel/eslint-parser": "^7.23.10",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@capacitor/cli": "^6.1.2",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-react-app": "^7.0.1",

@@ -44,7 +44,7 @@
 // assets
 import { IconKey } from '@tabler/icons-react';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
-import { isAdmin } from '../menu-items/isadmin'; // Import the isAdmin function
+import { isAdmin } from './isadmin'; // Import the isAdmin function
 
 // constant
 const icons = {
